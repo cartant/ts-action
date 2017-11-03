@@ -72,9 +72,11 @@ import { action, payload } from "ts-action";
 
 const Foo = action({ type: "FOO", ...payload({ foo: 42 }) });
 const Bar = action({ type: "BAR", ...payload({ bar: 56 }) });
-type FooBarActions = typeof Foo.action | typeof Bar.action;
 
-function fooBarReducer(state: { foo?: number, bar?: number } = {}, action: FooBarActions): any {
+type FooBarActions = typeof Foo.action | typeof Bar.action;
+type State = { foo?: number, bar?: number };
+
+function fooBarReducer(state: State = {}, action: FooBarActions): State {
   switch (action.type) {
   case Foo.type:
     return { ...state, foo: action.payload.foo };
@@ -94,7 +96,7 @@ import { action, isType, payload } from "ts-action";
 const Foo = action({ type: "FOO", ...payload({ foo: 42 }) });
 const Bar = action({ type: "BAR", ...payload({ bar: 56 }) });
 
-function fooBarReducer(state: { foo?: number, bar?: number } = {}, action: Action): any {
+function fooBarReducer(state: State = {}, action: Action): State {
   if (isType(action, Foo)) {
     return { ...state, foo: action.payload.foo };
   }
