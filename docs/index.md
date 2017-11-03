@@ -1,6 +1,6 @@
-### Redux action creators with less TypeScript cruft.
+### Redux action creators with less TypeScript cruft
 
-Declare Redux actions like this:
+Declare Redux action creators like this:
 
 ```ts
 export const Search = action({ type: "[Books] Search", ...payload<string>() });
