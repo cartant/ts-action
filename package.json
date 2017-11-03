@@ -1,0 +1,53 @@
+{
+  "author": "Nicholas Jamieson <nicholas@cartant.com>",
+  "bugs": {
+    "url": "https://github.com/cartant/ts-action/issues"
+  },
+  "dependencies": {},
+  "description": "TypeScript action creators for Redux",
+  "devDependencies": {
+    "@types/chai": "^4.0.0",
+    "@types/mocha": "^2.2.41",
+    "chai": "^4.1.2",
+    "cpy-cli": "^1.0.1",
+    "mocha": "^4.0.1",
+    "rimraf": "^2.6.2",
+    "ts-snippet": "^2.0.0",
+    "tslib": "^1.8.0",
+    "tslint": "^5.8.0",
+    "typescript": "~2.6.1"
+  },
+  "homepage": "https://github.com/cartant/ts-action",
+  "keywords": [
+    "action",
+    "ngrx",
+    "redux",
+    "redux-observable",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "ts-action",
+  "optionalDependencies": {},
+  "peerDependencies": {},
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cartant/ts-action.git"
+  },
+  "scripts": {
+    "dist": "yarn run dist:build && yarn run dist:copy",
+    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs",
+    "dist:build:cjs": "tsc -p tsconfig-dist.json",
+    "dist:clean": "rimraf dist",
+    "dist:copy": "node scripts/pack.js && yarn run dist:copy:docs && yarn run dist:copy:ts",
+    "dist:copy:docs": "cpy CHANGELOG.md LICENSE README.md dist/",
+    "dist:copy:ts": "cpy **/*.ts !**/*-spec.ts ../dist/ --cwd=source --parents",
+    "lint": "tslint --project tsconfig.json source/**/*.ts",
+    "test": "yarn run lint && yarn run test:build && mocha ./build/**/*-spec.js",
+    "test:build": "yarn run test:clean && tsc -p tsconfig.json",
+    "test:clean": "rimraf build"
+  },
+  "types": "./dist/index.ts",
+  "version": "0.0.1"
+}

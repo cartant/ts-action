@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "inlineSourceMap": true,
+    "outDir": "dist",
+    "target": "es5"
+  },
+  "exclude": [
+    "source/**/*-spec.ts"
+  ],
+  "extends": "./tsconfig.json"
+}
