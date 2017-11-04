@@ -49,5 +49,5 @@
     "test:clean": "rimraf build"
   },
   "types": "./dist/index.ts",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
