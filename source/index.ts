@@ -5,5 +5,6 @@
  */
 
 export * from "./action";
+export * from "./guard";
 export * from "./interfaces";
 export * from "./isType";

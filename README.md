@@ -60,7 +60,7 @@ If a value is specifed when calling the `payload` function, that value will be t
 
 ```ts
 const Foo = action({ type: "FOO", ...payload({ foo: 42 }) });
-store.dispatch(new Foo()); // Dispatches { "type": "FOO", "payload": { "foo": 42 } }
+store.dispatch(new Foo()); // Dispatches: { "type": "FOO", "payload": { "foo": 42 } }
 ```
 
 Action creators have `type` and `action` properties that can be used to narrow an action's TypeScript type in a reducer.
@@ -113,6 +113,7 @@ function fooBarReducer(state: State = {}, action: Action): State {
 * [payload](#payload)
 * [props](#props)
 * [isType](#isType)
+* [guard](#guard)
 
 <a name="action"></a>
 
@@ -219,6 +220,17 @@ if (isType(action, Foo)) {
   // Here, TypeScript has narrowed the type, so the action is strongly typed
   // and individual properties can be accessed in a type-safe manner.
 }
+```
+
+### guard
+
+`guard` is higher-order equivalent of `isType`. That is, it returns a TypeScript [type guard](https://www.typescriptlang.org/docs/handbook/advanced-types.html) that will in turn return either `true` or `false` depending upon whether the passed action is of the appropriate type. The `guard` method is useful when dealing with APIs that accept type guards.
+
+For example, `Array.prototype.filter` accepts a type guard:
+
+```ts
+const actions = [new Foo(), new Bar()];
+const filtered = actions.filter(guard(Foo)); // Inferred to be: const filtered: Foo[]
 ```
 
 <a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/ts-action'>

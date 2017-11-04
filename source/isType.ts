@@ -21,6 +21,6 @@ export function isType<T extends string, P>(action: Action, constructor: ActionW
 export function isType<T extends string, P extends object>(action: Action, constructor: ActionWithDefaultPropsConstructor<T, P>): action is ActionWithType<T> & P;
 export function isType<T extends string, P extends object>(action: Action, constructor: ActionWithPropsConstructor<T, P>): action is ActionWithType<T> & P;
 export function isType<T extends string>(action: Action, constructor: ActionWithTypeConstructor<T>): action is ActionWithType<T>;
-export function isType<T extends string, P>(action: Action, constructor: ActionConstructor<T>): action is Action<T> {
+export function isType<T extends string>(action: Action, constructor: ActionConstructor<T>): action is Action<T> {
     return action.type === constructor.type;
 }
