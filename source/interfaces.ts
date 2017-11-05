@@ -66,10 +66,10 @@ export interface ActionWithDefaultPayloadCreator<T extends string, P> extends Ac
 
 export interface ActionWithPropsCreator<T extends string, P extends object> extends ActionWithPropsConstructor<T, P> {
     action: ActionWithType<T> & P;
-    create(payload: P): ActionWithType<T> & P;
+    create(props: P): ActionWithType<T> & P;
 }
 
 export interface ActionWithDefaultPropsCreator<T extends string, P extends object> extends ActionWithDefaultPropsConstructor<T, P> {
     action: ActionWithType<T> & P;
-    create(payload?: P): ActionWithType<T> & P;
+    create(props?: P): ActionWithType<T> & P;
 }
