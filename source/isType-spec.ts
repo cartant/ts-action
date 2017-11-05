@@ -6,7 +6,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Foo, Bar, Baz, Daz, Woo, Zoo } from "./foobar-spec";
+import { Foo, Bar, Baz, Daz, Par, Rar, Woo, Zoo } from "./foobar-spec";
 import { isType } from "./isType";
 
 describe("isType", () => {
@@ -56,6 +56,22 @@ describe("isType", () => {
         it("should return false for non-matching actions", () => {
             const action = new Daz({ daz: 56 });
             expect(isType(action, Baz)).to.be.false;
+        });
+    });
+
+    describe("generated actions with props using params", () => {
+
+        it("should return true for matching actions", () => {
+            const action = new Par(42);
+            expect(isType(action, Par)).to.be.true;
+            if (isType(action, Par)) {
+                expect(action.par).to.equal(42);
+            }
+        });
+
+        it("should return false for non-matching actions", () => {
+            const action = new Rar(56);
+            expect(isType(action, Par)).to.be.false;
         });
     });
 });

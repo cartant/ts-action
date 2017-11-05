@@ -231,7 +231,7 @@ describe("action", () => {
         });
     });
 
-    describe("with params", () => {
+    describe("with props using params", () => {
 
         it("should generate an action that takes a single param", () => {
             const Boo = action({ type: "BOO", ...params(props<{ boo: number }>(), "boo") });
