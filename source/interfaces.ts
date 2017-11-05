@@ -14,23 +14,19 @@ export interface ActionWithPayload<T extends string, P> extends ActionType<T> {
     payload: P;
 }
 
+export interface AnyActionConstructor extends ActionType<string> {
+    new (...args: any[]): Action<string>;
+}
+
 export interface ActionConstructor<T extends string> extends ActionType<T> {
     new (): Action<T>;
 }
 
 export interface ActionWithPayloadConstructor<T extends string, P> extends ActionType<T> {
-    new (payload: P): ActionWithPayload<T, P>;
-}
-
-export interface ActionWithDefaultPayloadConstructor<T extends string, P> extends ActionType<T> {
     new (payload?: P): ActionWithPayload<T, P>;
 }
 
 export interface ActionWithPropsConstructor<T extends string, P extends object> extends ActionType<T> {
-    new (props: P): Action<T> & P;
-}
-
-export interface ActionWithDefaultPropsConstructor<T extends string, P extends object> extends ActionType<T> {
     new (props?: P): Action<T> & P;
 }
 
@@ -46,9 +42,10 @@ export interface ActionCreator<T extends string> extends ActionConstructor<T> {
 export interface ActionWithPayloadCreator<T extends string, P> extends ActionWithPayloadConstructor<T, P> {
     action: ActionWithPayload<T, P>;
     create(payload: P): ActionWithPayload<T, P>;
+    new (payload: P): ActionWithPayload<T, P>;
 }
 
-export interface ActionWithDefaultPayloadCreator<T extends string, P> extends ActionWithDefaultPayloadConstructor<T, P> {
+export interface ActionWithDefaultPayloadCreator<T extends string, P> extends ActionWithPayloadConstructor<T, P> {
     action: ActionWithPayload<T, P>;
     create(payload?: P): ActionWithPayload<T, P>;
 }
@@ -56,9 +53,10 @@ export interface ActionWithDefaultPayloadCreator<T extends string, P> extends Ac
 export interface ActionWithPropsCreator<T extends string, P extends object> extends ActionWithPropsConstructor<T, P> {
     action: Action<T> & P;
     create(props: P): Action<T> & P;
+    new (props: P): Action<T> & P;
 }
 
-export interface ActionWithDefaultPropsCreator<T extends string, P extends object> extends ActionWithDefaultPropsConstructor<T, P> {
+export interface ActionWithDefaultPropsCreator<T extends string, P extends object> extends ActionWithPropsConstructor<T, P> {
     action: Action<T> & P;
     create(props?: P): Action<T> & P;
 }

@@ -39,9 +39,9 @@ export function params<P extends object>(options: { props: P }, ...params: (keyo
 
 export function action<T extends string, P>(options: { readonly type: T, payload: P, default: true }): ActionWithDefaultPayloadCreator<T, P>;
 export function action<T extends string, P>(options: { readonly type: T, payload: P }): ActionWithPayloadCreator<T, P>;
-export function action<T extends string, P extends object, V>(options: { readonly type: T, props: P, value: { placeholder: V, props: string[] } }): ActionWithParamsCreator<T, P, V>;
 export function action<T extends string, P extends object>(options: { readonly type: T, props: P, default: true }): ActionWithDefaultPropsCreator<T, P>;
 export function action<T extends string, P extends object>(options: { readonly type: T, props: P }): ActionWithPropsCreator<T, P>;
+export function action<T extends string, P extends object, V>(options: { readonly type: T, props: P, value: { placeholder: V, props: string[] } }): ActionWithParamsCreator<T, P, V>;
 export function action<T extends string>(options: { readonly type: T }): ActionCreator<T>;
 export function action<T extends string, P>(options: { readonly type: T, payload?: P, props?: P, value?: { placeholder: any, props: string[] }, default?: true }): any {
     const { type } = options;
