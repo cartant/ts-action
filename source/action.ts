@@ -66,7 +66,7 @@ export function action<T extends string, P>(options: { readonly type: T, payload
                 static readonly type: T = type;
                 readonly type: T = type;
                 static readonly create = (props: P = defaultProps!) => new _ActionWithDefaultProps(props);
-                constructor(props: P = defaultProps!) { Object.assign(this, props); }
+                constructor(props: P = defaultProps!) { Object.assign(this, defaultProps!, props); }
             }
             return _ActionWithDefaultProps;
         } else if (defaultProps !== placeholder) {

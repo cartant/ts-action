@@ -176,6 +176,13 @@ describe("action", () => {
             expect(boo).to.have.property("boo", 42);
         });
 
+        it("should generate an action using optional props", () => {
+            const Boo = action({ type: "BOO", ...props<{ boo?: number }>({ boo: 42 }) });
+            const boo = new Boo({});
+            expect(boo).to.have.property("type", "BOO");
+            expect(boo).to.have.property("boo", 42);
+        });
+
         it("should generate an action using the specified props", () => {
             const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
             const boo = new Boo({ boo: 56 });
@@ -186,6 +193,13 @@ describe("action", () => {
         it("should support create using the default props", () => {
             const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
             const boo = Boo.create();
+            expect(boo).to.have.property("type", "BOO");
+            expect(boo).to.have.property("boo", 42);
+        });
+
+        it("should support create using optional props", () => {
+            const Boo = action({ type: "BOO", ...props<{ boo?: number }>({ boo: 42 }) });
+            const boo = Boo.create({});
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("boo", 42);
         });
