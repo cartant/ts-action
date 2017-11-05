@@ -6,9 +6,9 @@
 
 import { action, payload, props } from "./action";
 
-export const Foo = action({ type: "[foobar] FOO", ...payload({ foo: 42 }) });
+export const Foo = action({ type: "[foobar] FOO", ...payload<{ foo: number }>() });
 export const Bar = action({ type: "[foobar] BAR", ...payload<{ bar: number }>() });
 export const Goo = action({ type: "[foobar] GOO" });
 
-export const Baz = action({ type: "[foobar] BAZ", ...props({ baz: 42 }) });
+export const Baz = action({ type: "[foobar] BAZ", ...props<{ baz: number }>() });
 export const Daz = action({ type: "[foobar] DAZ", ...props<{ daz: number }>() });

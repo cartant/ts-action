@@ -81,56 +81,6 @@ describe("action", () => {
         });
     });
 
-    describe("with default payloads", () => {
-
-        it("should create an action using the default payload", () => {
-            const Boo = action({ type: "BOO", ...payload(42) });
-            const boo = new Boo();
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("payload", 42);
-        });
-
-        it("should create an action using the specified payload", () => {
-            const Boo = action({ type: "BOO", ...payload(42) });
-            const boo = new Boo(56);
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("payload", 56);
-        });
-
-        it("should support create using the default payload", () => {
-            const Boo = action({ type: "BOO", ...payload(42) });
-            const boo = Boo.create();
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("payload", 42);
-        });
-
-        it("should support create using the specified payload", () => {
-            const Boo = action({ type: "BOO", ...payload(42) });
-            const boo = Boo.create(56);
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("payload", 56);
-        });
-
-        it("should expose the action type", () => {
-            const Boo = action({ type: "BOO", ...payload(42) });
-            type BooAction = typeof Boo.action;
-            const boo: BooAction = new Boo();
-        });
-
-        it("should narrow the action", () => {
-            const Boo = action({ type: "BOO", ...payload({ boo: 42 }) });
-            const Coo = action({ type: "COO", ...payload({ coo: 56 }) });
-            const narrow = (action: typeof Boo.action | typeof Coo.action) => {
-                if (action.type === Boo.type) {
-                    expect(action.payload.boo).to.equal(42);
-                } else {
-                    throw new Error("Should not get here.");
-                }
-            };
-            narrow(new Boo());
-        });
-    });
-
     describe("with props", () => {
 
         it("should create an action", () => {
@@ -164,70 +114,6 @@ describe("action", () => {
                 }
             };
             narrow(new Boo({ boo: 42 }));
-        });
-    });
-
-    describe("with default props", () => {
-
-        it("should create an action using the default props", () => {
-            const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
-            const boo = new Boo();
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 42);
-        });
-
-        it("should create an action using optional props", () => {
-            const Boo = action({ type: "BOO", ...props<{ boo?: number }>({ boo: 42 }) });
-            const boo = new Boo({});
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 42);
-        });
-
-        it("should create an action using the specified props", () => {
-            const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
-            const boo = new Boo({ boo: 56 });
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 56);
-        });
-
-        it("should support create using the default props", () => {
-            const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
-            const boo = Boo.create();
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 42);
-        });
-
-        it("should support create using optional props", () => {
-            const Boo = action({ type: "BOO", ...props<{ boo?: number }>({ boo: 42 }) });
-            const boo = Boo.create({});
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 42);
-        });
-
-        it("should support create using the specified props", () => {
-            const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
-            const boo = Boo.create({ boo: 56 });
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 56);
-        });
-
-        it("should expose the action type", () => {
-            const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
-            type BooAction = typeof Boo.action;
-            const boo: BooAction = new Boo();
-        });
-
-        it("should narrow the action", () => {
-            const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
-            const Coo = action({ type: "COO", ...props({ coo: 56 }) });
-            const narrow = (action: typeof Boo.action | typeof Coo.action) => {
-                if (action.type === Boo.type) {
-                    expect(action.boo).to.equal(42);
-                } else {
-                    throw new Error("Should not get here.");
-                }
-            };
-            narrow(new Boo());
         });
     });
 });

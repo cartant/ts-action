@@ -14,7 +14,7 @@ describe("guard", () => {
     describe("actions with payloads", () => {
 
         it("should return true for matching actions", () => {
-            const action = new Foo();
+            const action = new Foo({ foo: 42 });
             expect(guard(Foo)(action)).to.be.true;
             if (guard(Foo)(action)) {
                 expect(action.payload.foo).to.equal(42);
@@ -30,7 +30,7 @@ describe("guard", () => {
     describe("actions with props", () => {
 
         it("should return true for matching actions", () => {
-            const action = new Baz();
+            const action = new Baz({ baz: 42 });
             expect(guard(Baz)(action)).to.be.true;
             if (guard(Baz)(action)) {
                 expect(action.baz).to.equal(42);

@@ -14,7 +14,7 @@ describe("isType", () => {
     describe("actions with payloads", () => {
 
         it("should return true for matching actions", () => {
-            const action = new Foo();
+            const action = new Foo({ foo: 42 });
             expect(isType(action, Foo)).to.be.true;
             if (isType(action, Foo)) {
                 expect(action.payload.foo).to.equal(42);
@@ -30,7 +30,7 @@ describe("isType", () => {
     describe("actions with props", () => {
 
         it("should return true for matching actions", () => {
-            const action = new Baz();
+            const action = new Baz({ baz: 42 });
             expect(isType(action, Baz)).to.be.true;
             if (isType(action, Baz)) {
                 expect(action.baz).to.equal(42);
