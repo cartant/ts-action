@@ -124,7 +124,7 @@ describe("research", function (): void {
             `).toSucceed();
         });
 
-        it("should narrow generated actions using 'type'", () => {
+        it("should narrow actions using 'type'", () => {
             expectSnippet(`
                 const A = action({ type: "[research] A", ...payload<{ a: number }>() });
                 const B = action({ type: "[research] B" });
@@ -138,7 +138,7 @@ describe("research", function (): void {
             `).toSucceed();
         });
 
-        it("should narrow generated actions using 'action.type'", () => {
+        it("should narrow actions using 'action.type'", () => {
             expectSnippet(`
                 const A = action({ type: "[research] A", ...payload<{ a: number }>() });
                 const B = action({ type: "[research] B" });
@@ -201,7 +201,7 @@ describe("research", function (): void {
         });
     });
 
-    describe("generated actions", () => {
+    describe("created actions", () => {
 
         it("should not infer the action type using the prototype", () => {
             expectSnippet(`

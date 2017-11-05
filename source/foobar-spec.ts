@@ -15,15 +15,3 @@ export const Daz = action({ type: "[foobar] DAZ", ...props<{ daz: number }>() })
 
 export const Par = action({ type: "[foobar] PAR", ...params(props<{ par: number }>(), "par") });
 export const Rar = action({ type: "[foobar] RAR", ...params(props<{ rar: number }>(), "rar") });
-
-export class Woo {
-    static readonly type = "[foobar] WOO";
-    readonly type = Woo.type;
-    constructor(public payload: { woo: number } = { woo: 0 }) {}
-}
-
-export class Zoo {
-    static readonly type = "[foobar] ZOO";
-    readonly type = Zoo.type;
-    constructor() {}
-}

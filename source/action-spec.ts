@@ -12,7 +12,7 @@ describe("action", () => {
 
     describe("with types only", () => {
 
-        it("should generate an action", () => {
+        it("should create an action", () => {
             const Boo = action({ type: "BOO" });
             const boo = new Boo();
             expect(boo).to.have.property("type", "BOO");
@@ -47,7 +47,7 @@ describe("action", () => {
 
     describe("with payloads", () => {
 
-        it("should generate an action", () => {
+        it("should create an action", () => {
             const Boo = action({ type: "BOO", ...payload<number>() });
             const boo = new Boo(42);
             expect(boo).to.have.property("type", "BOO");
@@ -83,14 +83,14 @@ describe("action", () => {
 
     describe("with default payloads", () => {
 
-        it("should generate an action using the default payload", () => {
+        it("should create an action using the default payload", () => {
             const Boo = action({ type: "BOO", ...payload(42) });
             const boo = new Boo();
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("payload", 42);
         });
 
-        it("should generate an action using the specified payload", () => {
+        it("should create an action using the specified payload", () => {
             const Boo = action({ type: "BOO", ...payload(42) });
             const boo = new Boo(56);
             expect(boo).to.have.property("type", "BOO");
@@ -133,7 +133,7 @@ describe("action", () => {
 
     describe("with props", () => {
 
-        it("should generate an action", () => {
+        it("should create an action", () => {
             const Boo = action({ type: "BOO", ...props<{ boo: number }>() });
             const boo = new Boo({ boo: 42 });
             expect(boo).to.have.property("type", "BOO");
@@ -169,21 +169,21 @@ describe("action", () => {
 
     describe("with default props", () => {
 
-        it("should generate an action using the default props", () => {
+        it("should create an action using the default props", () => {
             const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
             const boo = new Boo();
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("boo", 42);
         });
 
-        it("should generate an action using optional props", () => {
+        it("should create an action using optional props", () => {
             const Boo = action({ type: "BOO", ...props<{ boo?: number }>({ boo: 42 }) });
             const boo = new Boo({});
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("boo", 42);
         });
 
-        it("should generate an action using the specified props", () => {
+        it("should create an action using the specified props", () => {
             const Boo = action({ type: "BOO", ...props({ boo: 42 }) });
             const boo = new Boo({ boo: 56 });
             expect(boo).to.have.property("type", "BOO");
@@ -233,14 +233,14 @@ describe("action", () => {
 
     describe("with props using params", () => {
 
-        it("should generate an action that takes a single param", () => {
+        it("should create an action that takes a single param", () => {
             const Boo = action({ type: "BOO", ...params(props<{ boo: number }>(), "boo") });
             const boo = new Boo(42);
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("boo", 42);
         });
 
-        it("should generate an action that takes multiple params", () => {
+        it("should create an action that takes multiple params", () => {
             const Boo = action({ type: "BOO", ...params(props<{ boo: number, doo: string}>(), "boo", "doo") });
             const boo = new Boo([42, "forty-two"]);
             expect(boo).to.have.property("type", "BOO");

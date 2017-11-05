@@ -6,28 +6,12 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Foo, Bar, Baz, Daz, Par, Rar, Woo, Zoo } from "./foobar-spec";
+import { Foo, Bar, Baz, Daz, Par, Rar } from "./foobar-spec";
 import { isType } from "./isType";
 
 describe("isType", () => {
 
-    describe("declared actions", () => {
-
-        it("should return true for matching actions", () => {
-            const action = new Woo({ woo: 42 });
-            expect(isType(action, Woo)).to.be.true;
-            if (isType(action, Woo)) {
-                expect(action.payload.woo).to.equal(42);
-            }
-        });
-
-        it("should return false for non-matching actions", () => {
-            const action = new Zoo();
-            expect(isType(action, Woo)).to.be.false;
-        });
-    });
-
-    describe("generated actions with payloads", () => {
+    describe("actions with payloads", () => {
 
         it("should return true for matching actions", () => {
             const action = new Foo();
@@ -43,7 +27,7 @@ describe("isType", () => {
         });
     });
 
-    describe("generated actions with props", () => {
+    describe("actions with props", () => {
 
         it("should return true for matching actions", () => {
             const action = new Baz();
@@ -59,7 +43,7 @@ describe("isType", () => {
         });
     });
 
-    describe("generated actions with props using params", () => {
+    describe("actions with props using params", () => {
 
         it("should return true for matching actions", () => {
             const action = new Par(42);
