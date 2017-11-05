@@ -7,8 +7,6 @@
 import {
     Action,
     ActionConstructor,
-    ActionWithType,
-    ActionWithTypeConstructor,
     ActionWithPayload,
     ActionWithPayloadConstructor,
     ActionWithDefaultPayloadConstructor,
@@ -19,9 +17,9 @@ import { isType } from "./isType";
 
 export function guard<T extends string, P>(constructor: ActionWithDefaultPayloadConstructor<T, P>): (action: Action) => action is ActionWithPayload<T, P>;
 export function guard<T extends string, P>(constructor: ActionWithPayloadConstructor<T, P>): (action: Action) => action is ActionWithPayload<T, P>;
-export function guard<T extends string, P extends object>(constructor: ActionWithDefaultPropsConstructor<T, P>): (action: Action) => action is ActionWithType<T> & P;
-export function guard<T extends string, P extends object>(constructor: ActionWithPropsConstructor<T, P>): (action: Action) => action is ActionWithType<T> & P;
-export function guard<T extends string>(constructor: ActionWithTypeConstructor<T>): (action: Action) => action is ActionWithType<T>;
-export function guard<T extends string>(constructor: ActionConstructor<T>): (action: Action) => action is Action<T> {
+export function guard<T extends string, P extends object>(constructor: ActionWithDefaultPropsConstructor<T, P>): (action: Action) => action is Action<T> & P;
+export function guard<T extends string, P extends object>(constructor: ActionWithPropsConstructor<T, P>): (action: Action) => action is Action<T> & P;
+export function guard<T extends string>(constructor: ActionConstructor<T>): (action: Action) => action is Action<T>;
+export function guard<T extends string>(constructor: any): (action: Action) => action is Action<T> {
     return (action: Action): action is Action<T> => isType(action, constructor);
 }

@@ -8,8 +8,6 @@
 import {
     Action,
     ActionCreator,
-    ActionWithType,
-    ActionWithTypeCreator,
     ActionWithPayload,
     ActionWithPayloadCreator,
     ActionWithDefaultPayloadCreator,
@@ -35,8 +33,8 @@ export function action<T extends string, P>(options: { readonly type: T, payload
 export function action<T extends string, P>(options: { readonly type: T, payload: P }): ActionWithPayloadCreator<T, P>;
 export function action<T extends string, P extends object>(options: { readonly type: T, props: P, default: true }): ActionWithDefaultPropsCreator<T, P>;
 export function action<T extends string, P extends object>(options: { readonly type: T, props: P }): ActionWithPropsCreator<T, P>;
-export function action<T extends string>(options: { readonly type: T }): ActionWithTypeCreator<T>;
-export function action<T extends string, P>(options: { readonly type: T, payload?: P, props?: P, default?: true }): ActionCreator<T> {
+export function action<T extends string>(options: { readonly type: T }): ActionCreator<T>;
+export function action<T extends string, P>(options: { readonly type: T, payload?: P, props?: P, default?: true }): any {
     const { type } = options;
     if (options.hasOwnProperty("payload")) {
         const { payload: defaultPayload } = options;
@@ -83,12 +81,12 @@ export function action<T extends string, P>(options: { readonly type: T, payload
         }
         return _ActionWithProps;
     }
-    class _ActionWithType {
-        static readonly action: _ActionWithType = undefined!;
+    class _Action {
+        static readonly action: _Action = undefined!;
         static readonly type: T = type;
         readonly type: T = type;
-        static readonly create = () => new _ActionWithType();
+        static readonly create = () => new _Action();
         constructor() {}
     }
-    return _ActionWithType;
+    return _Action;
 }
