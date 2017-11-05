@@ -54,7 +54,7 @@ store.dispatch(new Foo({ foo: 42 }));
 store.dispatch(Foo.create({ foo: 42 }));
 ```
 
-To have the properties added to the action itself - rather than a `payload` propety - use the `props` method instead.
+To have the properties added to the action itself - rather than a `payload` property - use the `props` method instead.
 
 If a value is specifed when calling the `payload` function, that value will be treated as the action's default payload. When a payload default is specified, the payload type can be inferred from the value, so the explicit type can be omitted. If a payload is not specified when the action is created, the default is used:
 
