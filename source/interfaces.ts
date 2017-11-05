@@ -32,10 +32,6 @@ export interface ActionWithPropsConstructor<T extends string, P extends object> 
     new (props?: P): Action<T> & P;
 }
 
-export interface ActionWithParamsConstructor<T extends string, P extends object, V> extends ActionType<T> {
-    new (value: V): Action<T> & P;
-}
-
 export interface ActionCreator<T extends string> extends ActionConstructor<T> {
     action: Action<T>;
     create(): Action<T>;
@@ -61,9 +57,4 @@ export interface ActionWithPropsCreator<T extends string, P extends object> exte
 export interface ActionWithDefaultPropsCreator<T extends string, P extends object> extends ActionWithPropsConstructor<T, P> {
     action: Action<T> & P;
     create(props?: P): Action<T> & P;
-}
-
-export interface ActionWithParamsCreator<T extends string, P extends object, V> extends ActionWithParamsConstructor<T, P, V> {
-    action: Action<T> & P;
-    create(value: V): Action<T> & P;
 }

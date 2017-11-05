@@ -10,14 +10,12 @@ import {
     ActionWithPayload,
     ActionWithPayloadConstructor,
     ActionWithPropsConstructor,
-    ActionWithParamsConstructor,
     AnyAction,
     AnyActionConstructor
 } from "./interfaces";
 
 export function isType<T extends string, P>(action: AnyAction, constructor: ActionWithPayloadConstructor<T, P>): action is ActionWithPayload<T, P>;
 export function isType<T extends string, P extends object>(action: AnyAction, constructor: ActionWithPropsConstructor<T, P>): action is Action<T> & P;
-export function isType<T extends string, P extends object, V>(action: AnyAction, constructor: ActionWithParamsConstructor<T, P, V>): action is Action<T> & P;
 export function isType<T extends string>(action: AnyAction, constructor: ActionConstructor<T>): action is Action<T>;
 export function isType<T extends string>(action: AnyAction, constructor: AnyActionConstructor): boolean {
     return action.type === constructor.type;
