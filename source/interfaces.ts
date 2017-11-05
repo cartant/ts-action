@@ -28,17 +28,14 @@ export interface ActionWithPropsConstructor<T extends string, P extends object> 
 
 export interface ActionCreator<T extends string> extends ActionConstructor<T> {
     action: Action<T>;
-    create(): Action<T>;
 }
 
 export interface ActionWithPayloadCreator<T extends string, P> extends ActionWithPayloadConstructor<T, P> {
     action: ActionWithPayload<T, P>;
-    create(payload: P): ActionWithPayload<T, P>;
 }
 
 export interface ActionWithPropsCreator<T extends string, P extends object> extends ActionWithPropsConstructor<T, P> {
     action: Action<T> & P;
-    create(props: P): Action<T> & P;
 }
 
 export interface AnyAction extends ActionType<string> {}

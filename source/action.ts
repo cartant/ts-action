@@ -33,7 +33,6 @@ export function action<T extends string, P>(options: { readonly type: T, payload
             static readonly action: _ActionWithPayload = undefined!;
             static readonly type: T = type;
             readonly type: T = type;
-            static readonly create = (payload: P) => new _ActionWithPayload(payload);
             constructor(public payload: P) {}
         }
         return _ActionWithPayload;
@@ -42,7 +41,6 @@ export function action<T extends string, P>(options: { readonly type: T, payload
             static readonly action: _ActionWithProps = undefined!;
             static readonly type: T = type;
             readonly type: T = type;
-            static readonly create = (props: P) => new _ActionWithProps(props);
             constructor(props: P) { Object.assign(this, props); }
         }
         return _ActionWithProps;
@@ -51,7 +49,6 @@ export function action<T extends string, P>(options: { readonly type: T, payload
         static readonly action: _Action = undefined!;
         static readonly type: T = type;
         readonly type: T = type;
-        static readonly create = () => new _Action();
         constructor() {}
     }
     return _Action;

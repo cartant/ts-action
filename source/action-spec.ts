@@ -19,13 +19,6 @@ describe("action", () => {
             expect(boo).to.not.have.property("payload");
         });
 
-        it("should support create", () => {
-            const Boo = action({ type: "BOO" });
-            const boo = Boo.create();
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.not.have.property("payload");
-        });
-
         it("should expose the action type", () => {
             const Boo = action({ type: "BOO" });
             type BooAction = typeof Boo.action;
@@ -50,13 +43,6 @@ describe("action", () => {
         it("should create an action", () => {
             const Boo = action({ type: "BOO", ...payload<number>() });
             const boo = new Boo(42);
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("payload", 42);
-        });
-
-        it("should support create", () => {
-            const Boo = action({ type: "BOO", ...payload<number>() });
-            const boo = Boo.create(42);
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("payload", 42);
         });
@@ -86,13 +72,6 @@ describe("action", () => {
         it("should create an action", () => {
             const Boo = action({ type: "BOO", ...props<{ boo: number }>() });
             const boo = new Boo({ boo: 42 });
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 42);
-        });
-
-        it("should support create", () => {
-            const Boo = action({ type: "BOO", ...props<{ boo: number }>() });
-            const boo = Boo.create({ boo: 42 });
             expect(boo).to.have.property("type", "BOO");
             expect(boo).to.have.property("boo", 42);
         });
