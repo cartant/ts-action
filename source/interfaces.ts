@@ -8,14 +8,16 @@ export interface ActionType<T extends string> {
     type: T;
 }
 
-export interface Action<T extends string = string> extends ActionType<T> {}
+export interface Action<T extends string> extends ActionType<T> {}
 
 export interface ActionWithPayload<T extends string, P> extends ActionType<T> {
     payload: P;
 }
 
+export interface AnyAction extends ActionType<string> {}
+
 export interface AnyActionConstructor extends ActionType<string> {
-    new (...args: any[]): Action<string>;
+    new (...args: any[]): AnyAction;
 }
 
 export interface ActionConstructor<T extends string> extends ActionType<T> {
