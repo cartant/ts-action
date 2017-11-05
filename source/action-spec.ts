@@ -6,7 +6,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { action, payload, props } from "./action";
+import { action, params, payload, props } from "./action";
 
 describe("action", () => {
 
@@ -228,6 +228,24 @@ describe("action", () => {
                 }
             };
             narrow(new Boo());
+        });
+    });
+
+    describe("with params", () => {
+
+        it("should generate an action that takes a single param", () => {
+            const Boo = action({ type: "BOO", ...params(props<{ boo: number }>(), "boo") });
+            const boo = new Boo(42);
+            expect(boo).to.have.property("type", "BOO");
+            expect(boo).to.have.property("boo", 42);
+        });
+
+        it("should generate an action that takes multiple params", () => {
+            const Boo = action({ type: "BOO", ...params(props<{ boo: number, doo: string}>(), "boo", "doo") });
+            const boo = new Boo([42, "forty-two"]);
+            expect(boo).to.have.property("type", "BOO");
+            expect(boo).to.have.property("boo", 42);
+            expect(boo).to.have.property("doo", "forty-two");
         });
     });
 });
