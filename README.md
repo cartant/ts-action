@@ -165,7 +165,7 @@ default:
 
 ### empty
 
-`empty` is a helper method indended to be used in constructing the options passed to the `action` method. To declare an action without a payload or properties , call it like this:
+`empty` is a method that's used to construct the options passed to the `action` method. To declare an action without a payload or properties , call it like this:
 
 ```ts
 action({ type: "FOO", ...empty() });
@@ -177,7 +177,7 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 
 ### payload
 
-`payload` is a helper method indended to be used in constructing the options passed to the `action` method. To declare a payload, call it like this, specifying the type:
+`payload` is a method that's used to construct the options passed to the `action` method. To declare a payload, call it like this, specifying the type:
 
 ```ts
 action({ type: "FOO", ...payload<number>() });
@@ -189,7 +189,7 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 
 ### props
 
-`props` is a helper method indended to be used in constructing the options passed to the `action` method. To declare properties, call it like this, specifying the type:
+`props` is a method that's used to construct the options passed to the `action` method. To declare properties, call it like this, specifying the type:
 
 ```ts
 action({ type: "FOO", ...props<{ name: string }>() });
@@ -203,7 +203,7 @@ The `props` method is similar to the `payload` method, but with `props`, the spe
 
 ### base
 
-`base` is a helper method indended to be used in constructing the options passed to the `action` method. To declare a base class with properties, call it like this:
+`base` is a method that's used to construct the options passed to the `action` method. To declare a base class with properties, call it like this:
 
 ```ts
 action({ type: "FOO", ...base(class { constructor(public foo: number ) {} }) });
