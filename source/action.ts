@@ -8,7 +8,7 @@
 export interface Ctor<T> { new(...args: any[]): T; }
 
 /*tslint:disable-next-line:typedef*/
-export function action<T extends string, C extends Ctor<{}>, B>(options: { base: B, BaseCtor: C, readonly type: T }) {
+export function action<T extends string, B, C extends Ctor<{}>>(options: { base: B, BaseCtor: C, readonly type: T }) {
     const { BaseCtor, type } = options;
     class _Action extends BaseCtor {
         static readonly action: _Action & B = undefined!;
