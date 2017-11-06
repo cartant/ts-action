@@ -6,29 +6,58 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { action, payload, props } from "./action";
+import { action, base, empty, payload, props } from "./action";
 
 describe("action", () => {
 
-    describe("with types only", () => {
+    describe("base", () => {
 
         it("should create an action", () => {
-            const Boo = action({ type: "BOO" });
-            const boo = new Boo();
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.not.have.property("payload");
+            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+            const foo = new Foo(42);
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.have.property("foo", 42);
         });
 
         it("should expose the action type", () => {
-            const Boo = action({ type: "BOO" });
-            type BooAction = typeof Boo.action;
-            const boo: BooAction = new Boo();
+            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+            type FooAction = typeof Foo.action;
+            const foo: FooAction = new Foo(42);
         });
 
         it("should narrow the action", () => {
-            const Boo = action({ type: "BOO" });
-            const narrow = (action: typeof Boo.action | { type: "OTHER", payload: number }) => {
-                if (action.type === Boo.type) {
+            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+            const Bar = action({ type: "BAR", ...base(class { constructor(public bar: number) {} }) });
+            const narrow = (action: typeof Foo.action | typeof Bar.action) => {
+                if (action.type === Foo.type) {
+                    expect(action.foo).to.equal(42);
+                } else {
+                    throw new Error("Should not get here.");
+                }
+            };
+            narrow(new Foo(42));
+        });
+    });
+
+    describe("empty", () => {
+
+        it("should create an action", () => {
+            const Foo = action({ type: "FOO", ...empty() });
+            const foo = new Foo();
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.not.have.property("payload");
+        });
+
+        it("should expose the action type", () => {
+            const Foo = action({ type: "FOO", ...empty() });
+            type FooAction = typeof Foo.action;
+            const foo: FooAction = new Foo();
+        });
+
+        it("should narrow the action", () => {
+            const Foo = action({ type: "FOO", ...empty() });
+            const narrow = (action: typeof Foo.action | { type: "OTHER", payload: number }) => {
+                if (action.type === Foo.type) {
                     throw new Error("Should not get here.");
                 } else {
                     expect(action.payload).to.equal(42);
@@ -38,61 +67,61 @@ describe("action", () => {
         });
     });
 
-    describe("with payloads", () => {
+    describe("payload", () => {
 
         it("should create an action", () => {
-            const Boo = action({ type: "BOO", ...payload<number>() });
-            const boo = new Boo(42);
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("payload", 42);
+            const Foo = action({ type: "FOO", ...payload<number>() });
+            const foo = new Foo(42);
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.have.property("payload", 42);
         });
 
         it("should expose the action type", () => {
-            const Boo = action({ type: "BOO", ...payload<number>() });
-            type BooAction = typeof Boo.action;
-            const boo: BooAction = new Boo(42);
+            const Foo = action({ type: "FOO", ...payload<number>() });
+            type FooAction = typeof Foo.action;
+            const foo: FooAction = new Foo(42);
         });
 
         it("should narrow the action", () => {
-            const Boo = action({ type: "BOO", ...payload<{ boo: number }>() });
-            const Coo = action({ type: "COO", ...payload<{ coo: number }>() });
-            const narrow = (action: typeof Boo.action | typeof Coo.action) => {
-                if (action.type === Boo.type) {
-                    expect(action.payload.boo).to.equal(42);
+            const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
+            const Bar = action({ type: "BAR", ...payload<{ bar: number }>() });
+            const narrow = (action: typeof Foo.action | typeof Bar.action) => {
+                if (action.type === Foo.type) {
+                    expect(action.payload.foo).to.equal(42);
                 } else {
                     throw new Error("Should not get here.");
                 }
             };
-            narrow(new Boo({ boo: 42 }));
+            narrow(new Foo({ foo: 42 }));
         });
     });
 
-    describe("with props", () => {
+    describe("props", () => {
 
         it("should create an action", () => {
-            const Boo = action({ type: "BOO", ...props<{ boo: number }>() });
-            const boo = new Boo({ boo: 42 });
-            expect(boo).to.have.property("type", "BOO");
-            expect(boo).to.have.property("boo", 42);
+            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+            const foo = new Foo({ foo: 42 });
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.have.property("foo", 42);
         });
 
         it("should expose the action type", () => {
-            const Boo = action({ type: "BOO", ...props<{ boo: number }>() });
-            type BooAction = typeof Boo.action;
-            const boo: BooAction = new Boo({ boo: 42 });
+            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+            type FooAction = typeof Foo.action;
+            const foo: FooAction = new Foo({ foo: 42 });
         });
 
         it("should narrow the action", () => {
-            const Boo = action({ type: "BOO", ...props<{ boo: number }>() });
-            const Coo = action({ type: "COO", ...props<{ coo: number }>() });
-            const narrow = (action: typeof Boo.action | typeof Coo.action) => {
-                if (action.type === Boo.type) {
-                    expect(action.boo).to.equal(42);
+            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+            const Bar = action({ type: "BAR", ...props<{ bar: number }>() });
+            const narrow = (action: typeof Foo.action | typeof Bar.action) => {
+                if (action.type === Foo.type) {
+                    expect(action.foo).to.equal(42);
                 } else {
                     throw new Error("Should not get here.");
                 }
             };
-            narrow(new Boo({ boo: 42 }));
+            narrow(new Foo({ foo: 42 }));
         });
     });
 });

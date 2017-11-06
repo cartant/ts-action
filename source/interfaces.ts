@@ -4,42 +4,11 @@
  * found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-export interface ActionType<T extends string> {
+export interface Action<T extends string> {
     type: T;
 }
 
-export interface Action<T extends string> extends ActionType<T> {}
-
-export interface ActionWithPayload<T extends string, P> extends ActionType<T> {
-    payload: P;
-}
-
-export interface ActionConstructor<T extends string> extends ActionType<T> {
-    new (): Action<T>;
-}
-
-export interface ActionWithPayloadConstructor<T extends string, P> extends ActionType<T> {
-    new (payload: P): ActionWithPayload<T, P>;
-}
-
-export interface ActionWithPropsConstructor<T extends string, P extends object> extends ActionType<T> {
-    new (props: P): Action<T> & P;
-}
-
-export interface ActionCreator<T extends string> extends ActionConstructor<T> {
-    action: Action<T>;
-}
-
-export interface ActionWithPayloadCreator<T extends string, P> extends ActionWithPayloadConstructor<T, P> {
-    action: ActionWithPayload<T, P>;
-}
-
-export interface ActionWithPropsCreator<T extends string, P extends object> extends ActionWithPropsConstructor<T, P> {
-    action: Action<T> & P;
-}
-
-export interface AnyAction extends ActionType<string> {}
-
-export interface AnyActionConstructor extends ActionType<string> {
-    new (...args: any[]): AnyAction;
+export interface ActionCreator<T extends string, A> {
+    action: A;
+    type: T;
 }

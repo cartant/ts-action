@@ -4,20 +4,9 @@
  * found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import {
-    Action,
-    ActionConstructor,
-    ActionWithPayload,
-    ActionWithPayloadConstructor,
-    ActionWithPropsConstructor,
-    AnyAction,
-    AnyActionConstructor
-} from "./interfaces";
+import { Action, ActionCreator } from "./interfaces";
 import { isType } from "./isType";
 
-export function guard<T extends string, P>(constructor: ActionWithPayloadConstructor<T, P>): (action: AnyAction) => action is ActionWithPayload<T, P>;
-export function guard<T extends string, P extends object>(constructor: ActionWithPropsConstructor<T, P>): (action: AnyAction) => action is Action<T> & P;
-export function guard<T extends string>(constructor: ActionConstructor<T>): (action: AnyAction) => action is Action<T>;
-export function guard<T extends string>(constructor: AnyActionConstructor): (action: AnyAction) => action is Action<T> {
-    return (action: AnyAction): action is Action<T> => isType(action, constructor);
+export function guard<T extends string, A extends Action<string>>(creator: ActionCreator<T, A>): (action: Action<string>) => action is A {
+    return (action: Action<string>): action is A => isType(action, creator);
 }

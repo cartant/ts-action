@@ -6,12 +6,50 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Foo, Bar, Baz, Daz } from "./foobar-spec";
+import { usingBase, usingEmpty, usingPayload, usingProps } from "./foobar-spec";
 import { guard } from "./guard";
 
 describe("guard", () => {
 
-    describe("actions with payloads", () => {
+    describe("base", () => {
+
+        const Bar = usingBase.Bar;
+        const Foo = usingBase.Foo;
+
+        it("should return true for matching actions", () => {
+            const action = new Foo(42);
+            expect(guard(Foo)(action)).to.be.true;
+            if (guard(Foo)(action)) {
+                expect(action.foo).to.equal(42);
+            }
+        });
+
+        it("should return false for non-matching actions", () => {
+            const action = new Bar(56);
+            expect(guard(Foo)(action)).to.be.false;
+        });
+    });
+
+    describe("empty", () => {
+
+        const Bar = usingEmpty.Bar;
+        const Foo = usingEmpty.Foo;
+
+        it("should return true for matching actions", () => {
+            const action = new Foo();
+            expect(guard(Foo)(action)).to.be.true;
+        });
+
+        it("should return false for non-matching actions", () => {
+            const action = new Bar();
+            expect(guard(Foo)(action)).to.be.false;
+        });
+    });
+
+    describe("payload", () => {
+
+        const Bar = usingPayload.Bar;
+        const Foo = usingPayload.Foo;
 
         it("should return true for matching actions", () => {
             const action = new Foo({ foo: 42 });
@@ -27,19 +65,22 @@ describe("guard", () => {
         });
     });
 
-    describe("actions with props", () => {
+    describe("props", () => {
+
+        const Bar = usingProps.Bar;
+        const Foo = usingProps.Foo;
 
         it("should return true for matching actions", () => {
-            const action = new Baz({ baz: 42 });
-            expect(guard(Baz)(action)).to.be.true;
-            if (guard(Baz)(action)) {
-                expect(action.baz).to.equal(42);
+            const action = new Foo({ foo: 42 });
+            expect(guard(Foo)(action)).to.be.true;
+            if (guard(Foo)(action)) {
+                expect(action.foo).to.equal(42);
             }
         });
 
         it("should return false for non-matching actions", () => {
-            const action = new Daz({ daz: 56 });
-            expect(guard(Baz)(action)).to.be.false;
+            const action = new Bar({ bar: 56 });
+            expect(guard(Foo)(action)).to.be.false;
         });
     });
 });

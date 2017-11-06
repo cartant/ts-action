@@ -19,7 +19,7 @@ describe("research", function (): void {
     });
     const expectSnippet = (code: string) => snippet({
         "research.ts": `
-            import { action, payload } from "./source";
+            import { action, empty, payload } from "./source";
             ${code}
         `
     }, compiler).expect("research.ts");
@@ -127,7 +127,7 @@ describe("research", function (): void {
         it("should narrow actions using 'type'", () => {
             expectSnippet(`
                 const A = action({ type: "[research] A", ...payload<{ a: number }>() });
-                const B = action({ type: "[research] B" });
+                const B = action({ type: "[research] B", ...empty() });
                 const narrow = (action: typeof A.action | typeof B.action) => {
                     if (action.type === A.type) {
                         console.log(action.type, action.payload.a);
@@ -141,7 +141,7 @@ describe("research", function (): void {
         it("should narrow actions using 'action.type'", () => {
             expectSnippet(`
                 const A = action({ type: "[research] A", ...payload<{ a: number }>() });
-                const B = action({ type: "[research] B" });
+                const B = action({ type: "[research] B", ...empty() });
                 const narrow = (action: typeof A.action | typeof B.action) => {
                     if (action.type === A.action.type) {
                         console.log(action.type, action.payload.a);
@@ -198,23 +198,6 @@ describe("research", function (): void {
                 const get = <T, N extends string = string>(options: { readonly name: N, t: T }) => options.name;
                 const result = get<number>({ name: "alice", t: 42 });
             `).toInfer("result", "string");
-        });
-    });
-
-    describe("created actions", () => {
-
-        it("should not infer the action type using the prototype", () => {
-            expectSnippet(`
-                const A = action({ type: "[research] A", ...payload<{ a: number }>() });
-                const a: typeof A.prototype = undefined!;
-            `).toInfer("a", "any");
-        });
-
-        it("should infer the action type using the action", () => {
-            expectSnippet(`
-                const A = action({ type: "[research] A", ...payload<{ a: number }>() });
-                const a: typeof A.action = undefined!;
-            `).toInfer("a", `ActionWithPayload<"[research] A", { a: number; }>`);
         });
     });
 

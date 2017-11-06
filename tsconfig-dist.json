@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "inlineSourceMap": true,
-    "outDir": "dist",
-    "target": "es5"
+    "outDir": "dist"
   },
   "exclude": [
     "source/**/*-spec.ts"
