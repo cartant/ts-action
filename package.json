@@ -13,7 +13,6 @@
     "mocha": "^4.0.1",
     "rimraf": "^2.6.2",
     "ts-snippet": "^2.0.0",
-    "tslib": "^1.8.0",
     "tslint": "^5.8.0",
     "typescript": "~2.6.1"
   },

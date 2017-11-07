@@ -615,7 +615,7 @@ ts-snippet@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-2.0.0.tgz#b34300b5de207bffe3f64f3fe6c42d90ccd170f4"
 
-tslib@^1.7.1, tslib@^1.8.0:
+tslib@^1.7.1:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.8.0.tgz#dc604ebad64bcbf696d613da6c954aa0e7ea1eb6"
 

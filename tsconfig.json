@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "declaration": false,
-    "importHelpers": true,
+    "importHelpers": false,
     "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "noImplicitAny": true,
     "outDir": "build",
     "removeComments": true,
