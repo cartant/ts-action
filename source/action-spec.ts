@@ -6,6 +6,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
+import isPlainObject = require("lodash.isplainobject");
 import { action, base, empty, payload, props } from "./action";
 
 describe("action", () => {
@@ -36,6 +37,12 @@ describe("action", () => {
                 }
             };
             narrow(new Foo(42));
+        });
+
+        it("should pass the lodash isPlainObject predicate", () => {
+            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+            const foo = new Foo(42);
+            expect(isPlainObject({ ...foo })).to.be.true;
         });
     });
 

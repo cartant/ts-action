@@ -7,9 +7,11 @@
   "description": "TypeScript action creators for Redux",
   "devDependencies": {
     "@types/chai": "^4.0.0",
+    "@types/lodash.isplainobject": "^4.0.0",
     "@types/mocha": "^2.2.41",
     "chai": "^4.1.2",
     "cpy-cli": "^1.0.1",
+    "lodash.isplainobject": "^4.0.0",
     "mocha": "^4.0.1",
     "rimraf": "^2.6.2",
     "ts-snippet": "^2.0.0",

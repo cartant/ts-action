@@ -14,7 +14,12 @@ export function action<T extends string, B, C extends Ctor<{}>>(options: { base:
         static readonly action: _Action & B = undefined!;
         static readonly type: T = type;
         readonly type: T = type;
-        constructor(...args: any[]) { super(...args); }
+        constructor(...args: any[]) {
+            super(...args);
+            // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
+            // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
+            Object.setPrototypeOf(this, null);
+        }
     }
     return _Action;
 }
