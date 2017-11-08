@@ -72,6 +72,12 @@ describe("action", () => {
             };
             narrow({ type: "OTHER", payload: 42 });
         });
+
+        it("should pass the lodash isPlainObject predicate", () => {
+            const Foo = action({ type: "FOO", ...empty() });
+            const foo = new Foo();
+            expect(isPlainObject({ ...foo })).to.be.true;
+        });
     });
 
     describe("payload", () => {
@@ -101,6 +107,12 @@ describe("action", () => {
             };
             narrow(new Foo({ foo: 42 }));
         });
+
+        it("should pass the lodash isPlainObject predicate", () => {
+            const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
+            const foo = new Foo({ foo: 42 });
+            expect(isPlainObject({ ...foo })).to.be.true;
+        });
     });
 
     describe("props", () => {
@@ -129,6 +141,12 @@ describe("action", () => {
                 }
             };
             narrow(new Foo({ foo: 42 }));
+        });
+
+        it("should pass the lodash isPlainObject predicate", () => {
+            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+            const foo = new Foo({ foo: 42 });
+            expect(isPlainObject({ ...foo })).to.be.true;
         });
     });
 });
