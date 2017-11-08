@@ -206,7 +206,7 @@ The `props` method is similar to the `payload` method, but with `props`, the spe
 `base` is a method that's used to construct the options passed to the `action` method. To declare a base class with properties, call it like this:
 
 ```ts
-action({ type: "FOO", ...base(class { constructor(public foo: number ) {} }) });
+action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
 ```
 
 The `base` method is similar to the `props` method, but with offers more control over property defaults, etc. as the base class is declared inline.
