@@ -65,8 +65,8 @@ import { action, payload } from "ts-action";
 
 const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
 const Bar = action({ type: "BAR", ...payload<{ bar: number }>() });
+const All = union(Foo, Bar);
 
-type All = union(Foo, Bar);
 type State = { foo?: number, bar?: number };
 
 function fooBarReducer(state: State = {}, action: typeof All): State {
