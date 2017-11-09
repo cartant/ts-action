@@ -6,23 +6,12 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Compiler, snippet } from "ts-snippet";
+import { expectSnippet, timeout } from "./snippet-spec";
 
 describe("research", function (): void {
 
     /*tslint:disable-next-line:no-invalid-this*/
-    this.timeout(5000);
-
-    const compiler = new Compiler({
-        moduleResolution: "node",
-        target: "es2015"
-    });
-    const expectSnippet = (code: string) => snippet({
-        "research.ts": `
-            import { action, empty, payload } from "./source";
-            ${code}
-        `
-    }, compiler).expect("research.ts");
+    this.timeout(timeout);
 
     describe("narrowing", () => {
 

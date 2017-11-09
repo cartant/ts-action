@@ -8,8 +8,12 @@
 import { expect } from "chai";
 import isPlainObject = require("lodash.isplainobject");
 import { action, base, empty, payload, props } from "./action";
+import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("action", () => {
+describe("action", function (): void {
+
+    /*tslint:disable-next-line:no-invalid-this*/
+    this.timeout(timeout);
 
     describe("base", () => {
 
@@ -44,6 +48,21 @@ describe("action", () => {
             const foo = new Foo(42);
             expect(isPlainObject(foo)).to.be.true;
         });
+
+        it.skip("should enforce ctor parameters", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+                const foo = new Foo("42");
+            `).toFail();
+        });
+
+        it("should enforce action properties", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+                const foo = new Foo(42);
+                const value: string = foo.foo;
+            `).toFail(/'number' is not assignable to type 'string'/);
+        });
     });
 
     describe("empty", () => {
@@ -77,6 +96,21 @@ describe("action", () => {
             const Foo = action({ type: "FOO", ...empty() });
             const foo = new Foo();
             expect(isPlainObject(foo)).to.be.true;
+        });
+
+        it("should enforce ctor parameters", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...empty() });
+                const foo = new Foo("42");
+            `).toFail();
+        });
+
+        it("should enforce action properties", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...empty() });
+                const foo = new Foo();
+                const value: string = foo.foo;
+            `).toFail(/'foo' does not exist/);
         });
     });
 
@@ -113,6 +147,21 @@ describe("action", () => {
             const foo = new Foo({ foo: 42 });
             expect(isPlainObject(foo)).to.be.true;
         });
+
+        it("should enforce ctor parameters", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...payload<number>() });
+                const foo = new Foo("42");
+            `).toFail();
+        });
+
+        it("should enforce action properties", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...payload<number>() });
+                const foo = new Foo(42);
+                const value: string = foo.payload;
+            `).toFail(/'number' is not assignable to type 'string'/);
+        });
     });
 
     describe("props", () => {
@@ -147,6 +196,21 @@ describe("action", () => {
             const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
             const foo = new Foo({ foo: 42 });
             expect(isPlainObject(foo)).to.be.true;
+        });
+
+        it.skip("should enforce ctor parameters", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+                const foo = new Foo({ foo: "42" });
+            `).toFail();
+        });
+
+        it("should enforce action properties", () => {
+            expectSnippet(`
+                const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+                const foo = new Foo({ foo: 42 });
+                const value: string = foo.foo;
+            `).toFail(/'number' is not assignable to type 'string'/);
         });
     });
 });
