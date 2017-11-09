@@ -293,6 +293,16 @@ describe("research", function (): void {
                 `).toSucceed();
             });
 
+            it("should enforce a narrowed ctor's parameters", () => {
+                expectSnippet(`
+                    ${Person}
+                    ${Tagged}
+                    export interface ParamCtor<P, T> { new(p: P): T; }
+                    const TaggedPerson = Tagged(Person as ParamCtor<string, Person>);
+                    const user = new TaggedPerson(42);
+                `).toFail(/not assignable to parameter of type 'string'/);
+            });
+
             it.skip("should enforce ctor parameters for base", () => {
                 expectSnippet(`
                     const options = base(class { constructor(public foo: number) {} });
