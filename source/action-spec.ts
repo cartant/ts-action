@@ -198,11 +198,11 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
-        it.skip("should enforce ctor parameters", () => {
+        it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
                 const foo = new Foo({ foo: "42" });
-            `).toFail();
+            `).toFail(/'{ foo: string; }' is not assignable to parameter of type '{ foo: number; }'/);
         });
 
         it("should enforce action properties", () => {

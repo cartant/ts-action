@@ -302,11 +302,11 @@ describe("research", function (): void {
                 `).toFail(/not assignable to parameter of type 'number'/);
             });
 
-            it.skip("should enforce ctor parameters for props", () => {
+            it("should enforce ctor parameters for props", () => {
                 expectSnippet(`
                     const options = props<{ foo: number }>();
-                    const instance = new options.BaseCtor("42");
-                `).toFail();
+                    const instance = new options.BaseCtor({ foo: "42" });
+                `).toFail(/'{ foo: string; }' is not assignable to parameter of type '{ foo: number; }'/);
             });
         });
     });
