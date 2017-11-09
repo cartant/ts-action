@@ -242,6 +242,32 @@ describe("research", function (): void {
 
         describe("constructors", () => {
 
+            // These first two tests highlight the problem with the base and
+            // props methods. It's not possible both infer the return type and
+            // enforce the parameters.
+            //
+            // In particular, the problem is that narrowing to a Ctor<T>
+            // prevents the parameters being enforced.
+
+             it("should fail to infer the ctor return type", () => {
+                expectSnippet(`
+                    ${Person}
+                    function infer<C extends Ctor<{}>>(BaseCtor: C) {
+                        return (true as false) || new BaseCtor(...([] as any[]));
+                    }
+                    const value = infer(Person);
+                `).toInfer("value", "{}");
+            });
+
+             it("should fail to enforce the ctor parameters", () => {
+                expectSnippet(`
+                    ${Person}
+                    ${Tagged}
+                    const TaggedPerson = Tagged(Person as Ctor<Person>);
+                    const user = new TaggedPerson(42);
+                `).toSucceed();
+            });
+
             it.skip("should enforce ctor parameters for base", () => {
                 expectSnippet(`
                     const options = base(class { constructor(public foo: number) {} });
