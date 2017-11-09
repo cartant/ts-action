@@ -303,11 +303,11 @@ describe("research", function (): void {
                 `).toFail(/not assignable to parameter of type 'string'/);
             });
 
-            it.skip("should enforce ctor parameters for base", () => {
+            it("should enforce ctor parameters for base", () => {
                 expectSnippet(`
                     const options = base(class { constructor(public foo: number) {} });
                     const instance = new options.BaseCtor("42");
-                `).toFail();
+                `).toFail(/not assignable to parameter of type 'number'/);
             });
 
             it("should enforce ctor parameters for empty", () => {

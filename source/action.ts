@@ -6,6 +6,13 @@
 /*tslint:disable:class-name*/
 
 export interface Ctor<T> { new(...args: any[]): T; }
+export interface Ctor0<T> { new(): T; }
+export interface Ctor1<P1, T> { new(p1: P1): T; }
+export interface Ctor2<P1, P2, T> { new(p1: P1, p2: P2): T; }
+export interface Ctor3<P1, P2, P3, T> { new(p1: P1, p2: P2, p3: P3): T; }
+export interface Ctor4<P1, P2, P3, P4, T> { new(p1: P1, p2: P2, p3: P3, p4: P4): T; }
+export interface Ctor5<P1, P2, P3, P4, P5, T> { new(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5): T; }
+export interface Ctor6<P1, P2, P3, P4, P5, P6, T> { new(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6): T; }
 
 /*tslint:disable-next-line:typedef*/
 export function action<T extends string, B, C extends Ctor<{}>>(options: { base: B, BaseCtor: C, readonly type: T }) {
@@ -25,7 +32,15 @@ export function action<T extends string, B, C extends Ctor<{}>>(options: { base:
 }
 
 /*tslint:disable-next-line:typedef*/
-export function base<B>(BaseCtor: Ctor<B>) {
+export function base<B>(BaseCtor: Ctor0<B>): { base: B, BaseCtor: Ctor0<B> };
+export function base<P1, B>(BaseCtor: Ctor1<P1, B>): { base: B, BaseCtor: Ctor1<P1, B> };
+export function base<P1, P2, B>(BaseCtor: Ctor2<P1, P2, B>): { base: B, BaseCtor: Ctor2<P1, P2, B> };
+export function base<P1, P2, P3, B>(BaseCtor: Ctor3<P1, P2, P3, B>): { base: B, BaseCtor: Ctor3<P1, P2, P3, B> };
+export function base<P1, P2, P3, P4, B>(BaseCtor: Ctor4<P1, P2, P3, P4, B>): { base: B, BaseCtor: Ctor4<P1, P2, P3, P4, B> };
+export function base<P1, P2, P3, P4, P5, B>(BaseCtor: Ctor5<P1, P2, P3, P4, P5, B>): { base: B, BaseCtor: Ctor5<P1, P2, P3, P4, P5, B> };
+export function base<P1, P2, P3, P4, P5, P6, B>(BaseCtor: Ctor6<P1, P2, P3, P4, P5, P6, B>): { base: B, BaseCtor: Ctor6<P1, P2, P3, P4, P5, P6, B> };
+export function base<B>(BaseCtor: Ctor<B>): { base: B, BaseCtor: Ctor<B> };
+export function base<B>(BaseCtor: Ctor<B>): { base: B, BaseCtor: Ctor<B> } {
     const base: B = undefined!;
     return { base, BaseCtor };
 }
@@ -47,6 +62,6 @@ export function payload<P>() {
 /*tslint:disable-next-line:typedef*/
 export function props<P extends object>() {
     const base: P = undefined!;
-    const BaseCtor = class _PropsBase { constructor(props: P) { Object.assign(this, props); } } as { new(props: P): P; };
+    const BaseCtor = class _PropsBase { constructor(props: P) { Object.assign(this, props); } } as {  new(props: P): P; };
     return { base, BaseCtor };
 }

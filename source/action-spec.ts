@@ -49,19 +49,58 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
-        it.skip("should enforce ctor parameters", () => {
-            expectSnippet(`
-                const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
-                const foo = new Foo("42");
-            `).toFail();
+        describe("0 parameters", () => {
+
+            it("should enforce ctor parameters", () => {
+                expectSnippet(`
+                    const Foo = action({ type: "FOO", ...base(class { constructor() {} }) });
+                    const foo = new Foo("42");
+                `).toFail(/Expected 0 arguments/);
+            });
+
+            it("should enforce action properties", () => {
+                expectSnippet(`
+                    const Foo = action({ type: "FOO", ...base(class { constructor() {} }) });
+                    const foo = new Foo();
+                    const value: string = foo.foo;
+                `).toFail(/'foo' does not exist/);
+            });
         });
 
-        it("should enforce action properties", () => {
-            expectSnippet(`
-                const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
-                const foo = new Foo(42);
-                const value: string = foo.foo;
-            `).toFail(/'number' is not assignable to type 'string'/);
+        describe("1 parameter", () => {
+
+            it("should enforce ctor parameters", () => {
+                expectSnippet(`
+                    const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+                    const foo = new Foo("42");
+                `).toFail(/not assignable to parameter of type 'number'/);
+            });
+
+            it("should enforce action properties", () => {
+                expectSnippet(`
+                    const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+                    const foo = new Foo(42);
+                    const value: string = foo.foo;
+                `).toFail(/'number' is not assignable to type 'string'/);
+            });
+        });
+
+        describe("2 parameters", () => {
+
+            it("should enforce ctor parameters", () => {
+                expectSnippet(`
+                    const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number, public bar: number) {} }) });
+                    const foo = new Foo(42);
+                `).toFail(/Expected 2 arguments/);
+            });
+
+            it("should enforce action properties", () => {
+                expectSnippet(`
+                    const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number, public bar: number) {} }) });
+                    const foo = new Foo(42, 56);
+                    const value: string = foo.bar;
+                `).toFail(/'number' is not assignable to type 'string'/);
+            });
         });
     });
 
