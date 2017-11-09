@@ -10,7 +10,7 @@ export interface Ctor<T> { new(...args: any[]): T; }
 /*tslint:disable-next-line:typedef*/
 export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }) {
     const { BaseCtor, type } = options;
-    class _Action extends BaseCtor {
+    return class extends BaseCtor {
         static readonly type: T = type;
         readonly type: T = type;
         constructor(...args: any[]) {
@@ -19,8 +19,7 @@ export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor
             // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
             Object.setPrototypeOf(this, null);
         }
-    }
-    return _Action;
+    };
 }
 
 /*tslint:disable-next-line:typedef*/

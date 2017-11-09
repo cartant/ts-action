@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "inlineSourceMap": true,
+    "declaration": true,
+    "inlineSourceMap": false,
     "outDir": "dist"
   },
   "exclude": [
