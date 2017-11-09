@@ -272,6 +272,18 @@ describe("research", function (): void {
                 `).toInfer("value", "{}");
             });
 
+            it("should infer a narrowed ctor's return type", () => {
+                expectSnippet(`
+                    ${Person}
+                    export interface ParamCtor<P, T> { new(p: P): T; }
+                    function infer<P, T>(BaseCtor: ParamCtor<P, T>) {
+                        const p: P = undefined!;
+                        return (true as false) || new BaseCtor(p);
+                    }
+                    const value = infer(Person);
+                `).toInfer("value", "Person");
+            });
+
             it("should fail to enforce the ctor parameters", () => {
                 expectSnippet(`
                     ${Person}
