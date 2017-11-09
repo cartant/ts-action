@@ -66,10 +66,10 @@ import { action, payload } from "ts-action";
 const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
 const Bar = action({ type: "BAR", ...payload<{ bar: number }>() });
 
-type FooBarActions = typeof Foo.action | typeof Bar.action;
+type All = union(Foo, Bar);
 type State = { foo?: number, bar?: number };
 
-function fooBarReducer(state: State = {}, action: FooBarActions): State {
+function fooBarReducer(state: State = {}, action: typeof All): State {
   switch (action.type) {
   case Foo.type:
     return { ...state, foo: action.payload.foo };
@@ -107,6 +107,7 @@ function fooBarReducer(state: State = {}, action: Action): State {
 * [payload](#payload)
 * [props](#props)
 * [base](#base)
+* [union](#union)
 * [isType](#isType)
 * [guard](#guard)
 
@@ -146,17 +147,11 @@ let foo: string = "FOO";
 const Foo = action({ type: foo, ...empty() });
 ```
 
-The TypeScript type of the created actions can be obtained using the creator's static `action` property:
-
-```ts
-type FooAction = typeof Foo.action;
-```
-
 And the `type` option passed to the `action` method can be obtained using the creator's static `type` property:
 
 ```ts
 switch (action.type) {
-case Foo.action:
+case Foo.type:
   return { ...state, foo: action.payload.foo };
 default:
   return state;
@@ -212,6 +207,26 @@ action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
 ```
 
 The `base` method is similar to the `props` method, but with offers more control over property defaults, etc. as the base class is declared inline.
+
+<a name="union"></a>
+
+### union
+
+The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed two or more action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
+
+```ts
+const All = union(Foo, Bar);
+function reducer(state: any = [], action: typeof All): any {
+    switch (action.type) {
+    case Foo.type:
+        return ... // Here the action will be narrowed to Foo.
+    case Bar.type:
+        return ... // Here the action will be narrowed to Bar.
+    default:
+        return state;
+    }
+}
+```
 
 <a name="isType"></a>
 
