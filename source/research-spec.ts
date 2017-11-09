@@ -249,6 +249,12 @@ describe("research", function (): void {
             // In particular, the problem is that narrowing to a Ctor<T>
             // prevents the parameters being enforced.
 
+            // Also, it's not easy to solve the problem for props alone by
+            // asserting an intersection type of _Action & B for the return
+            // value (of the action method) because of this issue:
+            //
+            // https://github.com/Microsoft/TypeScript/issues/17388
+
              it("should fail to infer the ctor return type", () => {
                 expectSnippet(`
                     ${Person}
