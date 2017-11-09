@@ -4,7 +4,7 @@
  * found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { action, base, empty, payload, props } from "./action";
+import { action, base, empty, payload, props } from "../dist/action";
 
 export const usingBase = {
     Bar: action({ type: "[foobar] BAR", ...base(class { constructor(public bar: number) {} }) }),

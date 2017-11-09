@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import isPlainObject = require("lodash.isplainobject");
-import { action, base, empty, payload, props, union } from "./action";
+import { action, base, empty, payload, props, union } from "../dist/action";
 import { expectSnippet, timeout } from "./snippet-spec";
 
 describe("action", function (): void {
