@@ -102,7 +102,7 @@ describe("action", function (): void {
             expectSnippet(`
                 const Foo = action({ type: "FOO", ...empty() });
                 const foo = new Foo("42");
-            `).toFail();
+            `).toFail(/Expected 0 arguments/);
         });
 
         it("should enforce action properties", () => {
@@ -152,7 +152,7 @@ describe("action", function (): void {
             expectSnippet(`
                 const Foo = action({ type: "FOO", ...payload<number>() });
                 const foo = new Foo("42");
-            `).toFail();
+            `).toFail(/not assignable to parameter of type 'number'/);
         });
 
         it("should enforce action properties", () => {
