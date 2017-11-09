@@ -255,7 +255,14 @@ describe("research", function (): void {
             //
             // https://github.com/Microsoft/TypeScript/issues/17388
 
-             it("should fail to infer the ctor return type", () => {
+            it("should infer using fudged args", () => {
+                expectSnippet(`
+                    ${Person}
+                    const value = (true as false) || new Person(...([] as any[]));
+                `).toInfer("value", "Person");
+            });
+
+            it("should fail to infer the ctor return type", () => {
                 expectSnippet(`
                     ${Person}
                     function infer<C extends Ctor<{}>>(BaseCtor: C) {
@@ -265,7 +272,7 @@ describe("research", function (): void {
                 `).toInfer("value", "{}");
             });
 
-             it("should fail to enforce the ctor parameters", () => {
+            it("should fail to enforce the ctor parameters", () => {
                 expectSnippet(`
                     ${Person}
                     ${Tagged}
