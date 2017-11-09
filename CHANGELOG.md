@@ -3,7 +3,7 @@
 
 ### Bug Fixes
 
-* **action**: Set `prototype` to `null` for React compatibility. ([9925f79](https://github.com/cartant/ts-action/commit/9925f79))
+* **action**: Set `prototype` to `null` for `reactjs/redux` compatibility. ([9925f79](https://github.com/cartant/ts-action/commit/9925f79))
 
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/cartant/ts-action/compare/v2.0.0...v2.0.1) (2017-11-07)
