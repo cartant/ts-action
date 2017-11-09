@@ -239,5 +239,36 @@ describe("research", function (): void {
                 const user = new TaggedPerson(42);
             `).toFail(/not assignable to parameter of type 'string'/);
         });
+
+        describe("constructors", () => {
+
+            it.skip("should enforce ctor parameters for base", () => {
+                expectSnippet(`
+                    const options = base(class { constructor(public foo: number) {} });
+                    const instance = new options.BaseCtor("42");
+                `).toFail();
+            });
+
+            it("should enforce ctor parameters for empty", () => {
+                expectSnippet(`
+                    const options = empty();
+                    const instance = new options.BaseCtor("42");
+                `).toFail(/Expected 0 arguments/);
+            });
+
+            it("should enforce ctor parameters for payload", () => {
+                expectSnippet(`
+                    const options = payload<number>();
+                    const instance = new options.BaseCtor("42");
+                `).toFail(/not assignable to parameter of type 'number'/);
+            });
+
+            it.skip("should enforce ctor parameters for props", () => {
+                expectSnippet(`
+                    const options = props<{ foo: number }>();
+                    const instance = new options.BaseCtor("42");
+                `).toFail();
+            });
+        });
     });
 });
