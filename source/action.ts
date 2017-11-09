@@ -6,7 +6,6 @@
 /*tslint:disable:class-name*/
 
 export interface Ctor<T> { new(...args: any[]): T; }
-export interface PropsCtor<T> { new(props: T): T; }
 
 /*tslint:disable-next-line:typedef*/
 export function action<T extends string, B, C extends Ctor<{}>>(options: { base: B, BaseCtor: C, readonly type: T }) {
@@ -48,6 +47,6 @@ export function payload<P>() {
 /*tslint:disable-next-line:typedef*/
 export function props<P extends object>() {
     const base: P = undefined!;
-    const BaseCtor = class _PropsBase { constructor(props: P) { Object.assign(this, props); } } as PropsCtor<P>;
+    const BaseCtor = class _PropsBase { constructor(props: P) { Object.assign(this, props); } } as { new(props: P): P; };
     return { base, BaseCtor };
 }
