@@ -1,3 +1,10 @@
+<a name="3.0.0"></a>
+## [3.0.0](https://github.com/cartant/ts-action/compare/v2.0.3...v3.0.0) (2017-11-09)
+
+### Breaking Changes
+
+**action**: Removed the static `action` property from action creators. Instead, there's a `union` method for creating discriminated unions from action creators. ([22067fb](https://github.com/cartant/ts-action/commit/22067fb))
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/cartant/ts-action/compare/v2.0.2...v2.0.3) (2017-11-09)
 
