@@ -9,6 +9,6 @@ export interface Action<T extends string> {
 }
 
 export interface ActionCreator<T extends string, A extends Action<string>> {
-    action: A;
     type: T;
+    new(...args: any[]): A;
 }
