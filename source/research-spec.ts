@@ -200,4 +200,44 @@ describe("research", function (): void {
             `).toFail(/type literal property cannot have an initializer/);
         });
     });
+
+    describe("mixins", () => {
+
+        // https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#support-for-mix-in-classes
+
+        const Person = `
+            class Person {
+                constructor(public name: string) {}
+            }
+        `;
+        const Tagged = `
+            function Tagged<T extends Ctor<{}>>(Base: T) {
+                return class extends Base {
+                    tag: string;
+                    constructor(...args: any[]) {
+                        super(...args);
+                        this.tag = "";
+                    }
+                }
+            }
+        `;
+
+        it("should extend a class", () => {
+            expectSnippet(`
+                ${Person}
+                ${Tagged}
+                const TaggedPerson = Tagged(Person);
+                const user = new TaggedPerson("alice");
+            `).toSucceed();
+        });
+
+        it("should enforce ctor parameters", () => {
+            expectSnippet(`
+                ${Person}
+                ${Tagged}
+                const TaggedPerson = Tagged(Person);
+                const user = new TaggedPerson(42);
+            `).toFail(/not assignable to parameter of type 'string'/);
+        });
+    });
 });
