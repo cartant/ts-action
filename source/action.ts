@@ -11,7 +11,7 @@ export interface Ctor<T> { new(...args: any[]): T; }
 export function action<T extends string, B, C extends Ctor<{}>>(options: { base: B, BaseCtor: C, readonly type: T }) {
     const { BaseCtor, type } = options;
     class _Action extends BaseCtor {
-        static readonly action: _Action & B = undefined!;
+        static readonly action: { type: T } & B = undefined!;
         static readonly type: T = type;
         readonly type: T = type;
         constructor(...args: any[]) {
