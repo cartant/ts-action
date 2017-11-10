@@ -1,9 +1,16 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/cartant/ts-action/compare/v3.0.0...v3.0.1) (2017-11-10)
+
+### Changes
+
+* The distribution now includes `.d.ts` files rather than `.ts` files. ([b5ebbbf](https://github.com/cartant/ts-action/commit/b5ebbbf))
+
 <a name="3.0.0"></a>
 ## [3.0.0](https://github.com/cartant/ts-action/compare/v2.0.3...v3.0.0) (2017-11-09)
 
 ### Breaking Changes
 
-**action**: Removed the static `action` property from action creators. Instead, there's a `union` method for creating discriminated unions from action creators. ([22067fb](https://github.com/cartant/ts-action/commit/22067fb))
+* **action**: Removed the static `action` property from action creators. Instead, there's a `union` method for creating discriminated unions from action creators. ([22067fb](https://github.com/cartant/ts-action/commit/22067fb))
 
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/cartant/ts-action/compare/v2.0.2...v2.0.3) (2017-11-09)
