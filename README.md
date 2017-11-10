@@ -32,7 +32,7 @@ Action creators are declared using the `action` method:
 
 ```ts
 import { action, empty } from "ts-action";
-const Foo = action({ type: "FOO", ...empty() });
+const Foo = action("FOO", empty());
 ```
 
 Actions are created using the action creator as a class:
@@ -45,7 +45,7 @@ For actions with payloads, the payload type is specified using the `payload` met
 
 ```ts
 import { action, payload } from "ts-action";
-const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
+const Foo = action("FOO", payload<{ foo: number }>());
 ```
 
 and the payload value is specified when creating the action:
@@ -63,8 +63,8 @@ The action types can be combined into a discriminated union and the action can b
 ```ts
 import { action, payload } from "ts-action";
 
-const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
-const Bar = action({ type: "BAR", ...payload<{ bar: number }>() });
+const Foo = action("FOO", payload<{ foo: number }>());
+const Bar = action("BAR", payload<{ bar: number }>());
 const All = union(Foo, Bar);
 
 type State = { foo?: number, bar?: number };
@@ -86,8 +86,8 @@ Or, the package's `isType` method can be used to narrow the action's type using 
 ```ts
 import { action, isType, payload } from "ts-action";
 
-const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
-const Bar = action({ type: "BAR", ...payload<{ bar: number }>() });
+const Foo = action("FOO", payload<{ foo: number }>());
+const Bar = action("BAR", payload<{ bar: number }>());
 
 function fooBarReducer(state: State = {}, action: Action): State {
   if (isType(action, Foo)) {
@@ -118,7 +118,7 @@ function fooBarReducer(state: State = {}, action: Action): State {
 The `action` method returns an action creator:
 
 ```ts
-const Foo = action({ type: "FOO", ...empty() });
+const Foo = action("FOO", empty());
 ```
 
 Action creators are classes and actions are be created using `new`:
@@ -130,21 +130,21 @@ store.dispatch(new Foo());
 The `type` option passed to the `action` method will be assigned to the created action's `type` property. The value passed should be either a literal or a literal type. That is, this is fine:
 
 ```ts
-const Foo = action({ type: "FOO", ...empty() });
+const Foo = action("FOO", empty());
 ```
 
 And this is fine, too:
 
 ```ts
 const FOO = "FOO"; // Equivalent to: const FOO: "FOO" = "FOO";
-const Foo = action({ type: FOO, ...empty() });
+const Foo = action(FOO, empty());
 ```
 
 However, with the following, TypeScript will be unable to narrow the action in a discriminated union:
 
 ```ts
 let foo: string = "FOO";
-const Foo = action({ type: foo, ...empty() });
+const Foo = action(foo, empty());
 ```
 
 And the `type` option passed to the `action` method can be obtained using the creator's static `type` property:
@@ -165,7 +165,7 @@ default:
 `empty` is a method that's used to construct the options passed to the `action` method. To declare an action without a payload or properties , call it like this:
 
 ```ts
-action({ type: "FOO", ...empty() });
+action("FOO", empty());
 ```
 
 Note that the spread syntax is used, as `payload` merges more that one option.
@@ -177,7 +177,7 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 `payload` is a method that's used to construct the options passed to the `action` method. To declare a payload, call it like this, specifying the type:
 
 ```ts
-action({ type: "FOO", ...payload<number>() });
+action("FOO", payload<number>());
 ```
 
 Note that the spread syntax is used, as `payload` merges more that one option.
@@ -189,7 +189,7 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 `props` is a method that's used to construct the options passed to the `action` method. To declare properties, call it like this, specifying the type:
 
 ```ts
-action({ type: "FOO", ...props<{ name: string }>() });
+action("FOO", props<{ name: string }>());
 ```
 
 Note that the spread syntax is used, as `props` merges more that one option.
@@ -203,7 +203,7 @@ The `props` method is similar to the `payload` method, but with `props`, the spe
 `base` is a method that's used to construct the options passed to the `action` method. To declare a base class with properties, call it like this:
 
 ```ts
-action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+action("FOO", base(class { constructor(public foo: number) {} }));
 ```
 
 The `base` method is similar to the `props` method, but with offers more control over property defaults, etc. as the base class is declared inline.

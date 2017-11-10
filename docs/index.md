@@ -3,9 +3,9 @@
 Declare Redux action creators like this:
 
 ```ts
-export const Search = action({ type: "[Books] Search", ...payload<string>() });
-export const SearchComplete = action({ type: "[Books] Search Complete", ...payload<Book[]>() });
-export const SearchError = action({ type: "[Books] Search Error", ...payload<string>() });
+export const Search = action("[Books] Search", payload<string>());
+export const SearchComplete = action("[Books] Search Complete", payload<Book[]>());
+export const SearchError = action("[Books] Search Error", payload<string>());
 ```
 
 Instead of like this:

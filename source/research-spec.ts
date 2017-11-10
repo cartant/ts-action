@@ -115,8 +115,8 @@ describe("research", function (): void {
 
         it("should narrow actions using 'type'", () => {
             expectSnippet(`
-                const A = action({ type: "[research] A", ...payload<{ a: number }>() });
-                const B = action({ type: "[research] B", ...empty() });
+                const A = action("[research] A", payload<{ a: number }>());
+                const B = action("[research] B", empty());
                 const All = union(A, B);
                 const narrow = (action: typeof All) => {
                     if (action.type === A.type) {

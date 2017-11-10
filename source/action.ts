@@ -6,10 +6,14 @@
 /*tslint:disable:class-name*/
 
 export interface Ctor<T> { new(...args: any[]): T; }
+export type ActionCtor<T, C> = { readonly type: T; new(...args: any[]): { readonly type: T; }; } & C;
 
 /*tslint:disable-next-line:typedef*/
-export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }) {
-    const { BaseCtor, type } = options;
+export function action<T extends string, C extends Ctor<{}>>(t: T, options: { BaseCtor: C }): ActionCtor<T, C>;
+export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }): ActionCtor<T, C>;
+export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | { BaseCtor: C, readonly type: T }, options?: { BaseCtor: C }): ActionCtor<T, C> {
+    const type: T = options ? typeOrOptions as T : (typeOrOptions as { type: T }).type;
+    const BaseCtor: C = options ? options.BaseCtor : (typeOrOptions as { BaseCtor: C }).BaseCtor;
     return class extends BaseCtor {
         static readonly type: T = type;
         readonly type: T = type;

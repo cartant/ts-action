@@ -18,6 +18,13 @@ describe("action", function (): void {
     describe("base", () => {
 
         it("should create an action", () => {
+            const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
+            const foo = new Foo(42);
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.have.property("foo", 42);
+        });
+
+        it("should support combined options", () => {
             const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
             const foo = new Foo(42);
             expect(foo).to.have.property("type", "FOO");
@@ -25,8 +32,8 @@ describe("action", function (): void {
         });
 
         it("should narrow the action", () => {
-            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
-            const Bar = action({ type: "BAR", ...base(class { constructor(public bar: number) {} }) });
+            const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
+            const Bar = action("BAR", base(class { constructor(public bar: number) {} }));
             const All = union(Foo, Bar);
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
@@ -39,21 +46,21 @@ describe("action", function (): void {
         });
 
         it("should pass the lodash isPlainObject predicate", () => {
-            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+            const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
             const foo = new Foo(42);
             expect(isPlainObject(foo)).to.be.true;
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+                const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
                 const foo = new Foo("42");
             `).toFail(/not assignable to parameter of type 'number'/);
         });
 
         it("should enforce action properties", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
+                const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
                 const foo = new Foo(42);
                 const value: string = foo.foo;
             `).toFail(/'number' is not assignable to type 'string'/);
@@ -63,6 +70,13 @@ describe("action", function (): void {
     describe("empty", () => {
 
         it("should create an action", () => {
+            const Foo = action("FOO", empty());
+            const foo = new Foo();
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.not.have.property("payload");
+        });
+
+        it("should support combined options", () => {
             const Foo = action({ type: "FOO", ...empty() });
             const foo = new Foo();
             expect(foo).to.have.property("type", "FOO");
@@ -70,8 +84,8 @@ describe("action", function (): void {
         });
 
         it("should narrow the action", () => {
-            const Foo = action({ type: "FOO", ...empty() });
-            const Bar = action({ type: "BAR", ...base(class { constructor(public bar: number) {} }) });
+            const Foo = action("FOO", empty());
+            const Bar = action("BAR", base(class { constructor(public bar: number) {} }));
             const All = union(Foo, Bar);
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
@@ -84,21 +98,21 @@ describe("action", function (): void {
         });
 
         it("should pass the lodash isPlainObject predicate", () => {
-            const Foo = action({ type: "FOO", ...empty() });
+            const Foo = action("FOO", empty());
             const foo = new Foo();
             expect(isPlainObject(foo)).to.be.true;
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...empty() });
+                const Foo = action("FOO", empty());
                 const foo = new Foo("42");
             `).toFail(/Expected 0 arguments/);
         });
 
         it("should enforce action properties", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...empty() });
+                const Foo = action("FOO", empty());
                 const foo = new Foo();
                 const value: string = foo.foo;
             `).toFail(/'foo' does not exist/);
@@ -108,6 +122,13 @@ describe("action", function (): void {
     describe("payload", () => {
 
         it("should create an action", () => {
+            const Foo = action("FOO", payload<number>());
+            const foo = new Foo(42);
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.have.property("payload", 42);
+        });
+
+        it("should support combined options", () => {
             const Foo = action({ type: "FOO", ...payload<number>() });
             const foo = new Foo(42);
             expect(foo).to.have.property("type", "FOO");
@@ -115,8 +136,8 @@ describe("action", function (): void {
         });
 
         it("should narrow the action", () => {
-            const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
-            const Bar = action({ type: "BAR", ...payload<{ bar: number }>() });
+            const Foo = action("FOO", payload<{ foo: number }>());
+            const Bar = action("BAR", payload<{ bar: number }>());
             const All = union(Foo, Bar);
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
@@ -129,21 +150,21 @@ describe("action", function (): void {
         });
 
         it("should pass the lodash isPlainObject predicate", () => {
-            const Foo = action({ type: "FOO", ...payload<{ foo: number }>() });
+            const Foo = action("FOO", payload<{ foo: number }>());
             const foo = new Foo({ foo: 42 });
             expect(isPlainObject(foo)).to.be.true;
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...payload<number>() });
+                const Foo = action("FOO", payload<number>());
                 const foo = new Foo("42");
             `).toFail(/not assignable to parameter of type 'number'/);
         });
 
         it("should enforce action properties", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...payload<number>() });
+                const Foo = action("FOO", payload<number>());
                 const foo = new Foo(42);
                 const value: string = foo.payload;
             `).toFail(/'number' is not assignable to type 'string'/);
@@ -153,6 +174,13 @@ describe("action", function (): void {
     describe("props", () => {
 
         it("should create an action", () => {
+            const Foo = action("FOO", props<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            expect(foo).to.have.property("type", "FOO");
+            expect(foo).to.have.property("foo", 42);
+        });
+
+        it("should support combined options", () => {
             const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
             const foo = new Foo({ foo: 42 });
             expect(foo).to.have.property("type", "FOO");
@@ -160,8 +188,8 @@ describe("action", function (): void {
         });
 
         it("should narrow the action", () => {
-            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
-            const Bar = action({ type: "BAR", ...props<{ bar: number }>() });
+            const Foo = action("FOO", props<{ foo: number }>());
+            const Bar = action("BAR", props<{ bar: number }>());
             const All = union(Foo, Bar);
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
@@ -174,21 +202,21 @@ describe("action", function (): void {
         });
 
         it("should pass the lodash isPlainObject predicate", () => {
-            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+            const Foo = action("FOO", props<{ foo: number }>());
             const foo = new Foo({ foo: 42 });
             expect(isPlainObject(foo)).to.be.true;
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+                const Foo = action("FOO", props<{ foo: number }>());
                 const foo = new Foo({ foo: "42" });
             `).toFail(/'{ foo: string; }' is not assignable to parameter of type '{ foo: number; }'/);
         });
 
         it("should enforce action properties", () => {
             expectSnippet(`
-                const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
+                const Foo = action("FOO", props<{ foo: number }>());
                 const foo = new Foo({ foo: 42 });
                 const value: string = foo.foo;
             `).toFail(/'number' is not assignable to type 'string'/);
