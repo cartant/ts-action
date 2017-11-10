@@ -167,7 +167,8 @@ default:
 `empty` is a method that's used to construct the options passed to the `action` method. To declare an action without a payload or properties , call it like this:
 
 ```ts
-action("FOO", empty());
+const Foo = action("FOO", empty());
+const foo = new Foo();
 ```
 
 Note that the spread syntax is used, as `payload` merges more that one option.
@@ -176,10 +177,12 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 
 ### payload
 
-`payload` is a method that's used to construct the options passed to the `action` method. To declare a payload, call it like this, specifying the type:
+`payload` is a method that's used to construct the options passed to the `action` method. To declare action properties within a `payload` property, call it like this:
 
 ```ts
-action("FOO", payload<number>());
+const Foo = action("FOO", payload<{ name: string }>());
+const foo = new Foo({ name: "alice" });
+console.log(foo.payload.name);
 ```
 
 Note that the spread syntax is used, as `payload` merges more that one option.
@@ -188,10 +191,12 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 
 ### props
 
-`props` is a method that's used to construct the options passed to the `action` method. To declare properties, call it like this, specifying the type:
+`props` is a method that's used to construct the options passed to the `action` method. To declare action properties at the same level as the `type` property, call it like this:
 
 ```ts
-action("FOO", props<{ name: string }>());
+const Foo = action("FOO", props<{ name: string }>());
+const foo = new Foo({ name: "alice" });
+console.log(foo.name);
 ```
 
 Note that the spread syntax is used, as `props` merges more that one option.
@@ -205,7 +210,9 @@ The `props` method is similar to the `payload` method, but with `props`, the spe
 `base` is a method that's used to construct the options passed to the `action` method. To declare a base class with properties, call it like this:
 
 ```ts
-action("FOO", base(class { constructor(public foo: number) {} }));
+const Foo = action("FOO", base(class { constructor(public name: string) {} }));
+const foo = new Foo("alice");
+console.log(foo.name);
 ```
 
 The `base` method is similar to the `props` method, but with offers more control over property defaults, etc. as the base class is declared inline.
