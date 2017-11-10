@@ -77,6 +77,13 @@ describe("action", function (): void {
 
     describe("empty", () => {
 
+        it("should default to empty", () => {
+            const Foo = action("FOO");
+            const foo = new Foo();
+            expect(foo).to.have.property("type", "FOO");
+            expect(Object.keys(foo)).to.deep.equal(["type"]);
+        });
+
         it("should create an action", () => {
             const Foo = action("FOO", empty());
             const foo = new Foo();
@@ -88,7 +95,7 @@ describe("action", function (): void {
             const Foo = action({ type: "FOO", ...empty() });
             const foo = new Foo();
             expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.not.have.property("payload");
+            expect(Object.keys(foo)).to.deep.equal(["type"]);
         });
 
         it("should narrow the action", () => {

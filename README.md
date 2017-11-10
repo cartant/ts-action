@@ -31,8 +31,8 @@ npm install ts-action --save-dev
 Action creators are declared using the `action` method:
 
 ```ts
-import { action, empty } from "ts-action";
-const Foo = action("FOO", empty());
+import { action } from "ts-action";
+const Foo = action("FOO");
 ```
 
 Actions are created using the action creator as a class:
@@ -120,7 +120,7 @@ function fooBarReducer(state: State = {}, action: Action): State {
 The `action` method returns an action creator:
 
 ```ts
-const Foo = action("FOO", empty());
+const Foo = action("FOO");
 ```
 
 Action creators are classes and actions are be created using `new`:
@@ -132,21 +132,21 @@ store.dispatch(new Foo());
 The `type` option passed to the `action` method will be assigned to the created action's `type` property. The value passed should be either a literal or a literal type. That is, this is fine:
 
 ```ts
-const Foo = action("FOO", empty());
+const Foo = action("FOO");
 ```
 
 And this is fine, too:
 
 ```ts
 const FOO = "FOO"; // Equivalent to: const FOO: "FOO" = "FOO";
-const Foo = action(FOO, empty());
+const Foo = action(FOO);
 ```
 
 However, with the following, TypeScript will be unable to narrow the action in a discriminated union:
 
 ```ts
 let foo: string = "FOO";
-const Foo = action(foo, empty());
+const Foo = action(foo);
 ```
 
 And the `type` option passed to the `action` method can be obtained using the creator's static `type` property:
@@ -172,7 +172,13 @@ const foo = new Foo();
 console.log(foo); // { type: "FOO" }
 ```
 
-Note that the spread syntax is used, as `payload` merges more that one option.
+If only a `type` is passed to the `action` call, an empty action is created by default:
+
+```ts
+const Foo = action("FOO");
+const foo = new Foo();
+console.log(foo); // { type: "FOO" }
+```
 
 <a name="payload"></a>
 
@@ -186,8 +192,6 @@ const foo = new Foo({ name: "alice" });
 console.log(foo); // { type: "FOO", payload: { name: "alice" } }
 ```
 
-Note that the spread syntax is used, as `payload` merges more that one option.
-
 <a name="props"></a>
 
 ### props
@@ -199,8 +203,6 @@ const Foo = action("FOO", props<{ name: string }>());
 const foo = new Foo({ name: "alice" });
 console.log(foo); // { type: "FOO", name: "alice" }
 ```
-
-Note that the spread syntax is used, as `props` merges more that one option.
 
 The `props` method is similar to the `payload` method, but with `props`, the specified properties are added to the action itself - rather than a `payload` property.
 

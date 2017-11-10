@@ -5,13 +5,28 @@
  */
 /*tslint:disable:class-name*/
 
-export interface Ctor<T> { new(...args: any[]): T; }
-export type ActionCtor<T, C> = { readonly type: T; new(...args: any[]): { readonly type: T; }; } & C;
+export interface Ctor<T> { new (...args: any[]): T; }
+export type ActionCtor<T, C> = { readonly type: T; new (...args: any[]): { readonly type: T; }; } & C;
 
 /*tslint:disable-next-line:typedef*/
+export function action<T extends string>(t: T): ActionCtor<T, { new (): {}; }>;
 export function action<T extends string, C extends Ctor<{}>>(t: T, options: { BaseCtor: C }): ActionCtor<T, C>;
 export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }): ActionCtor<T, C>;
-export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | { BaseCtor: C, readonly type: T }, options?: { BaseCtor: C }): ActionCtor<T, C> {
+export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | { BaseCtor: C, readonly type: T }, options?: { BaseCtor: C }): ActionCtor<T, { new (): {}; } | C> {
+    // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
+    // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
+    if ((typeof typeOrOptions === "string") && (options === undefined)) {
+        const type: T = typeOrOptions as T;
+        const BaseCtor = empty().BaseCtor;
+        return class extends BaseCtor {
+            static readonly type: T = type;
+            readonly type: T = type;
+            constructor(...args: any[]) {
+                super(...args);
+                Object.setPrototypeOf(this, null);
+            }
+        };
+    }
     const type: T = options ? typeOrOptions as T : (typeOrOptions as { type: T }).type;
     const BaseCtor: C = options ? options.BaseCtor : (typeOrOptions as { BaseCtor: C }).BaseCtor;
     return class extends BaseCtor {
@@ -19,8 +34,6 @@ export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | 
         readonly type: T = type;
         constructor(...args: any[]) {
             super(...args);
-            // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
-            // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
             Object.setPrototypeOf(this, null);
         }
     };
@@ -45,7 +58,7 @@ export function payload<P>() {
 
 /*tslint:disable-next-line:typedef*/
 export function props<P extends object>() {
-    const BaseCtor = class _PropsBase { constructor(props: P) { Object.assign(this, props); } } as { new(props: P): P; };
+    const BaseCtor = class _PropsBase { constructor(props: P) { Object.assign(this, props); } } as { new (props: P): P; };
     return { BaseCtor };
 }
 
