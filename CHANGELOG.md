@@ -1,3 +1,12 @@
+c91f3cd7165f1763
+
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/cartant/ts-action/compare/v3.1.1...v3.1.2) (2017-11-10)
+
+### Changes
+
+* **action**: The `options` are now optional and `empty` is the default. ([c91f3cd](https://github.com/cartant/ts-action/commit/c91f3cd))
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/cartant/ts-action/compare/v3.1.0...v3.1.1) (2017-11-10)
 
