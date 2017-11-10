@@ -1,5 +1,3 @@
-c91f3cd7165f1763
-
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/cartant/ts-action/compare/v3.1.1...v3.1.2) (2017-11-10)
 
