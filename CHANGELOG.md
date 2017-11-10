@@ -1,3 +1,10 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/cartant/ts-action/compare/v3.1.0...v3.1.1) (2017-11-10)
+
+### Documentation
+
+* Improvemed API documentation.
+
 <a name="3.1.0"></a>
 ## [3.1.0](https://github.com/cartant/ts-action/compare/v3.0.1...v3.1.0) (2017-11-10)
 
