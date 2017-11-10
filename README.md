@@ -169,6 +169,7 @@ default:
 ```ts
 const Foo = action("FOO", empty());
 const foo = new Foo();
+console.log(foo); // { type: "FOO" }
 ```
 
 Note that the spread syntax is used, as `payload` merges more that one option.
@@ -182,7 +183,7 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 ```ts
 const Foo = action("FOO", payload<{ name: string }>());
 const foo = new Foo({ name: "alice" });
-console.log(foo.payload.name);
+console.log(foo); // { type: "FOO", payload: { name: "alice" } }
 ```
 
 Note that the spread syntax is used, as `payload` merges more that one option.
@@ -196,7 +197,7 @@ Note that the spread syntax is used, as `payload` merges more that one option.
 ```ts
 const Foo = action("FOO", props<{ name: string }>());
 const foo = new Foo({ name: "alice" });
-console.log(foo.name);
+console.log(foo); // { type: "FOO", name: "alice" }
 ```
 
 Note that the spread syntax is used, as `props` merges more that one option.
@@ -212,7 +213,7 @@ The `props` method is similar to the `payload` method, but with `props`, the spe
 ```ts
 const Foo = action("FOO", base(class { constructor(public name: string) {} }));
 const foo = new Foo("alice");
-console.log(foo.name);
+console.log(foo); // { type: "FOO", name: "alice" }
 ```
 
 The `base` method is similar to the `props` method, but with offers more control over property defaults, etc. as the base class is declared inline.
