@@ -7,7 +7,6 @@
     "moduleResolution": "node",
     "noEmitHelpers": false,
     "noImplicitAny": true,
-    "outDir": "build",
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": false,
