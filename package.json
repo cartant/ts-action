@@ -43,9 +43,9 @@
     "dist:clean": "rimraf dist",
     "dist:copy": "node scripts/pack.js && yarn run dist:copy:docs",
     "dist:copy:docs": "cpy CHANGELOG.md LICENSE README.md dist/",
-    "lint": "tslint --project tsconfig-lint.json source/**/*.ts",
+    "lint": "tslint --project tsconfig.json source/**/*.ts",
     "test": "yarn run lint && yarn run test:build && mocha ./build/**/*-spec.js",
-    "test:build": "yarn run test:clean && tsc -p tsconfig.json",
+    "test:build": "yarn run test:clean && tsc -p tsconfig-test.json",
     "test:clean": "rimraf build"
   },
   "types": "./dist/index.ts",

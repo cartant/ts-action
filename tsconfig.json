@@ -17,6 +17,6 @@
   },
   "exclude": [],
   "include": [
-    "source/**/*-spec.ts"
+    "source/**/*.ts"
   ]
 }

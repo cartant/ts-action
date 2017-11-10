@@ -7,8 +7,5 @@
   "exclude": [
     "source/**/*-spec.ts"
   ],
-  "extends": "./tsconfig.json",
-  "include": [
-    "source/**/*.ts"
-  ]
+  "extends": "./tsconfig.json"
 }
