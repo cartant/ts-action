@@ -51,6 +51,13 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
+        it("should be serializable", () => {
+            const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
+            const foo = new Foo(42);
+            const text = JSON.stringify(foo);
+            expect(JSON.parse(text)).to.deep.equal({ foo: 42, type: "FOO" });
+        });
+
         it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
@@ -118,6 +125,13 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
+        it("should be serializable", () => {
+            const Foo = action("FOO", empty());
+            const foo = new Foo();
+            const text = JSON.stringify(foo);
+            expect(JSON.parse(text)).to.deep.equal({ type: "FOO" });
+        });
+
         it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action("FOO", empty());
@@ -178,6 +192,13 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
+        it("should be serializable", () => {
+            const Foo = action("FOO", payload<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            const text = JSON.stringify(foo);
+            expect(JSON.parse(text)).to.deep.equal({ payload: { foo: 42 }, type: "FOO" });
+        });
+
         it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action("FOO", payload<number>());
@@ -236,6 +257,13 @@ describe("action", function (): void {
             const Foo = action("FOO", props<{ foo: number }>());
             const foo = new Foo({ foo: 42 });
             expect(isPlainObject(foo)).to.be.true;
+        });
+
+        it("should be serializable", () => {
+            const Foo = action("FOO", props<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            const text = JSON.stringify(foo);
+            expect(JSON.parse(text)).to.deep.equal({ foo: 42, type: "FOO" });
         });
 
         it("should enforce ctor parameters", () => {
