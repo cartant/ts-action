@@ -16,7 +16,7 @@ export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | 
     // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
     // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
     function resetPrototype(instance: object): void {
-        Object.setPrototypeOf(instance, null);
+        Object.setPrototypeOf(instance, Object.getPrototypeOf({}));
     }
     if ((typeof typeOrOptions === "string") && (options === undefined)) {
         const type: T = typeOrOptions as T;

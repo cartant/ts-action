@@ -58,6 +58,12 @@ describe("action", function (): void {
             expect(JSON.parse(text)).to.deep.equal({ foo: 42, type: "FOO" });
         });
 
+        it("should support toString", () => {
+            const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
+            const foo = new Foo(42);
+            expect(foo).to.respondTo("toString");
+        });
+
         it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
@@ -132,6 +138,12 @@ describe("action", function (): void {
             expect(JSON.parse(text)).to.deep.equal({ type: "FOO" });
         });
 
+        it("should support toString", () => {
+            const Foo = action("FOO", empty());
+            const foo = new Foo();
+            expect(foo).to.respondTo("toString");
+        });
+
         it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action("FOO", empty());
@@ -199,6 +211,12 @@ describe("action", function (): void {
             expect(JSON.parse(text)).to.deep.equal({ payload: { foo: 42 }, type: "FOO" });
         });
 
+        it("should support toString", () => {
+            const Foo = action("FOO", payload<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            expect(foo).to.respondTo("toString");
+        });
+
         it("should enforce ctor parameters", () => {
             expectSnippet(`
                 const Foo = action("FOO", payload<number>());
@@ -264,6 +282,12 @@ describe("action", function (): void {
             const foo = new Foo({ foo: 42 });
             const text = JSON.stringify(foo);
             expect(JSON.parse(text)).to.deep.equal({ foo: 42, type: "FOO" });
+        });
+
+        it("should support toString", () => {
+            const Foo = action("FOO", props<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            expect(foo).to.respondTo("toString");
         });
 
         it("should enforce ctor parameters", () => {
