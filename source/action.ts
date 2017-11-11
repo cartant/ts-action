@@ -8,7 +8,6 @@
 export interface Ctor<T> { new (...args: any[]): T; }
 export type ActionCtor<T, C> = { readonly type: T; new (...args: any[]): { readonly type: T; }; } & C;
 
-/*tslint:disable-next-line:typedef*/
 export function action<T extends string>(t: T): ActionCtor<T, { new (): {}; }>;
 export function action<T extends string, C extends Ctor<{}>>(t: T, options: { BaseCtor: C }): ActionCtor<T, C>;
 export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }): ActionCtor<T, C>;
