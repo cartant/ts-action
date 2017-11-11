@@ -1,3 +1,10 @@
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/cartant/ts-action/compare/v3.1.2...v3.1.3) (2017-11-11)
+
+### Changes
+
+* **action**: Reset the `prototype` to that of `{}` rather than to `null`. ([3337e68](https://github.com/cartant/ts-action/commit/3337e68))
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/cartant/ts-action/compare/v3.1.1...v3.1.2) (2017-11-10)
 
