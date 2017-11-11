@@ -51,6 +51,12 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
+        it("should pass the issue 2598 test", () => {
+            const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
+            const foo = new Foo(42);
+            expect(isPlainObjectIssue2598(foo)).to.be.true;
+        });
+
         it("should be serializable", () => {
             const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
             const foo = new Foo(42);
@@ -131,6 +137,12 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
+        it("should pass the issue 2598 test", () => {
+            const Foo = action("FOO", empty());
+            const foo = new Foo();
+            expect(isPlainObjectIssue2598(foo)).to.be.true;
+        });
+
         it("should be serializable", () => {
             const Foo = action("FOO", empty());
             const foo = new Foo();
@@ -202,6 +214,12 @@ describe("action", function (): void {
             const Foo = action("FOO", payload<{ foo: number }>());
             const foo = new Foo({ foo: 42 });
             expect(isPlainObject(foo)).to.be.true;
+        });
+
+        it("should pass the issue 2598 test", () => {
+            const Foo = action("FOO", payload<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            expect(isPlainObjectIssue2598(foo)).to.be.true;
         });
 
         it("should be serializable", () => {
@@ -277,6 +295,12 @@ describe("action", function (): void {
             expect(isPlainObject(foo)).to.be.true;
         });
 
+        it("should pass the issue 2598 test", () => {
+            const Foo = action("FOO", props<{ foo: number }>());
+            const foo = new Foo({ foo: 42 });
+            expect(isPlainObjectIssue2598(foo)).to.be.true;
+        });
+
         it("should be serializable", () => {
             const Foo = action("FOO", props<{ foo: number }>());
             const foo = new Foo({ foo: 42 });
@@ -314,3 +338,8 @@ describe("action", function (): void {
         });
     });
 });
+
+function isPlainObjectIssue2598(action: any): boolean {
+    // https://github.com/reactjs/redux/issues/2598
+    return action && (action.constructor === Object);
+}
