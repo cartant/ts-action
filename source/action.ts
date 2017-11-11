@@ -15,6 +15,9 @@ export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor
 export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | { BaseCtor: C, readonly type: T }, options?: { BaseCtor: C }): ActionCtor<T, { new (): {}; } | C> {
     // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
     // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
+    function resetPrototype(instance: object): void {
+        Object.setPrototypeOf(instance, null);
+    }
     if ((typeof typeOrOptions === "string") && (options === undefined)) {
         const type: T = typeOrOptions as T;
         const BaseCtor = empty().BaseCtor;
@@ -23,7 +26,7 @@ export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | 
             readonly type: T = type;
             constructor(...args: any[]) {
                 super(...args);
-                Object.setPrototypeOf(this, null);
+                resetPrototype(this);
             }
         };
     }
@@ -34,7 +37,7 @@ export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | 
         readonly type: T = type;
         constructor(...args: any[]) {
             super(...args);
-            Object.setPrototypeOf(this, null);
+            resetPrototype(this);
         }
     };
 }
