@@ -41,7 +41,7 @@ Actions are created using the action creator as a class:
 store.dispatch(new Foo());
 ```
 
-Although the actions are created as class instances, internally, the `prototype` is set to `null`, so they are compatible with `reactjs/redux`, as they are considered to be plain objects.
+Although the actions are created as class instances, internally, the `prototype` is reset, so they are compatible with `reactjs/redux`, as they are considered to be plain objects.
 
 For actions with payloads, the payload type is specified using the `payload` method:
 
