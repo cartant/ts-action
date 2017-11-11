@@ -166,7 +166,7 @@ Actions default to being empty; if only a `type` is passed to the `action` call,
 const Foo = action("FOO");
 const foo = new Foo();
 console.log(foo); // { type: "FOO" }
-```-
+```
 
 <a name="payload"></a>
 
