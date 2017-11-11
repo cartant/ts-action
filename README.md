@@ -43,7 +43,7 @@ store.dispatch(new Foo());
 
 Although the actions are created as class instances, internally, the `prototype` is reset, so they are compatible with `reactjs/redux`, as they are considered to be plain objects.
 
-For actions with payloads, the payload type is specified using the `payload` method:
+For actions with payloads, the payload type is specified using the [`payload`](#payload) method:
 
 ```ts
 import { action, payload } from "ts-action";
@@ -56,9 +56,9 @@ and the payload value is specified when creating the action:
 store.dispatch(new Foo({ foo: 42 }));
 ```
 
-To have the properties added to the action itself - rather than a `payload` property - use the `props` method instead.
+To have the properties added to the action itself - rather than a `payload` property - use the [`props`](#props) method instead. Or, for more control over the parameters accepted by the constructor, use the [`base`](#base) method.
 
-Action creators have `type` and `action` properties that can be used to narrow an action's TypeScript type in a reducer.
+Action creators have a `type` property that can be used to narrow an action's TypeScript type in a reducer.
 
 The action types can be combined into a discriminated union and the action can be narrowed to a specific TypeScript type using a `switch` statement, like this:
 
@@ -117,39 +117,21 @@ function fooBarReducer(state: State = {}, action: Action): State {
 
 ### action
 
-The `action` method returns an action creator:
+```ts
+function action<T, C extends Ctor<{}>>(type: T, options?: { BaseCtor: C })
+```
+
+The `action` method returns an action creator. Action creators are classes and actions are be created using `new`:
 
 ```ts
 const Foo = action("FOO");
+const foo = new Foo();
+console.log(foo); // { type: "FOO" }
 ```
 
-Action creators are classes and actions are be created using `new`:
+The `type` argument passed to `action` must be a string literal or have a string-literal type. Otherwise, TypeScript will not be able to narrow actions in a discriminated union.
 
-```ts
-store.dispatch(new Foo());
-```
-
-The `type` option passed to the `action` method will be assigned to the created action's `type` property. The value passed should be either a literal or a literal type. That is, this is fine:
-
-```ts
-const Foo = action("FOO");
-```
-
-And this is fine, too:
-
-```ts
-const FOO = "FOO"; // Equivalent to: const FOO: "FOO" = "FOO";
-const Foo = action(FOO);
-```
-
-However, with the following, TypeScript will be unable to narrow the action in a discriminated union:
-
-```ts
-let foo: string = "FOO";
-const Foo = action(foo);
-```
-
-And the `type` option passed to the `action` method can be obtained using the creator's static `type` property:
+The `type` option passed to the `action` method can be obtained using the creator's static `type` property:
 
 ```ts
 switch (action.type) {
@@ -160,11 +142,17 @@ default:
 }
 ```
 
+To define propeties, the `action` method can be passed options. The options should be created using the `empty`, `payload`, `props` or `base` methods.
+
 <a name="empty"></a>
 
 ### empty
 
-`empty` is a method that's used to construct the options passed to the `action` method. To declare an action without a payload or properties , call it like this:
+```ts
+function empty()
+```
+
+The `empty` method constructs options for the `action` method. To declare an action without a payload or properties , call it like this:
 
 ```ts
 const Foo = action("FOO", empty());
@@ -172,19 +160,23 @@ const foo = new Foo();
 console.log(foo); // { type: "FOO" }
 ```
 
-If only a `type` is passed to the `action` call, an empty action is created by default:
+Actions default to being empty; if only a `type` is passed to the `action` call, an empty action is created by default:
 
 ```ts
 const Foo = action("FOO");
 const foo = new Foo();
 console.log(foo); // { type: "FOO" }
-```
+```-
 
 <a name="payload"></a>
 
 ### payload
 
-`payload` is a method that's used to construct the options passed to the `action` method. To declare action properties within a `payload` property, call it like this:
+```ts
+function payload<T>()
+```
+
+The `payload` method constructs options for the `action` method. To declare action properties within a `payload` property, call it like this:
 
 ```ts
 const Foo = action("FOO", payload<{ name: string }>());
@@ -196,7 +188,11 @@ console.log(foo); // { type: "FOO", payload: { name: "alice" } }
 
 ### props
 
-`props` is a method that's used to construct the options passed to the `action` method. To declare action properties at the same level as the `type` property, call it like this:
+```ts
+function props<T>()
+```
+
+The `props` method constructs options for the `action` method. To declare action properties at the same level as the `type` property, call it like this:
 
 ```ts
 const Foo = action("FOO", props<{ name: string }>());
@@ -210,7 +206,11 @@ The `props` method is similar to the `payload` method, but with `props`, the spe
 
 ### base
 
-`base` is a method that's used to construct the options passed to the `action` method. To declare a base class with properties, call it like this:
+```ts
+function base<C extends Ctor<{}>>(BaseCtor: C)
+```
+
+The `base` method constructs options for the `action` method. To declare a base class with properties, call it like this:
 
 ```ts
 const Foo = action("FOO", base(class { constructor(public name: string) {} }));
@@ -218,7 +218,7 @@ const foo = new Foo("alice");
 console.log(foo); // { type: "FOO", name: "alice" }
 ```
 
-The `base` method is similar to the `props` method, but with offers more control over property defaults, etc. as the base class is declared inline.
+The `base` method offers more control over property defaults, etc. as the base class is declared inline.
 
 <a name="union"></a>
 
