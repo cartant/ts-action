@@ -64,6 +64,7 @@ export function props<P extends object>() {
     return { BaseCtor };
 }
 
+export function union<T1>(t1: Ctor<T1>): T1;
 export function union<T1, T2>(t1: Ctor<T1>, t2: Ctor<T2>): T1 | T2;
 export function union<T1, T2, T3>(t1: Ctor<T1>, t2: Ctor<T2>, t3: Ctor<T3>): T1 | T2 | T3;
 export function union<T1, T2, T3, T4>(t1: Ctor<T1>, t2: Ctor<T2>, t3: Ctor<T3>, t4: Ctor<T4>): T1 | T2 | T3 | T4;
