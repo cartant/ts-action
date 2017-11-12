@@ -51,7 +51,7 @@ describe("reducer", function (): void {
 
                 expect(fooBarReducer).to.be.a("function");
 
-                let state = fooBarReducer(undefined, { type: "UNKNOWN" });
+                let state = fooBarReducer(undefined!, { type: "UNKNOWN" });
                 expect(state).to.deep.equal({});
 
                 state = fooBarReducer(state, new Foo(42));
