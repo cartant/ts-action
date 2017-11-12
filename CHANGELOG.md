@@ -1,3 +1,10 @@
+<a name="3.2.1"></a>
+## [3.2.1](https://github.com/cartant/ts-action/compare/v3.2.0...v3.2.1) (2017-11-12)
+
+### Bug Fixes
+
+* **reducer**: Remove union with `undefined` from state. ([bd748f0](https://github.com/cartant/ts-action/commit/bd748f0))
+
 <a name="3.2.0"></a>
 ## [3.2.0](https://github.com/cartant/ts-action/compare/v3.1.3...v3.2.0) (2017-11-12)
 
