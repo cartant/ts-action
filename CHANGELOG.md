@@ -1,3 +1,10 @@
+<a name="3.2.0"></a>
+## [3.2.0](https://github.com/cartant/ts-action/compare/v3.1.3...v3.2.0) (2017-11-12)
+
+### Features
+
+* **reducer**: Add a `reducer` method for creating reducer functions. ([d7e870e](https://github.com/cartant/ts-action/commit/d7e870e))
+
 <a name="3.1.3"></a>
 ## [3.1.3](https://github.com/cartant/ts-action/compare/v3.1.2...v3.1.3) (2017-11-11)
 
