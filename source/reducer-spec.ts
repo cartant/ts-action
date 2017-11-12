@@ -26,14 +26,14 @@ describe("reducer", function (): void {
             it("should enforce action property types", () => {
                 expectSnippet(`
                     const Foo = action("FOO", props<{ foo: number }>());
-                    on(Foo, (state, action) => { const foo: string = action.foo; return state; }));
+                    on(Foo, (state, action) => { const foo: string = action.foo; return state; });
                 `).toFail(/'number' is not assignable to type 'string'/);
             });
 
             it("should enforce action property names", () => {
                 expectSnippet(`
                     const Foo = action("FOO", props<{ foo: number }>());
-                    on(Foo, (state, action) => { const bar: string = action.bar; return state; }));
+                    on(Foo, (state, action) => { const bar: string = action.bar; return state; });
                 `).toFail(/'bar' does not exist on type/);
             });
         });
