@@ -13,7 +13,7 @@ const compiler = new Compiler({
 
 export const expectSnippet = (code: string) => snippet({
     "research.ts": `
-        import { action, base, Ctor, empty, payload, props, union } from "./dist";
+        import { action, base, Ctor, empty, on, payload, props, union } from "./dist";
         ${code}
     `
 }, compiler).expect("research.ts");
