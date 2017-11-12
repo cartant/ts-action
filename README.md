@@ -102,6 +102,20 @@ function fooBarReducer(state: State = {}, action: Action): State {
 }
 ```
 
+Or, the package's [`reducer`](#reducer) method can be used to create a reducer function, like this:
+
+```ts
+import { action, on, payload, reducer } from "ts-action";
+
+const Foo = action("FOO", payload<{ foo: number }>());
+const Bar = action("BAR", payload<{ bar: number }>());
+
+const fooBarReducer = reducer<State>([
+  on(Foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
+  on(Bar, (state, { payload }) => ({ ...state, bar: payload.bar }))
+], {});
+```
+
 ## API
 
 * [action](#action)
@@ -112,6 +126,8 @@ function fooBarReducer(state: State = {}, action: Action): State {
 * [union](#union)
 * [isType](#isType)
 * [guard](#guard)
+* [reducer](#reducer)
+* [on](#on)
 
 <a name="action"></a>
 
@@ -229,14 +245,14 @@ The `union` method can be used to infer a union of actions - for type narrowing 
 ```ts
 const All = union(Foo, Bar);
 function reducer(state: any = [], action: typeof All): any {
-    switch (action.type) {
-    case Foo.type:
-        return ... // Here the action will be narrowed to Foo.
-    case Bar.type:
-        return ... // Here the action will be narrowed to Bar.
-    default:
-        return state;
-    }
+  switch (action.type) {
+  case Foo.type:
+    return ... // Here the action will be narrowed to Foo.
+  case Bar.type:
+    return ... // Here the action will be narrowed to Bar.
+  default:
+    return state;
+  }
 }
 ```
 
@@ -265,6 +281,32 @@ For example, `Array.prototype.filter` accepts a type guard:
 const actions = [new Foo(), new Bar()];
 const filtered = actions.filter(guard(Foo)); // Inferred to be: const filtered: Foo[]
 ```
+
+<a name="reducer"></a>
+
+### reducer
+
+```ts
+function reducer<S>(
+  ons: { reducer: Reducer<S>, type: string }[],
+  defaultState: S
+): Reducer<S>;
+```
+
+The `reducer` method creates a reducer function out of the combined, action-specific reducers specified in the array.
+
+<a name="on"></a>
+
+### on
+
+```ts
+function on<T extends string, A extends Action<string>, S>(
+  creator: ActionCreator<T, A>,
+  reducer: (state: S, action: A) => S
+): { reducer: Reducer<S>, type: string };
+```
+
+The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the action's type - that can be passed to the `reducer` method.
 
 <a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/ts-action'>
   <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/ts-action.svg' />
