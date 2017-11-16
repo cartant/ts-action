@@ -289,7 +289,7 @@ const filtered = actions.filter(guard(Foo)); // Inferred to be: const filtered: 
 ```ts
 function reducer<S>(
   ons: { reducer: Reducer<S>, type: string }[],
-  defaultState: S
+  initialState: S
 ): Reducer<S>;
 ```
 
