@@ -69,9 +69,10 @@ const Foo = action("FOO", payload<{ foo: number }>());
 const Bar = action("BAR", payload<{ bar: number }>());
 const All = union(Foo, Bar);
 
-type State = { foo?: number, bar?: number };
+interface State { foo?: number; bar?: number; }
+const initialState = {};
 
-function fooBarReducer(state: State = {}, action: typeof All): State {
+function fooBarReducer(state: State = initialState, action: typeof All): State {
   switch (action.type) {
   case Foo.type:
     return { ...state, foo: action.payload.foo };
@@ -91,7 +92,10 @@ import { action, isType, payload } from "ts-action";
 const Foo = action("FOO", payload<{ foo: number }>());
 const Bar = action("BAR", payload<{ bar: number }>());
 
-function fooBarReducer(state: State = {}, action: Action): State {
+interface State { foo?: number; bar?: number; }
+const initialState = {};
+
+function fooBarReducer(state: State = initialState, action: Action): State {
   if (isType(action, Foo)) {
     return { ...state, foo: action.payload.foo };
   }
@@ -110,10 +114,13 @@ import { action, on, payload, reducer } from "ts-action";
 const Foo = action("FOO", payload<{ foo: number }>());
 const Bar = action("BAR", payload<{ bar: number }>());
 
+interface State { foo?: number; bar?: number; }
+const initialState = {};
+
 const fooBarReducer = reducer<State>([
   on(Foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
   on(Bar, (state, { payload }) => ({ ...state, bar: payload.bar }))
-], {});
+], initialState);
 ```
 
 ## API
