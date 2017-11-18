@@ -26,6 +26,8 @@ Install the package using npm:
 npm install ts-action --save-dev
 ```
 
+TypeScript version 2.6 or later is required.
+
 ## Usage
 
 Action creators are declared using the `action` method:
