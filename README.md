@@ -316,7 +316,3 @@ function on<T extends string, A extends Action<string>, S>(
 ```
 
 The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the action's type - that can be passed to the `reducer` method.
-
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/ts-action'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/jZB4ja6SvwGUN4ibgYVgUVYV/cartant/ts-action.svg' />
-</a>
