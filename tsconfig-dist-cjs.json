@@ -2,7 +2,9 @@
   "compilerOptions": {
     "declaration": true,
     "inlineSourceMap": false,
-    "outDir": "dist"
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "es5"
   },
   "exclude": [
     "source/**/*-spec.ts"
