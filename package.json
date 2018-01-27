@@ -48,6 +48,6 @@
     "test:build": "yarn run test:clean && tsc -p tsconfig-test.json",
     "test:clean": "rimraf build"
   },
-  "types": "./dist/index.ts",
+  "types": "./dist/index.d.ts",
   "version": "3.2.2"
 }

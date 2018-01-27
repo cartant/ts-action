@@ -3,5 +3,5 @@
   "main": "./index.js",
   "private": false,
   "scripts": {},
-  "types": "./index.ts"
+  "types": "./index.d.ts"
 }
