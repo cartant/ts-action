@@ -65,7 +65,7 @@ Action creators have a `type` property that can be used to narrow an action's Ty
 The action types can be combined into a discriminated union and the action can be narrowed to a specific TypeScript type using a `switch` statement, like this:
 
 ```ts
-import { action, payload } from "ts-action";
+import { action, payload, union } from "ts-action";
 
 const Foo = action("FOO", payload<{ foo: number }>());
 const Bar = action("BAR", payload<{ bar: number }>());
