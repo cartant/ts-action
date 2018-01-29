@@ -280,6 +280,14 @@ if (isType(action, Foo)) {
 }
 ```
 
+And:
+
+```ts
+if (isType(action, Foo, Bar)) {
+  // Here, TypeScript has narrowed the type to `typeof union(Foo, Bar)`.
+}
+```
+
 ### guard
 
 `guard` is a higher-order equivalent of `isType`. That is, it returns a TypeScript [type guard](https://www.typescriptlang.org/docs/handbook/advanced-types.html) that will, in turn, return either `true` or `false` depending upon whether the passed action is of the appropriate type. The `guard` method is useful when dealing with APIs that accept type guards.
