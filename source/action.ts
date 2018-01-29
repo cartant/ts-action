@@ -4,6 +4,9 @@
  */
 /*tslint:disable:class-name*/
 
+// https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
+const literalPrototype = Object.getPrototypeOf({});
+
 export interface Ctor<T> { new (...args: any[]): T; }
 export type ActionCtor<T, C> = { readonly type: T; new (...args: any[]): { readonly type: T; }; } & C;
 
@@ -11,11 +14,6 @@ export function action<T extends string>(t: T): ActionCtor<T, { new (): {}; }>;
 export function action<T extends string, C extends Ctor<{}>>(t: T, options: { BaseCtor: C }): ActionCtor<T, C>;
 export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }): ActionCtor<T, C>;
 export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | { BaseCtor: C, readonly type: T }, options?: { BaseCtor: C }): ActionCtor<T, { new (): {}; } | C> {
-    // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
-    // isPlainObject checks if value is a plain object, that is, an object created by the Object constructor or one with a [[Prototype]] of null.
-    function resetPrototype(instance: object): void {
-        Object.setPrototypeOf(instance, Object.getPrototypeOf({}));
-    }
     if ((typeof typeOrOptions === "string") && (options === undefined)) {
         const type: T = typeOrOptions as T;
         const BaseCtor = empty().BaseCtor;
@@ -24,7 +22,7 @@ export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | 
             readonly type: T = type;
             constructor(...args: any[]) {
                 super(...args);
-                resetPrototype(this);
+                Object.setPrototypeOf(this, literalPrototype);
             }
         };
     }
@@ -35,7 +33,7 @@ export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | 
         readonly type: T = type;
         constructor(...args: any[]) {
             super(...args);
-            resetPrototype(this);
+            Object.setPrototypeOf(this, literalPrototype);
         }
     };
 }
