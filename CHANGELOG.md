@@ -1,3 +1,10 @@
+<a name="3.3.0"></a>
+## [3.3.0](https://github.com/cartant/ts-action/compare/v3.2.3...v3.3.0) (2018-01-29)
+
+### Features
+
+* **isType**: Add support for passing multiple action creators. ([899603f](https://github.com/cartant/ts-action/commit/899603f))
+
 <a name="3.2.3"></a>
 ## [3.2.3](https://github.com/cartant/ts-action/compare/v3.2.2...v3.2.3) (2018-01-27)
 
