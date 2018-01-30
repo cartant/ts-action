@@ -23,13 +23,6 @@ describe("action", function (): void {
             expect(foo).to.have.property("foo", 42);
         });
 
-        it("should support combined options", () => {
-            const Foo = action({ type: "FOO", ...base(class { constructor(public foo: number) {} }) });
-            const foo = new Foo(42);
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("foo", 42);
-        });
-
         it("should narrow the action", () => {
             const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
             const Bar = action("BAR", base(class { constructor(public bar: number) {} }));
@@ -109,13 +102,6 @@ describe("action", function (): void {
             expect(foo).to.not.have.property("payload");
         });
 
-        it("should support combined options", () => {
-            const Foo = action({ type: "FOO", ...empty() });
-            const foo = new Foo();
-            expect(foo).to.have.property("type", "FOO");
-            expect(Object.keys(foo)).to.deep.equal(["type"]);
-        });
-
         it("should narrow the action", () => {
             const Foo = action("FOO", empty());
             const Bar = action("BAR", base(class { constructor(public bar: number) {} }));
@@ -188,13 +174,6 @@ describe("action", function (): void {
             expect(foo).to.have.property("payload", 42);
         });
 
-        it("should support combined options", () => {
-            const Foo = action({ type: "FOO", ...payload<number>() });
-            const foo = new Foo(42);
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("payload", 42);
-        });
-
         it("should narrow the action", () => {
             const Foo = action("FOO", payload<{ foo: number }>());
             const Bar = action("BAR", payload<{ bar: number }>());
@@ -262,13 +241,6 @@ describe("action", function (): void {
 
         it("should create an action", () => {
             const Foo = action("FOO", props<{ foo: number }>());
-            const foo = new Foo({ foo: 42 });
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("foo", 42);
-        });
-
-        it("should support combined options", () => {
-            const Foo = action({ type: "FOO", ...props<{ foo: number }>() });
             const foo = new Foo({ foo: 42 });
             expect(foo).to.have.property("type", "FOO");
             expect(foo).to.have.property("foo", 42);

@@ -12,25 +12,11 @@ export type ActionCtor<T, C> = { readonly type: T; new (...args: any[]): { reado
 
 export function action<T extends string>(t: T): ActionCtor<T, { new (): {}; }>;
 export function action<T extends string, C extends Ctor<{}>>(t: T, options: { BaseCtor: C }): ActionCtor<T, C>;
-export function action<T extends string, C extends Ctor<{}>>(options: { BaseCtor: C, readonly type: T }): ActionCtor<T, C>;
-export function action<T extends string, C extends Ctor<{}>>(typeOrOptions: T | { BaseCtor: C, readonly type: T }, options?: { BaseCtor: C }): ActionCtor<T, { new (): {}; } | C> {
-    if ((typeof typeOrOptions === "string") && (options === undefined)) {
-        const type: T = typeOrOptions as T;
-        const BaseCtor = empty().BaseCtor;
-        return class extends BaseCtor {
-            static readonly type: T = type;
-            readonly type: T = type;
-            constructor(...args: any[]) {
-                super(...args);
-                Object.setPrototypeOf(this, literalPrototype);
-            }
-        };
-    }
-    const type: T = options ? typeOrOptions as T : (typeOrOptions as { type: T }).type;
-    const BaseCtor: C = options ? options.BaseCtor : (typeOrOptions as { BaseCtor: C }).BaseCtor;
+export function action<T extends string, C extends Ctor<{}>>(t: T, options?: { BaseCtor: C }): ActionCtor<T, { new (): {}; } | C> {
+    const BaseCtor = options ? options.BaseCtor : empty().BaseCtor;
     return class extends BaseCtor {
-        static readonly type: T = type;
-        readonly type: T = type;
+        static readonly type: T = t;
+        readonly type: T = t;
         constructor(...args: any[]) {
             super(...args);
             Object.setPrototypeOf(this, literalPrototype);
