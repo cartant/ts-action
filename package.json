@@ -18,6 +18,7 @@
     "tslint": "^5.8.0",
     "typescript": "~2.6.1"
   },
+  "es2015": "./dist/esm2015/index.js",
   "homepage": "https://github.com/cartant/ts-action",
   "keywords": [
     "action",
@@ -28,6 +29,7 @@
   ],
   "license": "MIT",
   "main": "./dist/index.js",
+  "module": "./dist/esm5/index.js",
   "name": "ts-action",
   "optionalDependencies": {},
   "peerDependencies": {},
@@ -38,8 +40,10 @@
   },
   "scripts": {
     "dist": "yarn run dist:build && yarn run dist:copy",
-    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs",
-    "dist:build:cjs": "tsc -p tsconfig-dist.json",
+    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs && yarn run dist:build:esm2015 && yarn run dist:build:esm5",
+    "dist:build:cjs": "tsc -p tsconfig-dist-cjs.json",
+    "dist:build:esm2015": "tsc -p tsconfig-dist-esm2015.json",
+    "dist:build:esm5": "tsc -p tsconfig-dist-esm5.json",
     "dist:clean": "rimraf dist",
     "dist:copy": "node scripts/pack.js && yarn run dist:copy:docs",
     "dist:copy:docs": "cpy CHANGELOG.md LICENSE README.md dist/",
