@@ -1,3 +1,14 @@
+<a name="4.0.0"></a>
+## [4.0.0](https://github.com/cartant/ts-action/compare/v3.3.0...v4.0.0) (2018-01-31)
+
+### Breaking Changes
+
+* **action**: Removed the overload in which the type could be passed in the `options`. ([742b17d](https://github.com/cartant/ts-action/commit/742b17d))
+* The package is now distributed with CommonJS, ES5 and ES2015 files (see the [Angular Package Format](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/edit#heading=h.k0mh3o8u5hx)). The ES5 and ES2015 files use ES modules. The entry points in the `package.json` are:
+    * `main` - CommonJS
+    * `module` - ES5 with ES modules (in the `esm5` directory)
+    * `es2015` - ES2015 (in the `esm2015` directory)
+
 <a name="3.3.0"></a>
 ## [3.3.0](https://github.com/cartant/ts-action/compare/v3.2.3...v3.3.0) (2018-01-29)
 
