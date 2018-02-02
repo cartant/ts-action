@@ -26,7 +26,7 @@ describe("action", function (): void {
         it("should narrow the action", () => {
             const Foo = action("FOO", base(class { constructor(public foo: number) {} }));
             const Bar = action("BAR", base(class { constructor(public bar: number) {} }));
-            const All = union(Foo, Bar);
+            const All = union({ Foo, Bar });
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
                     expect(action.foo).to.equal(42);
@@ -105,7 +105,7 @@ describe("action", function (): void {
         it("should narrow the action", () => {
             const Foo = action("FOO", empty());
             const Bar = action("BAR", base(class { constructor(public bar: number) {} }));
-            const All = union(Foo, Bar);
+            const All = union({ Foo, Bar });
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
                     throw new Error("Should not get here.");
@@ -177,7 +177,7 @@ describe("action", function (): void {
         it("should narrow the action", () => {
             const Foo = action("FOO", payload<{ foo: number }>());
             const Bar = action("BAR", payload<{ bar: number }>());
-            const All = union(Foo, Bar);
+            const All = union({ Foo, Bar });
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
                     expect(action.payload.foo).to.equal(42);
@@ -249,7 +249,7 @@ describe("action", function (): void {
         it("should narrow the action", () => {
             const Foo = action("FOO", props<{ foo: number }>());
             const Bar = action("BAR", props<{ bar: number }>());
-            const All = union(Foo, Bar);
+            const All = union({ Foo, Bar });
             const narrow = (action: typeof All) => {
                 if (action.type === Foo.type) {
                     expect(action.foo).to.equal(42);

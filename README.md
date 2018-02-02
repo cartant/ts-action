@@ -71,7 +71,7 @@ import { action, payload, union } from "ts-action";
 
 const Foo = action("FOO", payload<{ foo: number }>());
 const Bar = action("BAR", payload<{ bar: number }>());
-const All = union(Foo, Bar);
+const All = union({ Foo, Bar });
 
 interface State { foo?: number; bar?: number; }
 const initialState = {};
@@ -145,7 +145,8 @@ const fooBarReducer = reducer<State>([
 ### action
 
 ```ts
-function action<T, C extends Ctor<{}>>(type: T, options?: { BaseCtor: C })
+function action<T>(type: T)
+function action<T, B extends {}, C extends Ctor<{}>>(type: T, options: {})
 ```
 
 The `action` method returns an action creator. Action creators are classes and actions are be created using `new`:
@@ -251,10 +252,10 @@ The `base` method offers more control over property defaults, etc. as the base c
 
 ### union
 
-The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed two or more action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
+The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed an object literal of action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
 
 ```ts
-const All = union(Foo, Bar);
+const All = union({ Foo, Bar });
 function reducer(state: any = [], action: typeof All): any {
   switch (action.type) {
   case Foo.type:
@@ -286,7 +287,7 @@ And:
 
 ```ts
 if (isType(action, Foo, Bar)) {
-  // Here, TypeScript has narrowed the type to `typeof union(Foo, Bar)`.
+  // Here, TypeScript has narrowed the type to `typeof union({ Foo, Bar })`.
 }
 ```
 

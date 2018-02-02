@@ -116,7 +116,7 @@ describe("research", function (): void {
             expectSnippet(`
                 const A = action("[research] A", payload<{ a: number }>());
                 const B = action("[research] B", empty());
-                const All = union(A, B);
+                const All = union({ A, B });
                 const narrow = (action: typeof All) => {
                     if (action.type === A.type) {
                         console.log(action.type, action.payload.a);
@@ -292,28 +292,28 @@ describe("research", function (): void {
             it("should enforce ctor parameters for base", () => {
                 expectSnippet(`
                     const options = base(class { constructor(public foo: number) {} });
-                    const instance = new options.BaseCtor("42");
+                    const instance = new options._forCtor("42");
                 `).toFail(/not assignable to parameter of type 'number'/);
             });
 
             it("should enforce ctor parameters for empty", () => {
                 expectSnippet(`
                     const options = empty();
-                    const instance = new options.BaseCtor("42");
+                    const instance = new options._forCtor("42");
                 `).toFail(/Expected 0 arguments/);
             });
 
             it("should enforce ctor parameters for payload", () => {
                 expectSnippet(`
                     const options = payload<number>();
-                    const instance = new options.BaseCtor("42");
+                    const instance = new options._forCtor("42");
                 `).toFail(/not assignable to parameter of type 'number'/);
             });
 
             it("should enforce ctor parameters for props", () => {
                 expectSnippet(`
                     const options = props<{ foo: number }>();
-                    const instance = new options.BaseCtor({ foo: "42" });
+                    const instance = new options._forCtor({ foo: "42" });
                 `).toFail(/'{ foo: string; }' is not assignable to parameter of type '{ foo: number; }'/);
             });
         });
