@@ -1,3 +1,10 @@
+<a name="5.0.0"></a>
+## [5.0.0](https://github.com/cartant/ts-action/compare/v4.0.0...v5.0.0) (2018-02-03)
+
+### Breaking Changes
+
+* **union**: The `union` function now takes an object literal of action creators, so calls like `union(Foo, Bar)` should be replaced with calls like `union({ Foo, Bar })`. ([9d453a5](https://github.com/cartant/ts-action/commit/9d453a5))
+
 <a name="4.0.0"></a>
 ## [4.0.0](https://github.com/cartant/ts-action/compare/v3.3.0...v4.0.0) (2018-01-31)
 
