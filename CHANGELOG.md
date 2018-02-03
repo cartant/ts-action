@@ -1,3 +1,10 @@
+<a name="6.0.1"></a>
+## [6.0.1](https://github.com/cartant/ts-action/compare/v6.0.0...v6.0.1) (2018-02-04)
+
+### Fixes
+
+* **guard**: Like `isType`, the `guard` function now supports specifying multiple creators. ([9658da1](https://github.com/cartant/ts-action/commit/9658da1))
+
 <a name="6.0.0"></a>
 ## [6.0.0](https://github.com/cartant/ts-action/compare/v5.0.0...v6.0.0) (2018-02-03)
 
