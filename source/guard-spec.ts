@@ -12,9 +12,7 @@ describe("guard", () => {
 
     describe("base", () => {
 
-        const Bar = usingBase.Bar;
-        const Baz = usingBase.Baz;
-        const Foo = usingBase.Foo;
+        const { Bar, Baz, Foo } = usingBase;
 
         it("should return true for matching actions", () => {
             const foo = new Foo(42);
@@ -42,9 +40,7 @@ describe("guard", () => {
 
     describe("empty", () => {
 
-        const Bar = usingEmpty.Bar;
-        const Baz = usingEmpty.Baz;
-        const Foo = usingEmpty.Foo;
+        const { Bar, Baz, Foo } = usingEmpty;
 
         it("should return true for matching actions", () => {
             const foo = new Foo();
@@ -69,9 +65,7 @@ describe("guard", () => {
 
     describe("payload", () => {
 
-        const Bar = usingPayload.Bar;
-        const Baz = usingPayload.Baz;
-        const Foo = usingPayload.Foo;
+        const { Bar, Baz, Foo } = usingPayload;
 
         it("should return true for matching actions", () => {
             const foo = new Foo({ foo: 42 });
@@ -99,9 +93,7 @@ describe("guard", () => {
 
     describe("props", () => {
 
-        const Bar = usingProps.Bar;
-        const Baz = usingProps.Baz;
-        const Foo = usingProps.Foo;
+        const { Bar, Baz, Foo } = usingProps;
 
         it("should return true for matching actions", () => {
             const foo = new Foo({ foo: 42 });

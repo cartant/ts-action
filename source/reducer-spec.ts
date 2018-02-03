@@ -17,8 +17,7 @@ describe("reducer", function (): void {
 
     describe("base", () => {
 
-        const Bar = usingBase.Bar;
-        const Foo = usingBase.Foo;
+        const { Bar, Foo } = usingBase;
 
         describe("on", () => {
 
