@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { action, props } from "../dist/action";
+import { action, base, payload, props } from "../dist/action";
 import { usingBase, usingEmpty, usingPayload, usingProps } from "./foobar-spec";
 import { isType } from "../dist/isType";
 
@@ -28,6 +28,17 @@ describe("isType", () => {
             const a = new Bar(56);
             expect(isType(a, Foo)).to.be.false;
         });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo(42);
+            expect(isType(a, { Foo, Bar })).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]", base(class { constructor(public baz: number) {} }));
+            const a = new Baz(42);
+            expect(isType(a, { Foo, Bar })).to.be.false;
+        });
     });
 
     describe("empty", () => {
@@ -43,6 +54,17 @@ describe("isType", () => {
         it("should return false for non-matching actions", () => {
             const a = new Bar();
             expect(isType(a, Foo)).to.be.false;
+        });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo();
+            expect(isType(a, { Foo, Bar })).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]");
+            const a = new Baz();
+            expect(isType(a, { Foo, Bar })).to.be.false;
         });
     });
 
@@ -62,6 +84,17 @@ describe("isType", () => {
         it("should return false for non-matching actions", () => {
             const a = new Bar({ bar: 56 });
             expect(isType(a, Foo)).to.be.false;
+        });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo({ foo: 42 });
+            expect(isType(a, { Foo, Bar })).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]", payload<{ baz: number }>());
+            const a = new Baz({ baz: 42 });
+            expect(isType(a, { Foo, Bar })).to.be.false;
         });
     });
 
@@ -83,33 +116,15 @@ describe("isType", () => {
             expect(isType(a, Foo)).to.be.false;
         });
 
-        describe("multiple creators", () => {
+        it("should return true for matching unions", () => {
+            const a = new Foo({ foo: 42 });
+            expect(isType(a, { Foo, Bar })).to.be.true;
+        });
 
-            const Action1 = action("ACTION_1", props<{ name: string }>());
-            const Action2 = action("ACTION_2", props<{ name: string }>());
-            const Action3 = action("ACTION_3", props<{ name: string }>());
-            const Action4 = action("ACTION_4", props<{ name: string }>());
-
-            it("should guard and narrow using two actions", () => {
-                const a = new Action1({ name: "1" });
-                expect(isType(a, Action1, Action2)).to.be.true;
-                if (isType(a, Action1, Action2)) {
-                    const name = a.name;
-                }
-            });
-
-            it("should guard and narrow using three actions", () => {
-                const a = new Action1({ name: "1" });
-                expect(isType(a, Action1, Action2, Action3)).to.be.true;
-                if (isType(a, Action1, Action2, Action3)) {
-                    const name = a.name;
-                }
-            });
-
-            it("should guard but not narrow using more than three actions", () => {
-                const a = new Action1({ name: "1" });
-                expect(isType(a, Action1, Action2, Action3, Action4)).to.be.true;
-            });
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]", props<{ baz: number }>());
+            const a = new Baz({ baz: 42 });
+            expect(isType(a, { Foo, Bar })).to.be.false;
         });
     });
 });

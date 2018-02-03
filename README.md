@@ -286,7 +286,7 @@ if (isType(action, Foo)) {
 And:
 
 ```ts
-if (isType(action, Foo, Bar)) {
+if (isType(action, { Foo, Bar })) {
   // Here, TypeScript has narrowed the type to `typeof union({ Foo, Bar })`.
 }
 ```
