@@ -5,6 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
+import { action, base, payload, props } from "../dist/action";
 import { usingBase, usingEmpty, usingPayload, usingProps } from "./foobar-spec";
 import { guard } from "../dist/guard";
 
@@ -16,16 +17,27 @@ describe("guard", () => {
         const Foo = usingBase.Foo;
 
         it("should return true for matching actions", () => {
-            const action = new Foo(42);
-            expect(guard(Foo)(action)).to.be.true;
-            if (guard(Foo)(action)) {
-                expect(action.foo).to.equal(42);
+            const a = new Foo(42);
+            expect(guard(Foo)(a)).to.be.true;
+            if (guard(Foo)(a)) {
+                expect(a.foo).to.equal(42);
             }
         });
 
         it("should return false for non-matching actions", () => {
-            const action = new Bar(56);
-            expect(guard(Foo)(action)).to.be.false;
+            const a = new Bar(56);
+            expect(guard(Foo)(a)).to.be.false;
+        });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo(42);
+            expect(guard({ Foo, Bar })(a)).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]", base(class { constructor(public baz: number) {} }));
+            const a = new Baz(42);
+            expect(guard({ Foo, Bar })(a)).to.be.false;
         });
     });
 
@@ -35,13 +47,24 @@ describe("guard", () => {
         const Foo = usingEmpty.Foo;
 
         it("should return true for matching actions", () => {
-            const action = new Foo();
-            expect(guard(Foo)(action)).to.be.true;
+            const a = new Foo();
+            expect(guard(Foo)(a)).to.be.true;
         });
 
         it("should return false for non-matching actions", () => {
-            const action = new Bar();
-            expect(guard(Foo)(action)).to.be.false;
+            const a = new Bar();
+            expect(guard(Foo)(a)).to.be.false;
+        });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo();
+            expect(guard({ Foo, Bar })(a)).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]");
+            const a = new Baz();
+            expect(guard({ Foo, Bar })(a)).to.be.false;
         });
     });
 
@@ -51,16 +74,27 @@ describe("guard", () => {
         const Foo = usingPayload.Foo;
 
         it("should return true for matching actions", () => {
-            const action = new Foo({ foo: 42 });
-            expect(guard(Foo)(action)).to.be.true;
-            if (guard(Foo)(action)) {
-                expect(action.payload.foo).to.equal(42);
+            const a = new Foo({ foo: 42 });
+            expect(guard(Foo)(a)).to.be.true;
+            if (guard(Foo)(a)) {
+                expect(a.payload.foo).to.equal(42);
             }
         });
 
         it("should return false for non-matching actions", () => {
-            const action = new Bar({ bar: 56 });
-            expect(guard(Foo)(action)).to.be.false;
+            const a = new Bar({ bar: 56 });
+            expect(guard(Foo)(a)).to.be.false;
+        });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo({ foo: 42 });
+            expect(guard({ Foo, Bar })(a)).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]", payload<{ baz: number }>());
+            const a = new Baz({ baz: 42 });
+            expect(guard({ Foo, Bar })(a)).to.be.false;
         });
     });
 
@@ -70,16 +104,27 @@ describe("guard", () => {
         const Foo = usingProps.Foo;
 
         it("should return true for matching actions", () => {
-            const action = new Foo({ foo: 42 });
-            expect(guard(Foo)(action)).to.be.true;
-            if (guard(Foo)(action)) {
-                expect(action.foo).to.equal(42);
+            const a = new Foo({ foo: 42 });
+            expect(guard(Foo)(a)).to.be.true;
+            if (guard(Foo)(a)) {
+                expect(a.foo).to.equal(42);
             }
         });
 
         it("should return false for non-matching actions", () => {
-            const action = new Bar({ bar: 56 });
-            expect(guard(Foo)(action)).to.be.false;
+            const a = new Bar({ bar: 56 });
+            expect(guard(Foo)(a)).to.be.false;
+        });
+
+        it("should return true for matching unions", () => {
+            const a = new Foo({ foo: 42 });
+            expect(guard({ Foo, Bar })(a)).to.be.true;
+        });
+
+        it("should return false for non-matching unions", () => {
+            const Baz = action("Foobar [BAZ]", props<{ baz: number }>());
+            const a = new Baz({ baz: 42 });
+            expect(guard({ Foo, Bar })(a)).to.be.false;
         });
     });
 });

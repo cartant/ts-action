@@ -283,7 +283,7 @@ if (isType(action, Foo)) {
 }
 ```
 
-And:
+`isType` can also be passed multiple action creators:
 
 ```ts
 if (isType(action, { Foo, Bar })) {
@@ -299,7 +299,17 @@ For example, `Array.prototype.filter` accepts a type guard:
 
 ```ts
 const actions = [new Foo(), new Bar()];
-const filtered = actions.filter(guard(Foo)); // Inferred to be: const filtered: Foo[]
+const filtered = actions.filter(guard(Foo));
+// TypeScript will have narrowed the type of filtered, so the actions within
+// the array are strongly typed and individual properties can be accessed in
+// a type-safe manner.
+```
+
+`guard` can also be passed multiple action creators:
+
+```ts
+const actions = [new Foo(), new Bar(), new Baz()];
+const filtered = actions.filter(guard({ Foo, Bar }));
 ```
 
 <a name="reducer"></a>
