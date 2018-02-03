@@ -1,3 +1,10 @@
+<a name="6.0.0"></a>
+## [6.0.0](https://github.com/cartant/ts-action/compare/v5.0.0...v6.0.0) (2018-02-03)
+
+### Breaking Changes
+
+* **isType**: To support matching an arbitrary number of types, `isType` can now be passed either a single action creator or an object literal of action creators, so calls like `isType(action, Foo, Bar)` should be replaced with calls like `isType(action, { Foo, Bar })`. Calls that specify a single action creator - like `isType(action, Foo)` - do not need to be changed. ([0bbcf98](https://github.com/cartant/ts-action/commit/0bbcf98))
+
 <a name="5.0.0"></a>
 ## [5.0.0](https://github.com/cartant/ts-action/compare/v4.0.0...v5.0.0) (2018-02-03)
 
