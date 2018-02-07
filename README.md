@@ -25,7 +25,7 @@ For an in-depth look at TypeScript, Redux and `ts-action`, have a look at: [How 
 Install the package using npm:
 
 ```
-npm install ts-action --save-dev
+npm install ts-action --save
 ```
 
 TypeScript version 2.6 or later is required.
