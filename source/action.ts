@@ -4,8 +4,18 @@
  */
 /*tslint:disable:class-name*/
 
+// https://github.com/cartant/ts-action/issues/15
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setprototypeof#Polyfill
+const getPrototypeOf = Object.getPrototypeOf || function (obj: any): any {
+    return obj.__proto__;
+};
+const setPrototypeOf = Object.setPrototypeOf || function (obj: any, proto: any): any {
+    obj.__proto__ = proto;
+    return obj;
+};
+
 // https://github.com/reactjs/redux/blob/v3.7.2/src/createStore.js#L150-L155
-const literalPrototype = Object.getPrototypeOf({});
+const literalPrototype = getPrototypeOf({});
 
 export interface Ctor<T> { new (...args: any[]): T; }
 export type ActionCtor<T, B, C> = { readonly action: B & { readonly type: T }; readonly type: T; new (...args: any[]): { readonly type: T; }; } & C;
@@ -20,7 +30,7 @@ export function action<T extends string, B extends {}, C extends Ctor<{}>>(t: T,
         readonly type: T = t;
         constructor(...args: any[]) {
             super(...args);
-            Object.setPrototypeOf(this, literalPrototype);
+            setPrototypeOf(this, literalPrototype);
         }
     };
 }
