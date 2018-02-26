@@ -1,3 +1,10 @@
+<a name="6.0.2"></a>
+## [6.0.2](https://github.com/cartant/ts-action/compare/v6.0.1...v6.0.2) (2018-02-26)
+
+### Fixes
+
+* **action**: Add [ponyfills](https://github.com/sindresorhus/ponyfill) for `getPrototypeOf` and `setPrototypeOf`. ([b004a4c](https://github.com/cartant/ts-action/commit/b004a4c))
+
 <a name="6.0.1"></a>
 ## [6.0.1](https://github.com/cartant/ts-action/compare/v6.0.0...v6.0.1) (2018-02-04)
 
