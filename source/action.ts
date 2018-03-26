@@ -23,7 +23,7 @@ export type ActionCtor<T, B, C> = { readonly action: B & { readonly type: T }; r
 export function action<T extends string>(t: T): ActionCtor<T, {}, { new (): {}; }>;
 export function action<T extends string, B extends {}, C extends Ctor<{}>>(t: T, options: { _forBase: Ctor<B>, _forCtor: C }): ActionCtor<T, B, C>;
 export function action<T extends string, B extends {}, C extends Ctor<{}>>(t: T, options?: { _forBase: Ctor<B>, _forCtor: C }): ActionCtor<T, {} | B, { new (): {}; } | C> {
-    const BaseCtor = options ? options._forCtor : empty()._forCtor;
+    const BaseCtor: Ctor<{}> = options ? options._forCtor : empty()._forCtor;
     return class extends BaseCtor {
         static readonly action: B & { readonly type: T } = undefined!;
         static readonly type: T = t;
