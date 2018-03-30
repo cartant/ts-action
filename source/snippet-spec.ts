@@ -3,18 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { Compiler, snippet } from "ts-snippet";
+import { reuseCompiler } from "ts-snippet";
 
-const compiler = new Compiler({
+export const expectSnippet = reuseCompiler(code => `
+    import { action, base, Ctor, empty, on, payload, props, union } from "./dist";
+    ${code}
+`, {
     moduleResolution: "node",
     target: "es2015"
 });
-
-export const expectSnippet = (code: string) => snippet({
-    "research.ts": `
-        import { action, base, Ctor, empty, on, payload, props, union } from "./dist";
-        ${code}
-    `
-}, compiler).expect("research.ts");
 
 export const timeout = 5000;
