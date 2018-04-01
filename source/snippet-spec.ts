@@ -3,9 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { reuseCompiler } from "ts-snippet";
+import { expecter } from "ts-snippet";
 
-export const expectSnippet = reuseCompiler(code => `
+export const expectSnippet = expecter(code => `
     import { action, base, Ctor, empty, on, payload, props, union } from "./dist";
     ${code}
 `, {
