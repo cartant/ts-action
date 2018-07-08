@@ -5,7 +5,7 @@
 
 import { Action, ActionCreator } from "./interfaces";
 
-export type Reducer<S> = (state: S, action: Action<string>) => S;
+export type Reducer<S> = (state: S | undefined, action: Action<string>) => S;
 
 export function on<T extends string, A extends Action<string>, S>(creator: ActionCreator<T, A>, reducer: (state: S, action: A) => S): { reducer: Reducer<S>, type: string } {
     const r = reducer as Reducer<S>;
