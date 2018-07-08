@@ -1,3 +1,10 @@
+<a name="6.0.3"></a>
+## [6.0.3](https://github.com/cartant/ts-action/compare/v6.0.2...v6.0.3) (2018-07-09)
+
+### Fixes
+
+* **reducer**: Allow the `state` parameter in `Reducer` to be `undefined`. ([b8dab43](https://github.com/cartant/ts-action/commit/b8dab43))
+
 <a name="6.0.2"></a>
 ## [6.0.2](https://github.com/cartant/ts-action/compare/v6.0.1...v6.0.2) (2018-02-26)
 
