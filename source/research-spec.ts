@@ -161,11 +161,11 @@ describe("research", function (): void {
             `).toInfer("result", "{}");
         });
 
-        it("should infer {} if type parameters are partially specified", () => {
+        it("should infer string if type parameters are partially specified and extends string is used", () => {
             expectSnippet(`
                 const get = <T, N extends string>(options: { readonly name: N, t: T }) => options.name;
                 const result = get<number>({ name: "alice", t: 42 });
-            `).toInfer("result", "{}");
+            `).toInfer("result", "string");
         });
 
         it("should use the default if type parameters are partially specified", () => {

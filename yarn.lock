@@ -18,14 +18,14 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.4.tgz#5ca073b330d90b4066d6ce18f60d57f2084ce8ca"
 
 "@types/lodash.isplainobject@^4.0.0":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@types/lodash.isplainobject/-/lodash.isplainobject-4.0.3.tgz#dbe3a639411f63c9dfada4dfa653aa138c8178d2"
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@types/lodash.isplainobject/-/lodash.isplainobject-4.0.4.tgz#ac28008a145ea19ac9f6dc46045aa92e11a09322"
   dependencies:
     "@types/lodash" "*"
 
 "@types/lodash@*":
-  version "4.14.112"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.112.tgz#4a8d8e5716b97a1ac01fe1931ad1e4cba719de5a"
+  version "4.14.115"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.115.tgz#54d171b2ce12c058742443b5f6754760f701b8f9"
 
 "@types/mocha@^5.0.0":
   version "5.2.5"
@@ -1203,8 +1203,8 @@ trim-newlines@^2.0.0:
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-2.0.0.tgz#b403d0b91be50c331dfc4b82eeceb22c3de16d20"
 
 ts-snippet@^3.0.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-3.1.1.tgz#f92a6e16e02e06c46de507cb25541c18dbfae8bc"
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-3.1.2.tgz#317aa5485acba0d2ec46c1f82ec8501a4a6dbbeb"
   dependencies:
     tsutils "^2.25.0"
 
@@ -1230,8 +1230,8 @@ tslint@^5.8.0:
     tsutils "^2.27.2"
 
 tsutils@^2.25.0, tsutils@^2.27.2:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.28.0.tgz#6bd71e160828f9d019b6f4e844742228f85169a1"
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
   dependencies:
     tslib "^1.8.1"
 
@@ -1239,9 +1239,9 @@ type-detect@^4.0.0:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
 
-typescript@~2.9.1:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@~3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
 union-value@^1.0.0:
   version "1.0.0"
