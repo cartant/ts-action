@@ -314,7 +314,7 @@ describe("research", function (): void {
                 expectSnippet(`
                     const options = props<{ foo: number }>();
                     const instance = new options._forCtor({ foo: "42" });
-                `).toFail(/'{ foo: string; }' is not assignable to parameter of type '{ foo: number; }'/);
+                `).toFail(/'string' is not assignable to type 'number'/);
             });
         });
     });
