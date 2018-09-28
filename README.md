@@ -332,7 +332,7 @@ const initialState = {};
 
 const fooBarReducer = reducer<State>([
   on(Foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
-  on(Bar, (state, { payload }) => ({ ...state, bar: payload.bar }))
+  on(Bar, (state, { payload }) => ({ ...state, bar: payload.bar })),
   on({ FooError, BarError }, (state, { payload }) => ({ ...state, error: payload.error }))
 ], initialState);
 ```
