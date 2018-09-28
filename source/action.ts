@@ -58,6 +58,6 @@ export function props<P extends object>() {
     return { _forBase: BaseCtor, _forCtor: BaseCtor };
 }
 
-export function union<T extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(ctors: T): T[keyof T]["action"] {
+export function union<C extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(ctors: C): C[keyof C]["action"] {
     return undefined!;
 }

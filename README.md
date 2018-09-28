@@ -71,12 +71,12 @@ import { action, payload, union } from "ts-action";
 
 const Foo = action("FOO", payload<{ foo: number }>());
 const Bar = action("BAR", payload<{ bar: number }>());
-const All = union({ Foo, Bar });
+const Both = union({ Foo, Bar });
 
 interface State { foo?: number; bar?: number; }
 const initialState = {};
 
-function fooBarReducer(state: State = initialState, action: typeof All): State {
+function fooBarReducer(state: State = initialState, action: typeof Both): State {
   switch (action.type) {
   case Foo.type:
     return { ...state, foo: action.payload.foo };
@@ -255,8 +255,8 @@ The `base` method offers more control over property defaults, etc. as the base c
 The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed an object literal of action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
 
 ```ts
-const All = union({ Foo, Bar });
-function reducer(state: any = [], action: typeof All): any {
+const Both = union({ Foo, Bar });
+function reducer(state: any = [], action: typeof Both): any {
   switch (action.type) {
   case Foo.type:
     return ... // Here the action will be narrowed to Foo.

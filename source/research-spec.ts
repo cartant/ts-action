@@ -116,8 +116,8 @@ describe("research", function (): void {
             expectSnippet(`
                 const A = action("[research] A", payload<{ a: number }>());
                 const B = action("[research] B", empty());
-                const All = union({ A, B });
-                const narrow = (action: typeof All) => {
+                const Both = union({ A, B });
+                const narrow = (action: typeof Both) => {
                     if (action.type === A.type) {
                         console.log(action.type, action.payload.a);
                     } else {
