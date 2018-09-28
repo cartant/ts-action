@@ -138,7 +138,6 @@ const fooBarReducer = reducer<State>([
 * [isType](#isType)
 * [guard](#guard)
 * [reducer](#reducer)
-* [on](#on)
 
 <a name="action"></a>
 
@@ -316,24 +315,24 @@ const filtered = actions.filter(guard({ Foo, Bar }));
 
 ### reducer
 
-```ts
-function reducer<S>(
-  ons: { reducer: Reducer<S>, type: string }[],
-  initialState: S
-): Reducer<S>;
-```
+The `reducer` method creates a reducer function out of the combined, action-specific reducers specified in the array. The array should be populated with the results of calls to the `on` method.
 
-The `reducer` method creates a reducer function out of the combined, action-specific reducers specified in the array.
-
-<a name="on"></a>
-
-### on
+The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the types of one or more actions creators.
 
 ```ts
-function on<T extends string, A extends Action<string>, S>(
-  creator: ActionCreator<T, A>,
-  reducer: (state: S, action: A) => S
-): { reducer: Reducer<S>, type: string };
-```
+import { action, on, payload, reducer } from "ts-action";
 
-The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the action's type - that can be passed to the `reducer` method.
+const Foo = action("FOO", payload<{ foo: number }>());
+const Bar = action("BAR", payload<{ bar: number }>());
+const FooError = action("FOO_ERROR", payload<{ foo: number, error: {} }>());
+const BarError = action("BAR_ERROR", payload<{ bar: number, error: {} }>());
+
+interface State { foo?: number; bar?: number; error?: {} }
+const initialState = {};
+
+const fooBarReducer = reducer<State>([
+  on(Foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
+  on(Bar, (state, { payload }) => ({ ...state, bar: payload.bar }))
+  on({ FooError, BarError }, (state, { payload }) => ({ ...state, error: payload.error }))
+], initialState);
+```
