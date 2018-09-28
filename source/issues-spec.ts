@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { action, base, empty, payload, props, union } from "../dist/action";
+import { action, base, empty, payload, props, union } from "./action";
 
 describe.skip("issues", function (): void {
 

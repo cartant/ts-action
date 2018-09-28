@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { Action } from "../dist/interfaces";
-import { on, reducer, Reducer } from "../dist/reducer";
+import { Action } from "./interfaces";
+import { on, reducer, Reducer } from "./reducer";
 import { usingBase } from "./foobar-spec";
 import { expectSnippet, timeout } from "./snippet-spec";
 

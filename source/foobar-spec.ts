@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { action, base, payload, props } from "../dist/action";
+import { action, base, payload, props } from "./action";
 
 export const usingBase = {
     Bar: action("[foobar] BAR", base(class { constructor(public bar: number) {} })),
