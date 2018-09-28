@@ -1,3 +1,17 @@
+<a name="7.0.0"></a>
+## [7.0.0](https://github.com/cartant/ts-action/compare/v6.0.3...v7.0.0) (2018-09-29)
+
+## Features
+
+* Support passing multiple action creators to `on`. ([11e3e73](https://github.com/cartant/ts-action/commit/11e3e73))
+
+### Breaking changes
+
+To support passing multiple action creators to `on`, the return type was changed - which is technically a breaking change. However, if you are using `on` and `reducer` in the manner described in the README, this change will not affect you.
+
+* Changed the return type of `on` to support multiple actions.
+* Removed the `ActionCreator` interface.
+
 <a name="6.0.3"></a>
 ## [6.0.3](https://github.com/cartant/ts-action/compare/v6.0.2...v6.0.3) (2018-07-09)
 
