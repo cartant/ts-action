@@ -3,6 +3,4 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-export interface Action<T extends string> {
-    type: T;
-}
+import * as action from "./action";

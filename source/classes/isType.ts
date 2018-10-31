@@ -3,8 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
+import { Action } from "../common/types";
 import { ActionCtor, Ctor } from "./action";
-import { Action } from "./interfaces";
 
 export function isType<T extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(action: Action<string>, ctors: T): action is T[keyof T]["action"];
 export function isType<T extends ActionCtor<string, {}, Ctor<{}>>>(action: Action<string>, ctor: T): action is T["action"];
