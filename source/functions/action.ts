@@ -37,3 +37,6 @@ if (a.error) {
 } else {
     const p = a.payload;
 }
+
+function type<T extends string, R extends object>(type: T, rest: R): ({ type: T } & R) { return { type, ...(rest as any) } as any; }
+const foo = (bar: string, baz: number) => type("FOO", { bar, baz });
