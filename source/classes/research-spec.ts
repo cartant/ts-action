@@ -292,28 +292,28 @@ describe("research", function (): void {
             it("should enforce ctor parameters for base", () => {
                 expectSnippet(`
                     const options = base(class { constructor(public foo: number) {} });
-                    const instance = new options._forCtor("42");
+                    const instance = new options._ctor("42");
                 `).toFail(/not assignable to parameter of type 'number'/);
             });
 
             it("should enforce ctor parameters for empty", () => {
                 expectSnippet(`
                     const options = empty();
-                    const instance = new options._forCtor("42");
+                    const instance = new options._ctor("42");
                 `).toFail(/Expected 0 arguments/);
             });
 
             it("should enforce ctor parameters for payload", () => {
                 expectSnippet(`
                     const options = payload<number>();
-                    const instance = new options._forCtor("42");
+                    const instance = new options._ctor("42");
                 `).toFail(/not assignable to parameter of type 'number'/);
             });
 
             it("should enforce ctor parameters for props", () => {
                 expectSnippet(`
                     const options = props<{ foo: number }>();
-                    const instance = new options._forCtor({ foo: "42" });
+                    const instance = new options._ctor({ foo: "42" });
                 `).toFail(/'string' is not assignable to type 'number'/);
             });
         });
