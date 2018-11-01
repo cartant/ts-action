@@ -3,40 +3,39 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { ParametersType } from "../common/types";
+import { FunctionWithParametersType, ParametersType } from "../classes";
 
-export function action_func<T extends string, F extends (...args: any[]) => any>(type: T, f: F): (...args: ParametersType<F>) => (ReturnType<F> & { type: T }) {
-    return (...args) => ({ ...f(...args), type });
+export function fsa<P, M = unknown>(): { _as: "fsa", _p: P, _m: M } {
+    return { _as: "fsa" } as any;
 }
 
-export function action_payload<T extends string, P>(type: T, options: { _payload: P }): (payload: P) => { payload: P, type: T } {
-    return payload => ({ payload, type });
+export function payload<P>(): { _as: "payload", _p: P } {
+    return { _as: "payload" } as any;
 }
 
-export function action_props<T extends string, P extends object>(type: T, options: { _props: P }): (props: P) => (P | { type: T }) {
-    return props => ({ ...(props as {}), type });
+export function props<P>(): { _as: "props", _p: P } {
+    return { _as: "props" } as any;
 }
 
-export function action_fsa<T extends string, P, M>(type: T, options: { _fsaPayload: P, _fsaMeta: M }): (payload: P | Error, meta?: M) => ({ error: false, meta?: M, payload: P, type: T } | { error: true, meta?: M, payload: Error, type: T }) {
-    return undefined!;
+export function action<T extends string, C extends (...args: any[]) => object>(type: T, creator: C): FunctionWithParametersType<ParametersType<C>, ReturnType<C> & { type: T }>;
+export function action<T extends string, P, M>(type: T, config: { _as: "fsa", _p: P, _m: M }): (payload: P | Error, meta?: M) => ({ error: false, meta?: M, payload: P, type: T } | { error: true, meta?: M, payload: Error, type: T });
+export function action<T extends string, P>(type: T, config: { _as: "payload", _p: P }): (payload: P) => { payload: P, type: T };
+export function action<T extends string, P extends object>(type: T, config: { _as: "props", _p: P }): (props: P) => (P | { type: T });
+export function action<T extends string>(type: T, config: any): (...args: any[]) => any {
+    switch (config._as) {
+    case "fsa":
+        return (payload, meta) => payload instanceof Error
+            ? { error: true, meta, payload, type }
+            : { error: false, meta, payload, type };
+    case "payload":
+        return payload => ({ payload, type });
+    case "props":
+        return props => ({ ...props, type });
+    default:
+        return (...args) => ({ ...config(...args), type });
+    }
 }
 
-export function payload<P>(): { _payload: P } { return undefined!; }
-export function props<P>(): { _props: P } { return undefined!; }
-export function fsa<P, M = unknown>(): { _fsaPayload: P, _fsaMeta: M } { return undefined!; }
-
-const fromFunc = action_func("FOO", (name: string) => ({ name }));
-const fromPayload = action_payload("FOO", payload<{ name: string }>());
-const fromProps = action_props("FOO", props<{ name: "alice" }>());
-const fromFsa = action_fsa("FOO", fsa<string>());
-type FooFsa = ReturnType<typeof fromFsa>;
-
-declare const a: FooFsa;
-if (a.error) {
-    const p = a.payload;
-} else {
-    const p = a.payload;
+export function type<T extends string, R extends object>(type: T, rest: R): ({ type: T } & R) {
+    return { type, ...(rest as any) } as any;
 }
-
-function type<T extends string, R extends object>(type: T, rest: R): ({ type: T } & R) { return { type, ...(rest as any) } as any; }
-const foo = (bar: string, baz: number) => type("FOO", { bar, baz });
