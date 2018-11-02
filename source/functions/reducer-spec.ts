@@ -6,7 +6,7 @@
 
 import { expect } from "chai";
 import { on, reducer } from "./reducer";
-import { usingBase } from "./foobar-spec";
+import { usingProps } from "./foobar-spec";
 import { expectSnippet, timeout } from "./snippet-spec";
 import { union } from "./action";
 
@@ -17,32 +17,32 @@ describe("classes/reducer", function (): void {
 
     describe("base", () => {
 
-        const { Bar, Foo } = usingBase;
+        const { bar, foo } = usingProps;
 
         describe("on", () => {
 
             it("should enforce action property types", () => {
                 expectSnippet(`
-                    const Foo = action("FOO", props<{ foo: number }>());
-                    on(Foo, (state, action) => { const foo: string = action.foo; return state; });
+                    const foo = action("FOO", props<{ foo: number }>());
+                    on(foo, (state, action) => { const foo: string = action.foo; return state; });
                 `).toFail(/'number' is not assignable to type 'string'/);
             });
 
             it("should enforce action property names", () => {
                 expectSnippet(`
-                    const Foo = action("FOO", props<{ foo: number }>());
-                    on(Foo, (state, action) => { const bar: string = action.bar; return state; });
+                    const foo = action("FOO", props<{ foo: number }>());
+                    on(foo, (state, action) => { const bar: string = action.bar; return state; });
                 `).toFail(/'bar' does not exist on type/);
             });
 
             it("should support reducers with multiple actions", () => {
-                const Both = union({ Bar, Foo });
+                const Both = union({ bar, foo });
                 const func = (state: {}, action: typeof Both) => ({});
-                const result = on({ Bar, Foo }, func);
+                const result = on({ bar, foo }, func);
                 expect(result).to.have.property("reducer", func);
                 expect(result).to.have.property("types");
-                expect(result.types).to.contain(Bar.type);
-                expect(result.types).to.contain(Foo.type);
+                expect(result.types).to.contain(bar.type);
+                expect(result.types).to.contain(foo.type);
             });
         });
 
@@ -53,8 +53,8 @@ describe("classes/reducer", function (): void {
                 interface State { foo?: number; bar?: number; }
 
                 const fooBarReducer = reducer<State>([
-                    on(Foo, (state, { foo }) => ({ ...state, foo })),
-                    on(Bar, (state, { bar }) => ({ ...state, bar }))
+                    on(foo, (state, { foo }) => ({ ...state, foo })),
+                    on(bar, (state, { bar }) => ({ ...state, bar }))
                 ], {});
 
                 expect(fooBarReducer).to.be.a("function");
@@ -62,10 +62,10 @@ describe("classes/reducer", function (): void {
                 let state = fooBarReducer(undefined, { type: "UNKNOWN" });
                 expect(state).to.deep.equal({});
 
-                state = fooBarReducer(state, new Foo(42));
+                state = fooBarReducer(state, foo({ foo: 42 }));
                 expect(state).to.deep.equal({ foo: 42 });
 
-                state = fooBarReducer(state, new Bar(54));
+                state = fooBarReducer(state, bar({ bar: 54 }));
                 expect(state).to.deep.equal({ foo: 42, bar: 54 });
             });
 
@@ -74,7 +74,7 @@ describe("classes/reducer", function (): void {
                 type State = string[];
 
                 const fooBarReducer = reducer<State>([
-                    on({ Bar, Foo }, (state, { type }) => [...state, type])
+                    on({ bar, foo }, (state, { type }) => [...state, type])
                 ], []);
 
                 expect(fooBarReducer).to.be.a("function");
@@ -82,10 +82,10 @@ describe("classes/reducer", function (): void {
                 let state = fooBarReducer(undefined, { type: "UNKNOWN" });
                 expect(state).to.deep.equal([]);
 
-                state = fooBarReducer(state, new Foo(42));
+                state = fooBarReducer(state, foo({ foo: 42 }));
                 expect(state).to.deep.equal(["[foobar] FOO"]);
 
-                state = fooBarReducer(state, new Bar(54));
+                state = fooBarReducer(state, bar({ bar: 54 }));
                 expect(state).to.deep.equal(["[foobar] FOO", "[foobar] BAR"]);
             });
         });

@@ -6,7 +6,7 @@
 import { expecter } from "ts-snippet";
 
 export const expectSnippet = expecter(code => `
-    import { action, empty, fsa, payload, props, union } from "./source/functions";
+    import { action, empty, fsa, on, payload, props, reducer, union } from "./source/functions";
     ${code}
 `, {
     moduleResolution: "node",

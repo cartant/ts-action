@@ -6,3 +6,5 @@
 export * from "../common/types";
 export * from "./action";
 export * from "./guard";
+export * from "./isType";
+export * from "./reducer";
