@@ -7,7 +7,7 @@
 import { expect } from "chai";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("research", function (): void {
+describe("classes/research", function (): void {
 
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(timeout);

@@ -9,7 +9,7 @@ import isPlainObject = require("lodash.isplainobject");
 import { action, base, empty, payload, props, union } from "./action";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("action", function (): void {
+describe("classes/action", function (): void {
 
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(timeout);

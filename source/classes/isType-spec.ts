@@ -8,7 +8,7 @@ import { expect } from "chai";
 import { usingBase, usingEmpty, usingPayload, usingProps } from "./foobar-spec";
 import { isType } from "./isType";
 
-describe("isType", () => {
+describe("classes/isType", () => {
 
     describe("base", () => {
 

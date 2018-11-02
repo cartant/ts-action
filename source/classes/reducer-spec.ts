@@ -10,7 +10,7 @@ import { usingBase } from "./foobar-spec";
 import { expectSnippet, timeout } from "./snippet-spec";
 import { union } from "./action";
 
-describe("reducer", function (): void {
+describe("classes/reducer", function (): void {
 
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(timeout);

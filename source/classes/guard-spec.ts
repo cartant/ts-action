@@ -8,7 +8,7 @@ import { expect } from "chai";
 import { usingBase, usingEmpty, usingPayload, usingProps } from "./foobar-spec";
 import { guard } from "./guard";
 
-describe("guard", () => {
+describe("classes/guard", () => {
 
     describe("base", () => {
 

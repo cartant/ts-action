@@ -7,7 +7,7 @@
 import { expect } from "chai";
 import { action, base, empty, payload, props, union } from "./action";
 
-describe.skip("issues", function (): void {
+describe.skip("classes/issues", function (): void {
 
     describe("issue-14", () => {
 
