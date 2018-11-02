@@ -23,7 +23,7 @@ describe("classes/isType", () => {
         });
 
         it("should return false for non-matching actions", () => {
-            const bar = new Bar(56);
+            const bar = new Bar(54);
             expect(isType(bar, Foo)).to.be.false;
         });
 
@@ -76,7 +76,7 @@ describe("classes/isType", () => {
         });
 
         it("should return false for non-matching actions", () => {
-            const bar = new Bar({ bar: 56 });
+            const bar = new Bar({ bar: 54 });
             expect(isType(bar, Foo)).to.be.false;
         });
 
@@ -104,7 +104,7 @@ describe("classes/isType", () => {
         });
 
         it("should return false for non-matching actions", () => {
-            const bar = new Bar({ bar: 56 });
+            const bar = new Bar({ bar: 54 });
             expect(isType(bar, Foo)).to.be.false;
         });
 

@@ -6,37 +6,37 @@
 import { action, fsa, payload, props, type } from "./action";
 
 export const usingCreator = {
-    Bar: action("[foobar] BAR", (bar: number) => ({ bar })),
-    Baz: action("[foobar] BAZ", (baz: number) => ({ baz })),
-    Foo: action("[foobar] FOO", (foo: number) => ({ foo }))
+    bar: action("[foobar] BAR", (bar: number) => ({ bar })),
+    baz: action("[foobar] BAZ", (baz: number) => ({ baz })),
+    foo: action("[foobar] FOO", (foo: number) => ({ foo }))
 };
 
 export const usingEmpty = {
-    Bar: action("[foobar] BAR"),
-    Baz: action("[foobar] BAZ"),
-    Foo: action("[foobar] FOO")
+    bar: action("[foobar] BAR"),
+    baz: action("[foobar] BAZ"),
+    foo: action("[foobar] FOO")
 };
 
 export const usingFsa = {
-    Bar: action("[foobar] BAR", fsa<{ bar: number }>()),
-    Baz: action("[foobar] BAZ", fsa<{ baz: number }>()),
-    Foo: action("[foobar] FOO", fsa<{ foo: number }>())
+    bar: action("[foobar] BAR", fsa<{ bar: number }>()),
+    baz: action("[foobar] BAZ", fsa<{ baz: number }>()),
+    foo: action("[foobar] FOO", fsa<{ foo: number }>())
 };
 
 export const usingPayload = {
-    Bar: action("[foobar] BAR", payload<{ bar: number }>()),
-    Baz: action("[foobar] BAZ", payload<{ baz: number }>()),
-    Foo: action("[foobar] FOO", payload<{ foo: number }>())
+    bar: action("[foobar] BAR", payload<{ bar: number }>()),
+    baz: action("[foobar] BAZ", payload<{ baz: number }>()),
+    foo: action("[foobar] FOO", payload<{ foo: number }>())
 };
 
 export const usingProps = {
-    Bar: action("[foobar] BAR", props<{ bar: number }>()),
-    Baz: action("[foobar] BAZ", props<{ baz: number }>()),
-    Foo: action("[foobar] FOO", props<{ foo: number }>())
+    bar: action("[foobar] BAR", props<{ bar: number }>()),
+    baz: action("[foobar] BAZ", props<{ baz: number }>()),
+    foo: action("[foobar] FOO", props<{ foo: number }>())
 };
 
 export const usingType = {
-    Bar: (bar: number) => type("[foobar] BAR", { bar }),
-    Baz: (baz: number) => type("[foobar] BAZ", { baz }),
-    Foo: (foo: number) => type("[foobar] FOO", { foo })
+    bar: (bar: number) => type("[foobar] BAR", { bar }),
+    baz: (baz: number) => type("[foobar] BAZ", { baz }),
+    foo: (foo: number) => type("[foobar] FOO", { foo })
 };

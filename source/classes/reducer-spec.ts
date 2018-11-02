@@ -65,8 +65,8 @@ describe("classes/reducer", function (): void {
                 state = fooBarReducer(state, new Foo(42));
                 expect(state).to.deep.equal({ foo: 42 });
 
-                state = fooBarReducer(state, new Bar(56));
-                expect(state).to.deep.equal({ foo: 42, bar: 56 });
+                state = fooBarReducer(state, new Bar(54));
+                expect(state).to.deep.equal({ foo: 42, bar: 54 });
             });
 
             it("should support reducers with multiple actions", () => {
@@ -85,7 +85,7 @@ describe("classes/reducer", function (): void {
                 state = fooBarReducer(state, new Foo(42));
                 expect(state).to.deep.equal(["[foobar] FOO"]);
 
-                state = fooBarReducer(state, new Bar(56));
+                state = fooBarReducer(state, new Bar(54));
                 expect(state).to.deep.equal(["[foobar] FOO", "[foobar] BAR"]);
             });
         });

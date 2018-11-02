@@ -16,59 +16,59 @@ describe("functions/action", function (): void {
     describe("creator", () => {
 
         it("should create an action", () => {
-            const createFoo = action("FOO", (foo: number) => ({ foo }));
-            const foo = createFoo(42);
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("foo", 42);
+            const foo = action("FOO", (foo: number) => ({ foo }));
+            const fooAction = foo(42);
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.have.property("foo", 42);
         });
 
         it("should narrow the action", () => {
-            const createFoo = action("FOO", (foo: number) => ({ foo }));
-            const createBar = action("BAR", (bar: number) => ({ bar }));
-            const Both = union({ createFoo, createBar });
+            const foo = action("FOO", (foo: number) => ({ foo }));
+            const bar = action("BAR", (bar: number) => ({ bar }));
+            const Both = union({ foo, bar });
             const narrow = (action: typeof Both) => {
-                if (action.type === createFoo.type) {
+                if (action.type === foo.type) {
                     expect(action.foo).to.equal(42);
                 } else {
                     throw new Error("Should not get here.");
                 }
             };
-            narrow(createFoo(42));
+            narrow(foo(42));
         });
 
         it("should be serializable", () => {
-            const createFoo = action("FOO", (foo: number) => ({ foo }));
-            const foo = createFoo(42);
-            const text = JSON.stringify(foo);
+            const foo = action("FOO", (foo: number) => ({ foo }));
+            const fooAction = foo(42);
+            const text = JSON.stringify(fooAction);
             expect(JSON.parse(text)).to.deep.equal({ foo: 42, type: "FOO" });
         });
 
         it("should support toString", () => {
-            const createFoo = action("FOO", (foo: number) => ({ foo }));
-            const foo = createFoo(42);
-            expect(foo).to.respondTo("toString");
+            const foo = action("FOO", (foo: number) => ({ foo }));
+            const fooAction = foo(42);
+            expect(fooAction).to.respondTo("toString");
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const createFoo = action("FOO", (foo: number) => ({ foo }));
-                const foo = createFoo("42");
+                const foo = action("FOO", (foo: number) => ({ foo }));
+                const fooAction = foo("42");
             `).toFail(/not assignable to parameter of type 'number'/);
         });
 
         it("should enforce action property types", () => {
             expectSnippet(`
-                const createFoo = action("FOO", (foo: number) => ({ foo }));
-                const foo = createFoo(42);
-                const value: string = foo.foo;
+                const foo = action("FOO", (foo: number) => ({ foo }));
+                const fooAction = foo(42);
+                const value: string = fooAction.foo;
             `).toFail(/'number' is not assignable to type 'string'/);
         });
 
         it("should enforce action property names", () => {
             expectSnippet(`
-                const createFoo = action("FOO", (foo: number) => ({ foo }));
-                const foo = createFoo(42);
-                const value = foo.bar;
+                const foo = action("FOO", (foo: number) => ({ foo }));
+                const fooAction = foo(42);
+                const value = fooAction.bar;
             `).toFail(/'bar' does not exist on type/);
         });
     });
@@ -76,66 +76,66 @@ describe("functions/action", function (): void {
     describe("empty", () => {
 
         it("should default to empty", () => {
-            const createFoo = action("FOO");
-            const foo = createFoo();
-            expect(foo).to.have.property("type", "FOO");
-            expect(Object.keys(foo)).to.deep.equal(["type"]);
+            const foo = action("FOO");
+            const fooAction = foo();
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(Object.keys(fooAction)).to.deep.equal(["type"]);
         });
 
         it("should create an action", () => {
-            const createFoo = action("FOO", empty());
-            const foo = createFoo();
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.not.have.property("payload");
+            const foo = action("FOO", empty());
+            const fooAction = foo();
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.not.have.property("payload");
         });
 
         it("should narrow the action", () => {
-            const createFoo = action("FOO", empty());
-            const createBar = action("BAR", (bar: number) => ({ bar }));
-            const Both = union({ createFoo, createBar });
+            const foo = action("FOO", empty());
+            const bar = action("BAR", (bar: number) => ({ bar }));
+            const Both = union({ foo, bar });
             const narrow = (action: typeof Both) => {
-                if (action.type === createFoo.type) {
+                if (action.type === foo.type) {
                     throw new Error("Should not get here.");
                 } else {
                     expect(action.bar).to.equal(42);
                 }
             };
-            narrow(createBar(42));
+            narrow(bar(42));
         });
 
         it("should be serializable", () => {
-            const createFoo = action("FOO", empty());
-            const foo = createFoo();
-            const text = JSON.stringify(foo);
+            const foo = action("FOO", empty());
+            const fooAction = foo();
+            const text = JSON.stringify(fooAction);
             expect(JSON.parse(text)).to.deep.equal({ type: "FOO" });
         });
 
         it("should support toString", () => {
-            const createFoo = action("FOO", empty());
-            const foo = createFoo();
-            expect(foo).to.respondTo("toString");
+            const foo = action("FOO", empty());
+            const fooAction = foo();
+            expect(fooAction).to.respondTo("toString");
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const createFoo = action("FOO", empty());
-                const foo = createFoo("42");
+                const foo = action("FOO", empty());
+                const fooAction = foo("42");
             `).toFail(/Expected 0 arguments/);
         });
 
         it("should enforce action property types", () => {
             expectSnippet(`
-                const createFoo = action("FOO", empty());
-                const foo = createFoo();
-                const value: string = foo.foo;
+                const foo = action("FOO", empty());
+                const fooAction = foo();
+                const value: string = fooAction.foo;
             `).toFail(/'foo' does not exist/);
         });
 
         it("should enforce action property names", () => {
             expectSnippet(`
-                const createFoo = action("FOO", empty());
-                const foo = createFoo();
-                const value = foo.bar;
+                const foo = action("FOO", empty());
+                const fooAction = foo();
+                const value = fooAction.bar;
             `).toFail(/'bar' does not exist on type/);
         });
     });
@@ -143,19 +143,19 @@ describe("functions/action", function (): void {
     describe("fsa", () => {
 
         it("should create an action", () => {
-            const createFoo = action("FOO", fsa<number>());
-            const foo = createFoo(42);
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("error", false);
-            expect(foo).to.have.property("payload", 42);
+            const foo = action("FOO", fsa<number>());
+            const fooAction = foo(42);
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.have.property("error", false);
+            expect(fooAction).to.have.property("payload", 42);
         });
 
         it("should narrow the action", () => {
-            const createFoo = action("FOO", fsa<{ foo: number }>());
-            const createBar = action("BAR", fsa<{ bar: number }>());
-            const Both = union({ createFoo, createBar });
+            const foo = action("FOO", fsa<{ foo: number }>());
+            const bar = action("BAR", fsa<{ bar: number }>());
+            const Both = union({ foo, bar });
             const narrow = (action: typeof Both) => {
-                if (action.type === createFoo.type) {
+                if (action.type === foo.type) {
                     if (action.error) {
                         throw new Error("Should not get here.");
                     } else {
@@ -165,60 +165,60 @@ describe("functions/action", function (): void {
                     throw new Error("Should not get here.");
                 }
             };
-            narrow(createFoo({ foo: 42 }));
+            narrow(foo({ foo: 42 }));
         });
 
         it("should support error payloads", () => {
-            const createFoo = action("FOO", fsa<number>());
-            const foo = createFoo(new Error("Kaboom!"));
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("error", true);
-            expect(foo).to.have.property("payload");
-            expect(foo.payload).to.be.an.instanceof(Error);
+            const foo = action("FOO", fsa<number>());
+            const fooAction = foo(new Error("Kaboom!"));
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.have.property("error", true);
+            expect(fooAction).to.have.property("payload");
+            expect(fooAction.payload).to.be.an.instanceof(Error);
         });
 
         it("should support a meta property", () => {
-            const createFoo = action("FOO", fsa<number>());
-            const foo = createFoo(42, 54);
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("error", false);
-            expect(foo).to.have.property("payload", 42);
-            expect(foo).to.have.property("meta", 54);
+            const foo = action("FOO", fsa<number>());
+            const fooAction = foo(42, 54);
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.have.property("error", false);
+            expect(fooAction).to.have.property("payload", 42);
+            expect(fooAction).to.have.property("meta", 54);
         });
 
         it("should be serializable", () => {
-            const createFoo = action("FOO", fsa<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            const text = JSON.stringify(foo);
+            const foo = action("FOO", fsa<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            const text = JSON.stringify(fooAction);
             expect(JSON.parse(text)).to.deep.equal({ error: false, payload: { foo: 42 }, type: "FOO" });
         });
 
         it("should support toString", () => {
-            const createFoo = action("FOO", fsa<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            expect(foo).to.respondTo("toString");
+            const foo = action("FOO", fsa<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            expect(fooAction).to.respondTo("toString");
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const createFoo = action("FOO", fsa<number>());
-                const foo = createFoo("42");
+                const foo = action("FOO", fsa<number>());
+                const fooAction = foo("42");
             `).toFail(/not assignable to parameter of type 'number | Error'/);
         });
 
         it("should enforce action property types", () => {
             expectSnippet(`
-                const createFoo = action("FOO", fsa<number>());
-                const foo = createFoo(42);
-                const value: string = foo.payload;
+                const foo = action("FOO", fsa<number>());
+                const fooAction = foo(42);
+                const value: string = fooAction.payload;
             `).toFail(/'number' is not assignable to type 'string'/);
         });
 
         it("should enforce action property names", () => {
             expectSnippet(`
-                const createFoo = action("FOO", fsa<number>());
-                const foo = createFoo(42);
-                const value = foo.bar;
+                const foo = action("FOO", fsa<number>());
+                const fooAction = foo(42);
+                const value = fooAction.bar;
             `).toFail(/'bar' does not exist on type/);
         });
     });
@@ -226,59 +226,59 @@ describe("functions/action", function (): void {
     describe("payload", () => {
 
         it("should create an action", () => {
-            const createFoo = action("FOO", payload<number>());
-            const foo = createFoo(42);
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("payload", 42);
+            const foo = action("FOO", payload<number>());
+            const fooAction = foo(42);
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.have.property("payload", 42);
         });
 
         it("should narrow the action", () => {
-            const createFoo = action("FOO", payload<{ foo: number }>());
-            const createBar = action("BAR", payload<{ bar: number }>());
-            const Both = union({ createFoo, createBar });
+            const foo = action("FOO", payload<{ foo: number }>());
+            const bar = action("BAR", payload<{ bar: number }>());
+            const Both = union({ foo, bar });
             const narrow = (action: typeof Both) => {
-                if (action.type === createFoo.type) {
+                if (action.type === foo.type) {
                     expect(action.payload.foo).to.equal(42);
                 } else {
                     throw new Error("Should not get here.");
                 }
             };
-            narrow(createFoo({ foo: 42 }));
+            narrow(foo({ foo: 42 }));
         });
 
         it("should be serializable", () => {
-            const createFoo = action("FOO", payload<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            const text = JSON.stringify(foo);
+            const foo = action("FOO", payload<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            const text = JSON.stringify(fooAction);
             expect(JSON.parse(text)).to.deep.equal({ payload: { foo: 42 }, type: "FOO" });
         });
 
         it("should support toString", () => {
-            const createFoo = action("FOO", payload<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            expect(foo).to.respondTo("toString");
+            const foo = action("FOO", payload<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            expect(fooAction).to.respondTo("toString");
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const createFoo = action("FOO", payload<number>());
-                const foo = createFoo("42");
+                const foo = action("FOO", payload<number>());
+                const fooAction = foo("42");
             `).toFail(/not assignable to parameter of type 'number'/);
         });
 
         it("should enforce action property types", () => {
             expectSnippet(`
-                const createFoo = action("FOO", payload<number>());
-                const foo = createFoo(42);
-                const value: string = foo.payload;
+                const foo = action("FOO", payload<number>());
+                const fooAction = foo(42);
+                const value: string = fooAction.payload;
             `).toFail(/'number' is not assignable to type 'string'/);
         });
 
         it("should enforce action property names", () => {
             expectSnippet(`
-                const createFoo = action("FOO", payload<number>());
-                const foo = createFoo(42);
-                const value = foo.bar;
+                const foo = action("FOO", payload<number>());
+                const fooAction = foo(42);
+                const value = fooAction.bar;
             `).toFail(/'bar' does not exist on type/);
         });
     });
@@ -286,59 +286,59 @@ describe("functions/action", function (): void {
     describe("props", () => {
 
         it("should create an action", () => {
-            const createFoo = action("FOO", props<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            expect(foo).to.have.property("type", "FOO");
-            expect(foo).to.have.property("foo", 42);
+            const foo = action("FOO", props<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            expect(fooAction).to.have.property("type", "FOO");
+            expect(fooAction).to.have.property("foo", 42);
         });
 
         it("should narrow the action", () => {
-            const createFoo = action("FOO", props<{ foo: number }>());
-            const createBar = action("BAR", props<{ bar: number }>());
-            const Both = union({ createFoo, createBar });
+            const foo = action("FOO", props<{ foo: number }>());
+            const bar = action("BAR", props<{ bar: number }>());
+            const Both = union({ foo, bar });
             const narrow = (action: typeof Both) => {
-                if (action.type === createFoo.type) {
+                if (action.type === foo.type) {
                     expect(action.foo).to.equal(42);
                 } else {
                     throw new Error("Should not get here.");
                 }
             };
-            narrow(createFoo({ foo: 42 }));
+            narrow(foo({ foo: 42 }));
         });
 
         it("should be serializable", () => {
-            const createFoo = action("FOO", props<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            const text = JSON.stringify(foo);
+            const foo = action("FOO", props<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            const text = JSON.stringify(fooAction);
             expect(JSON.parse(text)).to.deep.equal({ foo: 42, type: "FOO" });
         });
 
         it("should support toString", () => {
-            const createFoo = action("FOO", props<{ foo: number }>());
-            const foo = createFoo({ foo: 42 });
-            expect(foo).to.respondTo("toString");
+            const foo = action("FOO", props<{ foo: number }>());
+            const fooAction = foo({ foo: 42 });
+            expect(fooAction).to.respondTo("toString");
         });
 
         it("should enforce ctor parameters", () => {
             expectSnippet(`
-                const createFoo = action("FOO", props<{ foo: number }>());
-                const foo = createFoo({ foo: "42" });
+                const foo = action("FOO", props<{ foo: number }>());
+                const fooAction = foo({ foo: "42" });
             `).toFail(/'string' is not assignable to type 'number'/);
         });
 
         it("should enforce action property types", () => {
             expectSnippet(`
-                const createFoo = action("FOO", props<{ foo: number }>());
-                const foo = createFoo({ foo: 42 });
-                const value: string = foo.foo;
+                const foo = action("FOO", props<{ foo: number }>());
+                const fooAction = foo({ foo: 42 });
+                const value: string = fooAction.foo;
             `).toFail(/'number' is not assignable to type 'string'/);
         });
 
         it("should enforce action property names", () => {
             expectSnippet(`
-                const createFoo = action("FOO", props<{ foo: number }>());
-                const foo = createFoo({ foo: 42 });
-                const value = foo.bar;
+                const foo = action("FOO", props<{ foo: number }>());
+                const fooAction = foo({ foo: 42 });
+                const value = fooAction.bar;
             `).toFail(/'bar' does not exist on type/);
         });
     });

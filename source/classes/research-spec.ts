@@ -181,7 +181,7 @@ describe("classes/research", function (): void {
         it("should not allow literal defaults", () => {
             expectSnippet(`
                 const maker = <T>() => (t: T) => t;
-                const make = maker<{ a: number = 42, b: number = 56 }>();
+                const make = maker<{ a: number = 42, b: number = 54 }>();
                 const made = make({});
             `).toFail(/type literal property cannot have an initializer/);
         });
