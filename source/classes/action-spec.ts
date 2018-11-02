@@ -14,24 +14,6 @@ describe("classes/action", function (): void {
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(timeout);
 
-    describe("aliases", () => {
-
-        it("should expose 'action' for type aliases", () => {
-            const Foo = action("FOO", payload<{ foo: number }>());
-            type Foo = typeof Foo.action;
-            const Bar = action("BAR", payload<{ bar: number }>());
-            type Bar = typeof Bar.action;
-            const narrow = (action: Foo | Bar) => {
-                if (action.type === Foo.type) {
-                    expect(action.payload.foo).to.equal(42);
-                } else {
-                    throw new Error("Should not get here.");
-                }
-            };
-            narrow(new Foo({ foo: 42 }));
-        });
-    });
-
     describe("base", () => {
 
         it("should create an action", () => {

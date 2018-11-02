@@ -18,14 +18,13 @@ const setPrototypeOf = Object.setPrototypeOf || function (obj: any, proto: any):
 const literalPrototype = getPrototypeOf({});
 
 export interface Ctor<T> { new (...args: any[]): T; }
-export type ActionCtor<T, B, C> = { readonly action: B & { readonly type: T }; readonly type: T; new (...args: any[]): { readonly type: T; }; } & C;
+export type ActionCtor<T, B, C> = { readonly type: T; new (...args: any[]): { readonly type: T; }; } & C;
 
 export function action<T extends string>(t: T): ActionCtor<T, {}, { new (): {}; }>;
 export function action<T extends string, B extends {}, C extends Ctor<{}>>(t: T, config: { _base: Ctor<B>, _ctor: C }): ActionCtor<T, B, C>;
 export function action<T extends string, B extends {}, C extends Ctor<{}>>(t: T, config?: { _base: Ctor<B>, _ctor: C }): ActionCtor<T, {} | B, { new (): {}; } | C> {
     const BaseCtor: Ctor<{}> = config ? config._ctor : empty()._ctor;
     return class extends BaseCtor {
-        static readonly action: B & { readonly type: T } = undefined!;
         static readonly type: T = t;
         readonly type: T = t;
         constructor(...args: any[]) {
@@ -58,6 +57,6 @@ export function props<P extends object>() {
     return { _base: BaseCtor, _ctor: BaseCtor };
 }
 
-export function union<C extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(ctors: C): C[keyof C]["action"] {
+export function union<C extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(ctors: C): InstanceType<C[keyof C]> {
     return undefined!;
 }

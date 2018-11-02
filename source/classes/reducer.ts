@@ -8,8 +8,8 @@ import { ActionCtor, Ctor } from "./action";
 
 export type Reducer<S> = (state: S | undefined, action: Action<string>) => S;
 
-export function on<C extends ActionCtor<string, {}, Ctor<{}>>, S>(ctor: C, reducer: (state: S, action: C["action"]) => S): { reducer: Reducer<S>, types: string[] };
-export function on<C extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }, S>(ctors: C, reducer: (state: S, action: C[keyof C]["action"]) => S): { reducer: Reducer<S>, types: string[] };
+export function on<C extends ActionCtor<string, {}, Ctor<{}>>, S>(ctor: C, reducer: (state: S, action: InstanceType<C>) => S): { reducer: Reducer<S>, types: string[] };
+export function on<C extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }, S>(ctors: C, reducer: (state: S, action: InstanceType<C[keyof C]>) => S): { reducer: Reducer<S>, types: string[] };
 export function on<S>(c: any, reducer: any): { reducer: Reducer<S>, types: string[] } {
     const types = typeof c === "function" ?
         [c.type] :
