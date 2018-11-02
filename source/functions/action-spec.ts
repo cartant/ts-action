@@ -13,24 +13,6 @@ describe("functions/action", function (): void {
     /*tslint:disable-next-line:no-invalid-this*/
     this.timeout(timeout);
 
-    describe("aliases", () => {
-
-        it("should expose 'action' for type aliases", () => {
-            const createFoo = action("FOO", payload<{ foo: number }>());
-            type Foo = typeof createFoo.action;
-            const createBar = action("BAR", payload<{ bar: number }>());
-            type Bar = typeof createBar.action;
-            const narrow = (action: Foo | Bar) => {
-                if (action.type === createFoo.type) {
-                    expect(action.payload.foo).to.equal(42);
-                } else {
-                    throw new Error("Should not get here.");
-                }
-            };
-            narrow(createFoo({ foo: 42 }));
-        });
-    });
-
     describe("creator", () => {
 
         it("should create an action", () => {
