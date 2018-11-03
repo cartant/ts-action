@@ -1,3 +1,13 @@
+<a name="8.0.0"></a>
+## [8.0.0](https://github.com/cartant/ts-action/compare/v7.0.0...v8.0.0) (2018-11-03)
+
+### Breaking changes
+
+* Action creators are now simple functions - instead of classes.
+* Class-based actions creators are deprecated, but can still be used via the `"ts-action/classes"` import location.
+* The action creator's static `action` property has been removed.
+* TypeScript 3.0 is required.
+
 <a name="7.0.0"></a>
 ## [7.0.0](https://github.com/cartant/ts-action/compare/v6.0.3...v7.0.0) (2018-09-29)
 
