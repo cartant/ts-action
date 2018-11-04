@@ -8,7 +8,7 @@ import { ActionCtor, Ctor } from "./action";
 
 export function isType<T extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(action: Action<string>, ctors: T): action is InstanceType<T[keyof T]>;
 export function isType<T extends ActionCtor<string, {}, Ctor<{}>>>(action: Action<string>, ctor: T): action is InstanceType<T>;
-export function isType(action: Action<string>, arg: any): boolean {
+export function isType(action: Action<string>, arg: { [key: string]: ActionCtor<string, {}, Ctor<{}>> } | ActionCtor<string, {}, Ctor<{}>>): boolean {
     if (arg.type !== undefined) {
         return action.type === arg.type;
     }

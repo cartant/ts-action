@@ -9,6 +9,6 @@ import { isType } from "./isType";
 
 export function guard<T extends { [key: string]: ActionCtor<string, {}, Ctor<{}>> }>(ctors: T): (action: Action<string>) => action is InstanceType<T[keyof T]>;
 export function guard<T extends ActionCtor<string, {}, Ctor<{}>>>(ctor: T): (action: Action<string>) => action is InstanceType<T>;
-export function guard(arg: any): (action: Action<string>) => boolean {
-    return (action: Action<string>) => isType(action, arg);
+export function guard(arg: { [key: string]: ActionCtor<string, {}, Ctor<{}>> } | ActionCtor<string, {}, Ctor<{}>>): (action: Action<string>) => boolean {
+    return (action: Action<string>) => isType(action, arg as {});
 }

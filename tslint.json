@@ -48,7 +48,7 @@
     "new-parens": { "severity": "error" },
     "newline-before-return": { "severity": "off" },
     "no-angle-bracket-type-assertion": { "severity": "off" },
-    "no-any": { "severity": "off" },
+    "no-any": { "severity": "error" },
     "no-arg": { "severity": "error" },
     "no-bitwise": { "severity": "error" },
     "no-conditional-assignment": { "severity": "error" },

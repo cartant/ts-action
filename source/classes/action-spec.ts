@@ -310,7 +310,8 @@ describe("classes/action", function (): void {
     });
 });
 
-function isPlainObjectIssue2598(action: any): boolean {
+function isPlainObjectIssue2598(action: unknown): boolean {
+    const known = action as { constructor?: unknown } | undefined;
     // https://github.com/reactjs/redux/issues/2598
-    return action && (action.constructor === Object);
+    return (known !== undefined) && (known.constructor === Object);
 }
