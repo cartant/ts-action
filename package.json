@@ -16,7 +16,7 @@
     "rimraf": "^2.6.2",
     "ts-snippet": "^3.0.0",
     "tslint": "^5.8.0",
-    "typescript": "~3.1.1"
+    "typescript": "~3.2.1"
   },
   "es2015": "./dist/esm2015/index.js",
   "homepage": "https://github.com/cartant/ts-action",
