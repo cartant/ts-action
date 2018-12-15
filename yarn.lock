@@ -1219,11 +1219,12 @@ trim-newlines@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-2.0.0.tgz#b403d0b91be50c331dfc4b82eeceb22c3de16d20"
 
-ts-snippet@^3.0.0:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-3.1.2.tgz#317aa5485acba0d2ec46c1f82ec8501a4a6dbbeb"
+ts-snippet@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ts-snippet/-/ts-snippet-4.0.0.tgz#c6911ea52cd2d39d8e14971e2371e94c1cdc8a1a"
+  integrity sha512-NS7myc8kpirrHTzv+X3IEwISt/t0WmfGHj9PmQYeDk7Isw0j4LPNj7DddCflMpAwEDhRrCe/YlO4cp+gatwPZQ==
   dependencies:
-    tsutils "^2.25.0"
+    tsutils "^3.0.0"
 
 tslib@^1.8.0, tslib@^1.8.1:
   version "1.9.3"
@@ -1246,9 +1247,16 @@ tslint@^5.8.0:
     tslib "^1.8.0"
     tsutils "^2.27.2"
 
-tsutils@^2.25.0, tsutils@^2.27.2:
+tsutils@^2.27.2:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-2.29.0.tgz#32b488501467acbedd4b85498673a0812aca0b99"
+  dependencies:
+    tslib "^1.8.1"
+
+tsutils@^3.0.0:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/tsutils/-/tsutils-3.5.2.tgz#6fd3c2d5a731e83bb21b070a173ec0faf3a8f6d3"
+  integrity sha512-qIlklNuI/1Dzfm+G+kJV5gg3gimZIX5haYtIVQe7qGyKd7eu8T1t1DY6pz4Sc2CGXAj9s1izycctm9Zfl9sRuQ==
   dependencies:
     tslib "^1.8.1"
 
