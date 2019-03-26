@@ -324,7 +324,7 @@ if (isType(action, { foo, bar })) {
 For example, `Array.prototype.filter` accepts a type guard:
 
 ```ts
-const actions = [new foo(), new bar()];
+const actions = [foo(), bar()];
 const filtered = actions.filter(guard(foo));
 // TypeScript will have narrowed the type of filtered, so the actions within
 // the array are strongly typed and individual properties can be accessed in
