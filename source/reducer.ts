@@ -3,8 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { Action } from "../common/types";
 import { ActionCreator, ActionType, Creator } from "./action";
+import { Action } from "./types";
 
 export type On<S> = (state: S, action: Action<string>) => S;
 export type Reducer<S> = (state: S | undefined, action: Action<string>) => S;

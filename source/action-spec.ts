@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { action, empty, fsa, payload, props, type, union } from "./action";
+import { action, empty, fsa, payload, props, union } from "./action";
 import { expectSnippet, timeout } from "./snippet-spec";
 
 describe("functions/action", function (): void {

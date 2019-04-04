@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-import { FunctionWithParametersType, ParametersType } from "../classes";
+import { FunctionWithParametersType, ParametersType } from "./types";
 
 // tslint:disable-next-line:no-any
 export type Creator = (...args: any[]) => object;

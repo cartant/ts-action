@@ -30,14 +30,6 @@ npm install ts-action --save
 
 TypeScript version 3.0 or later is required.
 
-### Function-based versus class-based action creators
-
-Early versions of `ts-action` used class-based action creators. That is, the actions themselves were classes.
-
-In version 8, class-based action creators were deprecated in favour of function-based action creators - functions that return plain objects. Function-based action creators are simpler and don't require a prototype-setting kludge to be used with `reactjs/redux`.
-
-There is more information on class-based action creators - which can still be used - [here](./CLASSES.md).
-
 ## Usage
 
 Action creators are declared using the `action` method:
