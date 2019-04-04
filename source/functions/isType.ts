@@ -8,6 +8,7 @@ import { ActionCreator, Creator } from "./action";
 
 export function isType<T extends ActionCreator<string, Creator>>(action: Action<string>, creator: T): action is ReturnType<T>;
 export function isType<T extends ActionCreator<string, Creator>[]>(action: Action<string>, creators: T): action is ReturnType<T[number]>;
+/** @deprecated Use an array literal instead of an object literal */
 export function isType<T extends { [key: string]: ActionCreator<string, Creator> }>(action: Action<string>, creators: T): action is ReturnType<T[keyof T]>;
 export function isType(action: Action<string>, arg:
     ActionCreator<string, Creator> |

@@ -11,6 +11,7 @@ export type Reducer<S> = (state: S | undefined, action: Action<string>) => S;
 
 export function on<C extends ActionCreator<string, Creator>, S>(ctor: C, reducer: (state: S, action: ReturnType<C>) => S): { reducer: On<S>, types: string[] };
 export function on<C extends ActionCreator<string, Creator>[], S>(ctors: C, reducer: (state: S, action: ReturnType<C[number]>) => S): { reducer: On<S>, types: string[] };
+/** @deprecated Use an array literal instead of an object literal */
 export function on<C extends { [key: string]: ActionCreator<string, Creator> }, S>(ctors: C, reducer: (state: S, action: ReturnType<C[keyof C]>) => S): { reducer: On<S>, types: string[] };
 export function on<S>(c:
     ActionCreator<string, Creator> |
