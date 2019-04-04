@@ -49,7 +49,7 @@ describe("functions/action", function (): void {
             expect(fooAction).to.respondTo("toString");
         });
 
-        it("should enforce ctor parameters", () => {
+        it("should enforce creator parameters", () => {
             expectSnippet(`
                 const foo = action("FOO", (foo: number) => ({ foo }));
                 const fooAction = foo("42");
@@ -116,7 +116,7 @@ describe("functions/action", function (): void {
             expect(fooAction).to.respondTo("toString");
         });
 
-        it("should enforce ctor parameters", () => {
+        it("should enforce creator parameters", () => {
             expectSnippet(`
                 const foo = action("FOO", empty());
                 const fooAction = foo("42");
@@ -199,7 +199,7 @@ describe("functions/action", function (): void {
             expect(fooAction).to.respondTo("toString");
         });
 
-        it("should enforce ctor parameters", () => {
+        it("should enforce creator parameters", () => {
             expectSnippet(`
                 const foo = action("FOO", fsa<number>());
                 const fooAction = foo("42");
@@ -259,7 +259,7 @@ describe("functions/action", function (): void {
             expect(fooAction).to.respondTo("toString");
         });
 
-        it("should enforce ctor parameters", () => {
+        it("should enforce creator parameters", () => {
             expectSnippet(`
                 const foo = action("FOO", payload<number>());
                 const fooAction = foo("42");
@@ -319,7 +319,7 @@ describe("functions/action", function (): void {
             expect(fooAction).to.respondTo("toString");
         });
 
-        it("should enforce ctor parameters", () => {
+        it("should enforce creator parameters", () => {
             expectSnippet(`
                 const foo = action("FOO", props<{ foo: number }>());
                 const fooAction = foo({ foo: "42" });

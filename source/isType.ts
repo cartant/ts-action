@@ -13,7 +13,7 @@ export function isType(
     arg: ActionCreator<string, Creator> | ActionCreator<string, Creator>[]
 ): boolean {
     if (Array.isArray(arg)) {
-        const types = arg.map(ctor => ctor.type);
+        const types = arg.map(creator => creator.type);
         return types.some(type => action.type === type);
     }
     return action.type === arg.type;
