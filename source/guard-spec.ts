@@ -29,12 +29,12 @@ describe("classes/guard", () => {
 
         it("should return true for matching unions", () => {
             const fooAction = foo(42);
-            expect(guard([foo, bar])(fooAction)).to.be.true;
+            expect(guard(foo, bar)(fooAction)).to.be.true;
         });
 
         it("should return false for non-matching unions", () => {
             const bazAction = baz(42);
-            expect(guard([foo, bar])(bazAction)).to.be.false;
+            expect(guard(foo, bar)(bazAction)).to.be.false;
         });
     });
 
@@ -54,12 +54,12 @@ describe("classes/guard", () => {
 
         it("should return true for matching unions", () => {
             const fooAction = foo();
-            expect(guard([foo, bar])(fooAction)).to.be.true;
+            expect(guard(foo, bar)(fooAction)).to.be.true;
         });
 
         it("should return false for non-matching unions", () => {
             const bazAction = baz();
-            expect(guard([foo, bar])(bazAction)).to.be.false;
+            expect(guard(foo, bar)(bazAction)).to.be.false;
         });
     });
 
@@ -82,12 +82,12 @@ describe("classes/guard", () => {
 
         it("should return true for matching unions", () => {
             const fooAction = foo({ foo: 42 });
-            expect(guard([foo, bar])(fooAction)).to.be.true;
+            expect(guard(foo, bar)(fooAction)).to.be.true;
         });
 
         it("should return false for non-matching unions", () => {
             const bazAction = baz({ baz: 42 });
-            expect(guard([foo, bar])(bazAction)).to.be.false;
+            expect(guard(foo, bar)(bazAction)).to.be.false;
         });
     });
 
@@ -110,12 +110,12 @@ describe("classes/guard", () => {
 
         it("should return true for matching unions", () => {
             const fooAction = foo({ foo: 42 });
-            expect(guard([foo, bar])(fooAction)).to.be.true;
+            expect(guard(foo, bar)(fooAction)).to.be.true;
         });
 
         it("should return false for non-matching unions", () => {
             const bazAction = baz({ baz: 42 });
-            expect(guard([foo, bar])(bazAction)).to.be.false;
+            expect(guard(foo, bar)(bazAction)).to.be.false;
         });
     });
 
@@ -138,12 +138,12 @@ describe("classes/guard", () => {
 
         it("should return true for matching unions", () => {
             const fooAction = foo({ foo: 42 });
-            expect(guard([foo, bar])(fooAction)).to.be.true;
+            expect(guard(foo, bar)(fooAction)).to.be.true;
         });
 
         it("should return false for non-matching unions", () => {
             const bazAction = baz({ baz: 42 });
-            expect(guard([foo, bar])(bazAction)).to.be.false;
+            expect(guard(foo, bar)(bazAction)).to.be.false;
         });
     });
 });

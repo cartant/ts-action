@@ -63,7 +63,7 @@ export function type<T extends string, R extends object>(type: T, rest: R): Type
     return { ...(rest as object), type } as any;
 }
 
-export function union<C extends ActionCreator<string, Creator>[]>(creators: C): ReturnType<C[number]> {
+export function union<C extends ActionCreator<string, Creator>[]>(...creators: C): ActionType<C[number]> {
     return undefined!;
 }
 

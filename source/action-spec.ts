@@ -25,7 +25,7 @@ describe("functions/action", function (): void {
         it("should narrow the action", () => {
             const foo = action("FOO", (foo: number) => ({ foo }));
             const bar = action("BAR", (bar: number) => ({ bar }));
-            const both = union([foo, bar]);
+            const both = union(foo, bar);
             const narrow = (action: typeof both) => {
                 if (action.type === foo.type) {
                     expect(action.foo).to.equal(42);
@@ -92,7 +92,7 @@ describe("functions/action", function (): void {
         it("should narrow the action", () => {
             const foo = action("FOO", empty());
             const bar = action("BAR", (bar: number) => ({ bar }));
-            const both = union([foo, bar]);
+            const both = union(foo, bar);
             const narrow = (action: typeof both) => {
                 if (action.type === foo.type) {
                     throw new Error("Should not get here.");
@@ -153,7 +153,7 @@ describe("functions/action", function (): void {
         it("should narrow the action", () => {
             const foo = action("FOO", fsa<{ foo: number }>());
             const bar = action("BAR", fsa<{ bar: number }>());
-            const both = union([foo, bar]);
+            const both = union(foo, bar);
             const narrow = (action: typeof both) => {
                 if (action.type === foo.type) {
                     if (action.error) {
@@ -235,7 +235,7 @@ describe("functions/action", function (): void {
         it("should narrow the action", () => {
             const foo = action("FOO", payload<{ foo: number }>());
             const bar = action("BAR", payload<{ bar: number }>());
-            const both = union([foo, bar]);
+            const both = union(foo, bar);
             const narrow = (action: typeof both) => {
                 if (action.type === foo.type) {
                     expect(action.payload.foo).to.equal(42);
@@ -295,7 +295,7 @@ describe("functions/action", function (): void {
         it("should narrow the action", () => {
             const foo = action("FOO", props<{ foo: number }>());
             const bar = action("BAR", props<{ bar: number }>());
-            const both = union([foo, bar]);
+            const both = union(foo, bar);
             const narrow = (action: typeof both) => {
                 if (action.type === foo.type) {
                     expect(action.foo).to.equal(42);

@@ -8,7 +8,7 @@ import { isType } from "./isType";
 import { Action } from "./types";
 
 export function guard<T extends ActionCreator<string, Creator>>(creator: T): (action: Action<string>) => action is ActionType<T>;
-export function guard<T extends ActionCreator<string, Creator>[]>(creators: T): (action: Action<string>) => action is ActionType<T[number]>;
+export function guard<T extends ActionCreator<string, Creator>[]>(...creators: T): (action: Action<string>) => action is ActionType<T[number]>;
 export function guard(
     arg: ActionCreator<string, Creator> | ActionCreator<string, Creator>[]
 ): (action: Action<string>) => boolean {
