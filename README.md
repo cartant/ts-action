@@ -77,7 +77,7 @@ import { action, payload, union } from "ts-action";
 
 const foo = action("FOO", payload<{ foo: number }>());
 const bar = action("BAR", payload<{ bar: number }>());
-const both = union({ foo, bar });
+const both = union([foo, bar]);
 
 interface State { foo?: number; bar?: number; }
 const initialState = {};
@@ -278,10 +278,10 @@ Passing a creator function  offers more control over property defaults, etc.
 
 ### union
 
-The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed an object literal of action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
+The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed an array literal of action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
 
 ```ts
-const both = union({ foo, bar });
+const both = union([foo, bar]);
 function reducer(state: any = [], action: typeof both): any {
   switch (action.type) {
   case fFoo.type:
@@ -312,8 +312,8 @@ if (isType(action, foo)) {
 `isType` can also be passed multiple action creators:
 
 ```ts
-if (isType(action, { foo, bar })) {
-  // Here, TypeScript has narrowed the type to `typeof union({ Foo, Bar })`.
+if (isType(action, [foo, bar])) {
+  // Here, TypeScript has narrowed the type to `typeof union([foo, bar])`.
 }
 ```
 
@@ -335,7 +335,7 @@ const filtered = actions.filter(guard(foo));
 
 ```ts
 const actions = [foo(), bar(), baz()];
-const filtered = actions.filter(guard({ foo, bar }));
+const filtered = actions.filter(guard([foo, bar]));
 ```
 
 <a name="reducer"></a>
