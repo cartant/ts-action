@@ -36,20 +36,6 @@ describe("functions/action", function (): void {
             narrow(foo(42));
         });
 
-        it("should narrow the action using a union expressed as an object literal", () => {
-            const foo = action("FOO", (foo: number) => ({ foo }));
-            const bar = action("BAR", (bar: number) => ({ bar }));
-            const both = union({ foo, bar });
-            const narrow = (action: typeof both) => {
-                if (action.type === foo.type) {
-                    expect(action.foo).to.equal(42);
-                } else {
-                    throw new Error("Should not get here.");
-                }
-            };
-            narrow(foo(42));
-        });
-
         it("should be serializable", () => {
             const foo = action("FOO", (foo: number) => ({ foo }));
             const fooAction = foo(42);

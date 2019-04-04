@@ -36,16 +36,6 @@ describe("classes/guard", () => {
             const bazAction = baz(42);
             expect(guard([foo, bar])(bazAction)).to.be.false;
         });
-
-        it("should return true for matching unions expressed using an object literal", () => {
-            const fooAction = foo(42);
-            expect(guard({ foo, bar })(fooAction)).to.be.true;
-        });
-
-        it("should return false for non-matching expressed using an object literal", () => {
-            const bazAction = baz(42);
-            expect(guard({ foo, bar })(bazAction)).to.be.false;
-        });
     });
 
     describe("empty", () => {

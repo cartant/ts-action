@@ -44,16 +44,6 @@ describe("classes/reducer", function (): void {
                 expect(result.types).to.contain(bar.type);
                 expect(result.types).to.contain(foo.type);
             });
-
-            it("should support reducers with multiple actions expressed as an object literal", () => {
-                const both = union({ bar, foo });
-                const func = (state: {}, action: typeof both) => ({});
-                const result = on({ bar, foo }, func);
-                expect(result).to.have.property("reducer", func);
-                expect(result).to.have.property("types");
-                expect(result.types).to.contain(bar.type);
-                expect(result.types).to.contain(foo.type);
-            });
         });
 
         describe("reducer", () => {
@@ -84,7 +74,7 @@ describe("classes/reducer", function (): void {
                 type State = string[];
 
                 const fooBarReducer = reducer<State>([
-                    on({ bar, foo }, (state, { type }) => [...state, type])
+                    on([bar, foo], (state, { type }) => [...state, type])
                 ], []);
 
                 expect(fooBarReducer).to.be.a("function");
