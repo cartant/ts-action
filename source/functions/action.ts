@@ -59,8 +59,10 @@ export function type<T extends string, R extends object>(type: T, rest: R): (R &
     return { ...(rest as object), type } as any;
 }
 
-export function union<C extends { [key: string]: ActionCreator<string, Creator> }>(creators: C): ReturnType<C[keyof C]> {
-    return undefined!;
+export function union<C extends ActionCreator<string, Creator>[]>(creators: C): ReturnType<C[number]>;
+export function union<C extends { [key: string]: ActionCreator<string, Creator> }>(creators: C): ReturnType<C[keyof C]>;
+export function union(creators: unknown): unknown {
+    return undefined;
 }
 
 function defineType(type: string, creator: Creator): Creator {
