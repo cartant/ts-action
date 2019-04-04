@@ -8,6 +8,9 @@ import { FunctionWithParametersType, ParametersType } from "../classes";
 // tslint:disable-next-line:no-any
 export type Creator = (...args: any[]) => object;
 export type ActionCreator<T, C extends Creator> = C & { type: T; };
+export type ActionType<A> = A extends ActionCreator<infer T, infer C>
+    ? ReturnType<C> & { type: T; }
+    : never;
 
 export function action<T extends string>(type: T): ActionCreator<T, () => { type: T }>;
 export function action<T extends string>(type: T, config: { _as: "empty" }): ActionCreator<T, () => { type: T }>;

@@ -4,20 +4,21 @@
  */
 
 import { Action } from "../common/types";
-import { ActionCreator, Creator } from "./action";
+import { ActionCreator, ActionType, Creator } from "./action";
 
 export type On<S> = (state: S, action: Action<string>) => S;
 export type Reducer<S> = (state: S | undefined, action: Action<string>) => S;
 
-export function on<C extends ActionCreator<string, Creator>, S>(ctor: C, reducer: (state: S, action: ReturnType<C>) => S): { reducer: On<S>, types: string[] };
-export function on<C extends ActionCreator<string, Creator>[], S>(ctors: C, reducer: (state: S, action: ReturnType<C[number]>) => S): { reducer: On<S>, types: string[] };
+export function on<C extends ActionCreator<string, Creator>, S>(ctor: C, reducer: (state: S, action: ActionType<C>) => S): { reducer: On<S>, types: string[] };
+export function on<C extends ActionCreator<string, Creator>[], S>(ctors: C, reducer: (state: S, action: ActionType<C[number]>) => S): { reducer: On<S>, types: string[] };
 /** @deprecated Use an array literal instead of an object literal */
-export function on<C extends { [key: string]: ActionCreator<string, Creator> }, S>(ctors: C, reducer: (state: S, action: ReturnType<C[keyof C]>) => S): { reducer: On<S>, types: string[] };
-export function on<S>(c:
-    ActionCreator<string, Creator> |
-    ActionCreator<string, Creator>[] |
-    { [key: string]: ActionCreator<string, Creator> },
-reducer: On<S>): { reducer: On<S>, types: string[] } {
+export function on<C extends { [key: string]: ActionCreator<string, Creator> }, S>(ctors: C, reducer: (state: S, action: ActionType<C[keyof C]>) => S): { reducer: On<S>, types: string[] };
+export function on<S>(
+    c: ActionCreator<string, Creator> |
+        ActionCreator<string, Creator>[] |
+        { [key: string]: ActionCreator<string, Creator> },
+    reducer: Function
+): { reducer: Function, types: string[] } {
     const types = typeof c === "function" ?
         [c.type] :
         Array.isArray(c)
