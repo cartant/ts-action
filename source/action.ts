@@ -13,8 +13,8 @@ export type ActionType<A> = A extends ActionCreator<infer T, infer C>
     ? Typed<ReturnType<C>, T>
     : never;
 
-export function action<T extends string>(type: T): ActionCreator<T, () => { type: T }>;
-export function action<T extends string>(type: T, config: { _as: "empty" }): ActionCreator<T, () => { type: T }>;
+export function action<T extends string>(type: T): ActionCreator<T, () => Typed<{}, T>>;
+export function action<T extends string>(type: T, config: { _as: "empty" }): ActionCreator<T, () => Typed<{}, T>>;
 export function action<T extends string, P, M>(type: T, config: { _as: "fsa", _p: P, _m: M }): ActionCreator<T, (payload: P | Error, meta?: M) => Typed<{ error: false, meta?: M, payload: P }, T> | Typed<{ error: true, meta?: M, payload: P }, T>>;
 export function action<T extends string, P>(type: T, config: { _as: "payload", _p: P }): ActionCreator<T, (payload: P) => Typed<{ payload: P }, T>>;
 export function action<T extends string, P extends object>(type: T, config: { _as: "props", _p: P }): ActionCreator<T, (props: P) => Typed<P, T>>;
