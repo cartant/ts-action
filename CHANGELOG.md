@@ -1,3 +1,10 @@
+<a name="8.1.2"></a>
+## [8.1.2](https://github.com/cartant/ts-action/compare/v8.1.1...v8.1.2) (2019-04-06)
+
+# Changes
+
+* Remove the deprecation messages for multiple action types expressed as object literals. There will be breaking changes for both array and object literal representations in the next major version. ([2a2b3b0](https://github.com/cartant/ts-action/commit/2a2b3b0))
+
 <a name="8.1.1"></a>
 ## [8.1.1](https://github.com/cartant/ts-action/compare/v8.1.0...v8.1.1) (2019-04-04)
 
@@ -10,7 +17,7 @@
 
 # Features
 
-* Support using array literals to represent mulitple action types. ([f0a98be](https://github.com/cartant/ts-action/commit/f0a98be))
+* Support using array literals to represent multiple action types. ([f0a98be](https://github.com/cartant/ts-action/commit/f0a98be))
 
 # Changes
 
