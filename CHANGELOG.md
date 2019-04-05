@@ -1,18 +1,18 @@
 <a name="8.1.1"></a>
 ## [8.1.1](https://github.com/cartant/ts-action/compare/v8.1.0...v8.1.1) (2019-04-04)
 
-# Fixes
+### Fixes
 
 * Replace `ReturnType` with `ActionType` for TypeScript 3.4 compatibility. ([f20ed2e](https://github.com/cartant/ts-action/commit/f20ed2e))
 
 <a name="8.1.0"></a>
 ## [8.1.0](https://github.com/cartant/ts-action/compare/v8.0.0...v8.1.0) (2019-04-04)
 
-# Features
+### Features
 
 * Support using array literals to represent multiple action types. ([f0a98be](https://github.com/cartant/ts-action/commit/f0a98be))
 
-# Changes
+### Changes
 
 * Deprecate using object literals to represent multiple action types.
 
@@ -29,7 +29,7 @@
 <a name="7.0.0"></a>
 ## [7.0.0](https://github.com/cartant/ts-action/compare/v6.0.3...v7.0.0) (2018-09-29)
 
-## Features
+### Features
 
 * Support passing multiple action creators to `on`. ([11e3e73](https://github.com/cartant/ts-action/commit/11e3e73))
 
