@@ -7,17 +7,18 @@ import { FunctionWithParametersType, ParametersType } from "./types";
 
 // tslint:disable-next-line:no-any
 export type Creator = (...args: any[]) => object;
-export type ActionCreator<T, C extends Creator> = C & { type: T; };
+export type Typed<A, T extends string> = A extends { type: T } ? A : A & { type: T };
+export type ActionCreator<T extends string, C extends Creator> = Typed<C, T>;
 export type ActionType<A> = A extends ActionCreator<infer T, infer C>
-    ? ReturnType<C> & { type: T; }
+    ? Typed<ReturnType<C>, T>
     : never;
 
 export function action<T extends string>(type: T): ActionCreator<T, () => { type: T }>;
 export function action<T extends string>(type: T, config: { _as: "empty" }): ActionCreator<T, () => { type: T }>;
-export function action<T extends string, P, M>(type: T, config: { _as: "fsa", _p: P, _m: M }): ActionCreator<T, (payload: P | Error, meta?: M) => ({ error: false, meta?: M, payload: P, type: T } | { error: true, meta?: M, payload: Error, type: T })>;
-export function action<T extends string, P>(type: T, config: { _as: "payload", _p: P }): ActionCreator<T, (payload: P) => { payload: P, type: T }>;
-export function action<T extends string, P extends object>(type: T, config: { _as: "props", _p: P }): ActionCreator<T, (props: P) => (P & { type: T })>;
-export function action<T extends string, C extends Creator>(type: T, creator: C): FunctionWithParametersType<ParametersType<C>, ReturnType<C> & { type: T }> & { type: T };
+export function action<T extends string, P, M>(type: T, config: { _as: "fsa", _p: P, _m: M }): ActionCreator<T, (payload: P | Error, meta?: M) => Typed<{ error: false, meta?: M, payload: P }, T> | Typed<{ error: true, meta?: M, payload: P }, T>>;
+export function action<T extends string, P>(type: T, config: { _as: "payload", _p: P }): ActionCreator<T, (payload: P) => Typed<{ payload: P }, T>>;
+export function action<T extends string, P extends object>(type: T, config: { _as: "props", _p: P }): ActionCreator<T, (props: P) => Typed<P, T>>;
+export function action<T extends string, C extends Creator>(type: T, creator: C): Typed<FunctionWithParametersType<ParametersType<C>, Typed<ReturnType<C>, T>>, T>;
 export function action<T extends string>(type: T, config?: { _as: "empty" } | { _as: "fsa" } | { _as: "payload" } | { _as: "props" } | Creator): Creator {
     if (typeof config === "function") {
         return defineType(type, (...args: unknown[]) => ({ ...config(...args), type }));
@@ -56,7 +57,7 @@ export function props<P>(): { _as: "props", _p: P } {
     return { _as: "props", _p: undefined! };
 }
 
-export function type<T extends string, R extends object>(type: T, rest: R): (R & { type: T }) {
+export function type<T extends string, R extends object>(type: T, rest: R): Typed<R, T> {
     // https://github.com/Microsoft/TypeScript/pull/28312
     // tslint:disable-next-line:no-any
     return { ...(rest as object), type } as any;
