@@ -10,7 +10,7 @@
 
 # Features
 
-* Support using array literals to represent mulitple action types. ([f0a98be](https://github.com/cartant/ts-action/commit/f0a98be))
+* Support using array literals to represent multiple action types. ([f0a98be](https://github.com/cartant/ts-action/commit/f0a98be))
 
 # Changes
 
