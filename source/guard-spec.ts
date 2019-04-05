@@ -8,7 +8,7 @@ import { expect } from "chai";
 import { usingCreator, usingEmpty, usingFsa, usingPayload, usingProps } from "./foobar-spec";
 import { guard } from "./guard";
 
-describe("classes/guard", () => {
+describe("guard", () => {
 
     describe("creator", () => {
 
