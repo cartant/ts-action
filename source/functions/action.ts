@@ -63,7 +63,6 @@ export function type<T extends string, R extends object>(type: T, rest: R): (R &
 }
 
 export function union<C extends ActionCreator<string, Creator>[]>(creators: C): ReturnType<C[number]>;
-/** @deprecated Use an array literal instead of an object literal */
 export function union<C extends { [key: string]: ActionCreator<string, Creator> }>(creators: C): ReturnType<C[keyof C]>;
 export function union(creators: unknown): unknown {
     return undefined;
