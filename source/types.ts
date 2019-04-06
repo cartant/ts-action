@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 
-export interface Action<T extends string> {
+export interface Action<T extends string = string> {
     type: T;
 }
 
