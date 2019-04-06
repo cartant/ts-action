@@ -38,7 +38,7 @@ describe("classes/reducer", function (): void {
             it("should support reducers with multiple actions", () => {
                 const both = union(bar, foo);
                 const func = (state: {}, action: typeof both) => ({});
-                const result = on([bar, foo], func);
+                const result = on(foo, bar, func);
                 expect(result).to.have.property("reducer", func);
                 expect(result).to.have.property("types");
                 expect(result.types).to.contain(bar.type);
@@ -74,7 +74,7 @@ describe("classes/reducer", function (): void {
                 type State = string[];
 
                 const fooBarReducer = reducer<State>([
-                    on([bar, foo], (state, { type }) => [...state, type])
+                    on(foo, bar, (state, { type }) => [...state, type])
                 ], []);
 
                 expect(fooBarReducer).to.be.a("function");
