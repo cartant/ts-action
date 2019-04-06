@@ -8,7 +8,7 @@ import { FunctionWithParametersType, ParametersType } from "./types";
 // tslint:disable-next-line:no-any
 export type Creator = (...args: any[]) => object;
 export type Typed<A, T extends string> = A extends { type: T } ? A : A & { type: T };
-export type ActionCreator<T extends string, C extends Creator> = Typed<C, T>;
+export type ActionCreator<T extends string = string, C extends Creator = Creator> = Typed<C, T>;
 export type ActionType<A> = A extends ActionCreator<infer T, infer C>
     ? Typed<ReturnType<C>, T>
     : never;
@@ -63,7 +63,7 @@ export function type<T extends string, R extends object>(type: T, rest: R): Type
     return { ...(rest as object), type } as any;
 }
 
-export function union<C extends ActionCreator<string, Creator>[]>(...creators: C): ActionType<C[number]> {
+export function union<C extends ActionCreator[]>(...creators: C): ActionType<C[number]> {
     return undefined!;
 }
 
