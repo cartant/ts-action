@@ -15,6 +15,8 @@
 
     This breaking change applies to `union`, `guard`, `isType` and `on`.
 
+* Support for class-based action creators has been removed.
+
 <a name="8.1.1"></a>
 ## [8.1.1](https://github.com/cartant/ts-action/compare/v8.1.0...v8.1.1) (2019-04-04)
 
