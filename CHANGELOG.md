@@ -1,3 +1,20 @@
+<a name="9.0.0"></a>
+## [9.0.0](https://github.com/cartant/ts-action/compare/v8.1.2...v9.0.0) (2019-04-06)
+
+### Breaking changes
+
+* Expressing multiple actions using array or object literals is no longer supported. Pass multiple actions as separate arguments instead.
+
+    That is, instead of this:
+
+        union({ foo, bar }); // or union([foo, bar]);
+
+    Do this:
+
+        union(foo, bar);
+
+    This breaking change applies to `union`, `guard`, `isType` and `on`.
+
 <a name="8.1.1"></a>
 ## [8.1.1](https://github.com/cartant/ts-action/compare/v8.1.0...v8.1.1) (2019-04-04)
 
