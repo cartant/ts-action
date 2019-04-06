@@ -69,7 +69,7 @@ import { action, payload, union } from "ts-action";
 
 const foo = action("FOO", payload<{ foo: number }>());
 const bar = action("BAR", payload<{ bar: number }>());
-const both = union([foo, bar]);
+const both = union(foo, bar);
 
 interface State { foo?: number; bar?: number; }
 const initialState = {};
@@ -270,10 +270,10 @@ Passing a creator function  offers more control over property defaults, etc.
 
 ### union
 
-The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed an array literal of action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
+The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
 
 ```ts
-const both = union([foo, bar]);
+const both = union(foo, bar);
 function reducer(state: any = [], action: typeof both): any {
   switch (action.type) {
   case fFoo.type:
@@ -304,8 +304,8 @@ if (isType(action, foo)) {
 `isType` can also be passed multiple action creators:
 
 ```ts
-if (isType(action, [foo, bar])) {
-  // Here, TypeScript has narrowed the type to `typeof union([foo, bar])`.
+if (isType(action, foo, bar)) {
+  // Here, TypeScript has narrowed the type to `typeof union(foo, bar)`.
 }
 ```
 
@@ -327,7 +327,7 @@ const filtered = actions.filter(guard(foo));
 
 ```ts
 const actions = [foo(), bar(), baz()];
-const filtered = actions.filter(guard([foo, bar]));
+const filtered = actions.filter(guard(foo, bar));
 ```
 
 <a name="reducer"></a>
@@ -336,7 +336,7 @@ const filtered = actions.filter(guard([foo, bar]));
 
 The `reducer` method creates a reducer function out of the combined, action-specific reducers specified in the array. The array should be populated with the results of calls to the `on` method.
 
-The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the types of one or more actions creators.
+The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the types of one or more action creators.
 
 ```ts
 import { action, on, payload, reducer } from "ts-action";
@@ -352,6 +352,6 @@ const initialState = {};
 const fooBarReducer = reducer<State>([
   on(foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
   on(bar, (state, { payload }) => ({ ...state, bar: payload.bar })),
-  on({ fooError, barError }, (state, { payload }) => ({ ...state, error: payload.error }))
+  on(fooError, barError, (state, { payload }) => ({ ...state, error: payload.error }))
 ], initialState);
 ```
