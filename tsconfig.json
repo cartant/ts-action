@@ -11,11 +11,10 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "es5"
   },
   "exclude": [],
   "include": [
-    "source/**/*.ts"
+    "source/*.ts"
   ]
 }
