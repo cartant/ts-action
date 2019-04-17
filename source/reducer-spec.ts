@@ -52,10 +52,12 @@ describe("classes/reducer", function (): void {
 
                 interface State { foo?: number; bar?: number; }
 
-                const fooBarReducer = reducer<State>([
+                const initialState: State = {};
+                const fooBarReducer = reducer<State>(
+                    initialState,
                     on(foo, (state, { foo }) => ({ ...state, foo })),
                     on(bar, (state, { bar }) => ({ ...state, bar }))
-                ], {});
+                );
 
                 expect(fooBarReducer).to.be.a("function");
 
@@ -73,9 +75,11 @@ describe("classes/reducer", function (): void {
 
                 type State = string[];
 
-                const fooBarReducer = reducer<State>([
+                const initialState: State = [];
+                const fooBarReducer = reducer<State>(
+                    initialState,
                     on(foo, bar, (state, { type }) => [...state, type])
-                ], []);
+                );
 
                 expect(fooBarReducer).to.be.a("function");
 
