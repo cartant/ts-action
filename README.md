@@ -32,7 +32,7 @@ TypeScript version 3.0 or later is required.
 
 ## Usage
 
-Action creators are declared using the `action` method:
+Action creators are declared using the `action` function:
 
 ```ts
 import { action } from "ts-action";
@@ -45,7 +45,7 @@ Actions are created using the returned action creator function:
 store.dispatch(foo());
 ```
 
-For actions with payloads, the payload type is specified using the [`payload`](#payload) method:
+For actions with payloads, the payload type is specified using the [`payload`](#payload) function:
 
 ```ts
 import { action, payload } from "ts-action";
@@ -58,7 +58,7 @@ and the payload value is specified when creating the action:
 store.dispatch(foo({ foo: 42 }));
 ```
 
-To have the properties added to the action itself - rather than a `payload` property - use the [`props`](#props) method instead. Or, for more control over the parameters accepted by the action creator, pass a [creator](#creator) function.
+To have the properties added to the action itself - rather than a `payload` property - use the [`props`](#props) function instead. Or, for more control over the parameters accepted by the action creator, pass a [creator](#creator) function.
 
 Action creators have a `type` property that can be used to narrow an action's TypeScript type in a reducer.
 
@@ -86,7 +86,7 @@ function fooBarReducer(state: State = initialState, action: typeof both): State 
 }
 ```
 
-Or, the package's `isType` method can be used to narrow the action's type using `if` statements, like this:
+Or, the package's `isType` function can be used to narrow the action's type using `if` statements, like this:
 
 ```ts
 import { action, isType, payload } from "ts-action";
@@ -108,7 +108,7 @@ function fooBarReducer(state: State = initialState, action: Action): State {
 }
 ```
 
-Or, the package's [`reducer`](#reducer) method can be used to create a reducer function, like this:
+Or, the package's [`reducer`](#reducer) function can be used to create a reducer function, like this:
 
 ```ts
 import { action, on, payload, reducer } from "ts-action";
@@ -119,10 +119,11 @@ const bar = action("BAR", payload<{ bar: number }>());
 interface State { foo?: number; bar?: number; }
 const initialState = {};
 
-const fooBarReducer = reducer<State>([
+const fooBarReducer = reducer<State>(
+  initialState,
   on(foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
   on(bar, (state, { payload }) => ({ ...state, bar: payload.bar }))
-], initialState);
+);
 ```
 
 ## API
@@ -148,7 +149,7 @@ function action<T>(type: T, config: unknown)
 function action<T>(type: T, creator: (...args: any[]) => object)
 ```
 
-The `action` method returns an action creator. Action creators are functions:
+The `action` function returns an action creator. Action creators are functions:
 
 ```ts
 const foo = action("FOO");
@@ -158,7 +159,7 @@ console.log(fooAction); // { type: "FOO" }
 
 The `type` argument passed to `action` must be a string literal or have a string-literal type. Otherwise, TypeScript will not be able to narrow actions in a discriminated union.
 
-The `type` option passed to the `action` method can be obtained using the creator's static `type` property:
+The `type` option passed to the `action` function can be obtained using the creator's static `type` property:
 
 ```ts
 switch (action.type) {
@@ -169,7 +170,7 @@ default:
 }
 ```
 
-To define propeties, the `action` method can be passed a `config`. The `config` should be created using the `empty`, `payload`, `props` or `fsa` methods.
+To define propeties, the `action` function can be passed a `config`. The `config` should be created using the `empty`, `payload`, `props` or `fsa` functions.
 
 <a name="empty"></a>
 
@@ -179,7 +180,7 @@ To define propeties, the `action` method can be passed a `config`. The `config` 
 function empty()
 ```
 
-The `empty` method constructs the `config` for the `action` method. To declare an action without a payload or properties , call it like this:
+The `empty` function constructs the `config` for the `action` function. To declare an action without a payload or properties , call it like this:
 
 ```ts
 const foo = action("FOO", empty());
@@ -203,7 +204,7 @@ console.log(fooAction); // { type: "FOO" }
 function payload<T>()
 ```
 
-The `payload` method constructs the `config` for the `action` method. To declare action properties within a `payload` property, call it like this:
+The `payload` function constructs the `config` for the `action` function. To declare action properties within a `payload` property, call it like this:
 
 ```ts
 const foo = action("FOO", payload<{ name: string }>());
@@ -219,7 +220,7 @@ console.log(fooAction); // { type: "FOO", payload: { name: "alice" } }
 function fsa<T>()
 ```
 
-The `fsa` method constructs the `config` for the `action` method. To declare action properties within a `payload` property, call it like this:
+The `fsa` function constructs the `config` for the `action` function. To declare action properties within a `payload` property, call it like this:
 
 ```ts
 const foo = action("FOO", fsa<{ name: string }>());
@@ -242,7 +243,7 @@ console.log(fooAction); // { type: "FOO", payload: Error("Kaboom!"), error: true
 function props<T>()
 ```
 
-The `props` method constructs the `config` for the `action` method. To declare action properties at the same level as the `type` property, call it like this:
+The `props` function constructs the `config` for the `action` function. To declare action properties at the same level as the `type` property, call it like this:
 
 ```ts
 const foo = action("FOO", props<{ name: string }>());
@@ -250,13 +251,13 @@ const fooAction = foo({ name: "alice" });
 console.log(fooAction); // { type: "FOO", name: "alice" }
 ```
 
-The `props` method is similar to the `payload` method, but with `props`, the specified properties are added to the action itself - rather than a `payload` property.
+The `props` function is similar to the `payload` function, but with `props`, the specified properties are added to the action itself - rather than a `payload` property.
 
 <a name="creator"></a>
 
 ### creator
 
-Instead of passing a `config` to the `action` method, a creator function can be passed like this:
+Instead of passing a `config` to the `action` function, a creator function can be passed like this:
 
 ```ts
 const foo = action("FOO", (name: string) => ({ name }));
@@ -270,7 +271,7 @@ Passing a creator function  offers more control over property defaults, etc.
 
 ### union
 
-The `union` method can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
+The `union` function can be used to infer a union of actions - for type narrowing using a discriminated union. It's passed action creators and returns a value that can be used with TypeScript's `typeof` operator, like this:
 
 ```ts
 const both = union(foo, bar);
@@ -311,7 +312,7 @@ if (isType(action, foo, bar)) {
 
 ### guard
 
-`guard` is a higher-order equivalent of `isType`. That is, it returns a TypeScript [type guard](https://www.typescriptlang.org/docs/handbook/advanced-types.html) that will, in turn, return either `true` or `false` depending upon whether the passed action is of the appropriate type. The `guard` method is useful when dealing with APIs that accept type guards.
+`guard` is a higher-order equivalent of `isType`. That is, it returns a TypeScript [type guard](https://www.typescriptlang.org/docs/handbook/advanced-types.html) that will, in turn, return either `true` or `false` depending upon whether the passed action is of the appropriate type. The `guard` function is useful when dealing with APIs that accept type guards.
 
 For example, `Array.prototype.filter` accepts a type guard:
 
@@ -334,9 +335,9 @@ const filtered = actions.filter(guard(foo, bar));
 
 ### reducer
 
-The `reducer` method creates a reducer function out of the combined, action-specific reducers specified in the array. The array should be populated with the results of calls to the `on` method.
+The `reducer` function creates a reducer function out of the combined, action-specific reducers declared using the `on` function.
 
-The `on` method creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the types of one or more action creators.
+The `on` function creates a reducer for a specific, narrowed action and returns an object - containing the created reducer and the types of one or more action creators.
 
 ```ts
 import { action, on, payload, reducer } from "ts-action";
@@ -349,9 +350,10 @@ const barError = action("BAR_ERROR", payload<{ bar: number, error: {} }>());
 interface State { foo?: number; bar?: number; error?: {} }
 const initialState = {};
 
-const fooBarReducer = reducer<State>([
+const fooBarReducer = reducer<State>(
+  initialState,
   on(foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
   on(bar, (state, { payload }) => ({ ...state, bar: payload.bar })),
   on(fooError, barError, (state, { payload }) => ({ ...state, error: payload.error }))
-], initialState);
+);
 ```
