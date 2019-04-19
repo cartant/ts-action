@@ -6,6 +6,9 @@
 import { ActionCreator, ActionType } from "./action";
 import { Action } from "./types";
 
-export function isType<T extends ActionCreator[]>(action: Action, ...creators: T): action is ActionType<T[number]> {
-    return creators.some(({ type }) => action.type === type);
+export function isType<T extends ActionCreator[]>(
+  action: Action,
+  ...creators: T
+): action is ActionType<T[number]> {
+  return creators.some(({ type }) => action.type === type);
 }

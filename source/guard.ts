@@ -7,7 +7,9 @@ import { ActionCreator, ActionType } from "./action";
 import { isType } from "./isType";
 import { Action } from "./types";
 
-export function guard<T extends ActionCreator[]>(...creators: T): (action: Action) => action is ActionType<T[number]> {
-    /*tslint:disable-next-line:no-any*/
-    return ((action: Action) => isType(action, ...creators)) as any;
+export function guard<T extends ActionCreator[]>(
+  ...creators: T
+): (action: Action) => action is ActionType<T[number]> {
+  /*tslint:disable-next-line:no-any*/
+  return ((action: Action) => isType(action, ...creators)) as any;
 }
