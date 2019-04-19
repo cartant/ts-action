@@ -1,3 +1,10 @@
+<a name="10.0.1"></a>
+## [10.0.1](https://github.com/cartant/ts-action/compare/v10.0.0...v10.0.1) (2019-04-19)
+
+* Update documentation. ([5db1725](https://github.com/cartant/ts-action/commit/5db1725))
+
+### Fixes
+
 <a name="10.0.0"></a>
 ## [10.0.0](https://github.com/cartant/ts-action/compare/v9.0.0...v10.0.0) (2019-04-19)
 
