@@ -1,3 +1,11 @@
+<a name="10.0.0"></a>
+## [10.0.0](https://github.com/cartant/ts-action/compare/v9.0.0...v10.0.0) (2019-04-19)
+
+### Breaking changes
+
+* `reducer` now takes the `intialState` as its first parameter, followed by any number of `on` declarations - using a rest parameter, rather than an array.
+* The types used for the `reducer` parameters have been simplified, but unless said types have been explicitly referenced, this won't be a breaking change.
+
 <a name="9.0.0"></a>
 ## [9.0.0](https://github.com/cartant/ts-action/compare/v8.1.2...v9.0.0) (2019-04-06)
 
