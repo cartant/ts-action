@@ -39,9 +39,6 @@
   "name": "ts-action",
   "optionalDependencies": {},
   "peerDependencies": {},
-  "prettier": {
-    "tabWidth": 2
-  },
   "private": true,
   "repository": {
     "type": "git",
