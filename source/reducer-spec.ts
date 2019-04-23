@@ -51,7 +51,7 @@ describe("classes/reducer", function(): void {
         }
 
         const initialState: State = {};
-        const fooBarReducer = reducer<State>(
+        const fooBarReducer = reducer(
           initialState,
           on(foo, (state, { foo }) => ({ ...state, foo })),
           on(bar, (state, { bar }) => ({ ...state, bar }))
@@ -73,7 +73,7 @@ describe("classes/reducer", function(): void {
         type State = string[];
 
         const initialState: State = [];
-        const fooBarReducer = reducer<State>(
+        const fooBarReducer = reducer(
           initialState,
           on(foo, bar, (state, { type }) => [...state, type])
         );

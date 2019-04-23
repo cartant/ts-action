@@ -119,7 +119,7 @@ const bar = action("BAR", payload<{ bar: number }>());
 interface State { foo?: number; bar?: number; }
 const initialState = {};
 
-const fooBarReducer = reducer<State>(
+const fooBarReducer = reducer(
   initialState,
   on(foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
   on(bar, (state, { payload }) => ({ ...state, bar: payload.bar }))
@@ -350,7 +350,7 @@ const barError = action("BAR_ERROR", payload<{ bar: number, error: {} }>());
 interface State { foo?: number; bar?: number; error?: {} }
 const initialState = {};
 
-const fooBarReducer = reducer<State>(
+const fooBarReducer = reducer(
   initialState,
   on(foo, (state, { payload }) => ({ ...state, foo: payload.foo })),
   on(bar, (state, { payload }) => ({ ...state, bar: payload.bar })),
