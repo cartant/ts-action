@@ -72,7 +72,7 @@ const bar = action("BAR", payload<{ bar: number }>());
 const both = union(foo, bar);
 
 interface State { foo?: number; bar?: number; }
-const initialState = {};
+const initialState: State = {};
 
 function fooBarReducer(state: State = initialState, action: typeof both): State {
   switch (action.type) {
@@ -95,7 +95,7 @@ const foo = action("FOO", payload<{ foo: number }>());
 const bar = action("BAR", payload<{ bar: number }>());
 
 interface State { foo?: number; bar?: number; }
-const initialState = {};
+const initialState: State = {};
 
 function fooBarReducer(state: State = initialState, action: Action): State {
   if (isType(action, foo)) {
@@ -117,7 +117,7 @@ const foo = action("FOO", payload<{ foo: number }>());
 const bar = action("BAR", payload<{ bar: number }>());
 
 interface State { foo?: number; bar?: number; }
-const initialState = {};
+const initialState: State = {};
 
 const fooBarReducer = reducer(
   initialState,
@@ -348,7 +348,7 @@ const fooError = action("FOO_ERROR", payload<{ foo: number, error: {} }>());
 const barError = action("BAR_ERROR", payload<{ bar: number, error: {} }>());
 
 interface State { foo?: number; bar?: number; error?: {} }
-const initialState = {};
+const initialState: State = {};
 
 const fooBarReducer = reducer(
   initialState,
