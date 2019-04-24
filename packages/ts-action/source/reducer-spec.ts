@@ -14,7 +14,7 @@ describe("reducer", function(): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
-  describe("base", () => {
+  describe("props", () => {
     const { bar, foo } = usingProps;
 
     describe("on", () => {

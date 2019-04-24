@@ -15,7 +15,7 @@ import {
 import { isType } from "./isType";
 
 describe("isType", () => {
-  describe("props", () => {
+  describe("creator", () => {
     const { bar, baz, foo } = usingCreator;
 
     it("should return true for matching actions", () => {
