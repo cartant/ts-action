@@ -14,7 +14,7 @@ import {
 } from "./foobar-spec";
 import { isType } from "./isType";
 
-describe("classes/isType", () => {
+describe("isType", () => {
   describe("props", () => {
     const { bar, baz, foo } = usingCreator;
 
