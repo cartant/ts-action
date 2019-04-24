@@ -9,7 +9,7 @@ export const expectSnippet = expecter(
   code => `
     import { action, empty, fsa, on, payload, props, reducer, union } from "./source";
     ${code}
-`,
+  `,
   {
     moduleResolution: "node",
     target: "es2015"

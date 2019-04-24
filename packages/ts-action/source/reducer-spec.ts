@@ -20,16 +20,16 @@ describe("reducer", function(): void {
     describe("on", () => {
       it("should enforce action property types", () => {
         expectSnippet(`
-                    const foo = action("FOO", props<{ foo: number }>());
-                    on(foo, (state, action) => { const foo: string = action.foo; return state; });
-                `).toFail(/'number' is not assignable to type 'string'/);
+          const foo = action("FOO", props<{ foo: number }>());
+          on(foo, (state, action) => { const foo: string = action.foo; return state; });
+        `).toFail(/'number' is not assignable to type 'string'/);
       });
 
       it("should enforce action property names", () => {
         expectSnippet(`
-                    const foo = action("FOO", props<{ foo: number }>());
-                    on(foo, (state, action) => { const bar: string = action.bar; return state; });
-                `).toFail(/'bar' does not exist on type/);
+          const foo = action("FOO", props<{ foo: number }>());
+          on(foo, (state, action) => { const bar: string = action.bar; return state; });
+        `).toFail(/'bar' does not exist on type/);
       });
 
       it("should support reducers with multiple actions", () => {

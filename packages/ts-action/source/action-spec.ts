@@ -49,25 +49,25 @@ describe("functions/action", function(): void {
 
     it("should enforce creator parameters", () => {
       expectSnippet(`
-                const foo = action("FOO", (foo: number) => ({ foo }));
-                const fooAction = foo("42");
-            `).toFail(/not assignable to parameter of type 'number'/);
+        const foo = action("FOO", (foo: number) => ({ foo }));
+        const fooAction = foo("42");
+      `).toFail(/not assignable to parameter of type 'number'/);
     });
 
     it("should enforce action property types", () => {
       expectSnippet(`
-                const foo = action("FOO", (foo: number) => ({ foo }));
-                const fooAction = foo(42);
-                const value: string = fooAction.foo;
-            `).toFail(/'number' is not assignable to type 'string'/);
+        const foo = action("FOO", (foo: number) => ({ foo }));
+        const fooAction = foo(42);
+        const value: string = fooAction.foo;
+      `).toFail(/'number' is not assignable to type 'string'/);
     });
 
     it("should enforce action property names", () => {
       expectSnippet(`
-                const foo = action("FOO", (foo: number) => ({ foo }));
-                const fooAction = foo(42);
-                const value = fooAction.bar;
-            `).toFail(/'bar' does not exist on type/);
+        const foo = action("FOO", (foo: number) => ({ foo }));
+        const fooAction = foo(42);
+        const value = fooAction.bar;
+      `).toFail(/'bar' does not exist on type/);
     });
   });
 
@@ -115,25 +115,25 @@ describe("functions/action", function(): void {
 
     it("should enforce creator parameters", () => {
       expectSnippet(`
-                const foo = action("FOO", empty());
-                const fooAction = foo("42");
-            `).toFail(/Expected 0 arguments/);
+        const foo = action("FOO", empty());
+        const fooAction = foo("42");
+      `).toFail(/Expected 0 arguments/);
     });
 
     it("should enforce action property types", () => {
       expectSnippet(`
-                const foo = action("FOO", empty());
-                const fooAction = foo();
-                const value: string = fooAction.foo;
-            `).toFail(/'foo' does not exist/);
+        const foo = action("FOO", empty());
+        const fooAction = foo();
+        const value: string = fooAction.foo;
+      `).toFail(/'foo' does not exist/);
     });
 
     it("should enforce action property names", () => {
       expectSnippet(`
-                const foo = action("FOO", empty());
-                const fooAction = foo();
-                const value = fooAction.bar;
-            `).toFail(/'bar' does not exist on type/);
+        const foo = action("FOO", empty());
+        const fooAction = foo();
+        const value = fooAction.bar;
+      `).toFail(/'bar' does not exist on type/);
     });
   });
 
@@ -201,25 +201,25 @@ describe("functions/action", function(): void {
 
     it("should enforce creator parameters", () => {
       expectSnippet(`
-                const foo = action("FOO", fsa<number>());
-                const fooAction = foo("42");
-            `).toFail(/not assignable to parameter of type 'number | Error'/);
+        const foo = action("FOO", fsa<number>());
+        const fooAction = foo("42");
+      `).toFail(/not assignable to parameter of type 'number | Error'/);
     });
 
     it("should enforce action property types", () => {
       expectSnippet(`
-                const foo = action("FOO", fsa<number>());
-                const fooAction = foo(42);
-                const value: string = fooAction.payload;
-            `).toFail(/'number' is not assignable to type 'string'/);
+        const foo = action("FOO", fsa<number>());
+        const fooAction = foo(42);
+        const value: string = fooAction.payload;
+      `).toFail(/'number' is not assignable to type 'string'/);
     });
 
     it("should enforce action property names", () => {
       expectSnippet(`
-                const foo = action("FOO", fsa<number>());
-                const fooAction = foo(42);
-                const value = fooAction.bar;
-            `).toFail(/'bar' does not exist on type/);
+        const foo = action("FOO", fsa<number>());
+        const fooAction = foo(42);
+        const value = fooAction.bar;
+      `).toFail(/'bar' does not exist on type/);
     });
   });
 
@@ -263,25 +263,25 @@ describe("functions/action", function(): void {
 
     it("should enforce creator parameters", () => {
       expectSnippet(`
-                const foo = action("FOO", payload<number>());
-                const fooAction = foo("42");
-            `).toFail(/not assignable to parameter of type 'number'/);
+        const foo = action("FOO", payload<number>());
+        const fooAction = foo("42");
+      `).toFail(/not assignable to parameter of type 'number'/);
     });
 
     it("should enforce action property types", () => {
       expectSnippet(`
-                const foo = action("FOO", payload<number>());
-                const fooAction = foo(42);
-                const value: string = fooAction.payload;
-            `).toFail(/'number' is not assignable to type 'string'/);
+        const foo = action("FOO", payload<number>());
+        const fooAction = foo(42);
+        const value: string = fooAction.payload;
+      `).toFail(/'number' is not assignable to type 'string'/);
     });
 
     it("should enforce action property names", () => {
       expectSnippet(`
-                const foo = action("FOO", payload<number>());
-                const fooAction = foo(42);
-                const value = fooAction.bar;
-            `).toFail(/'bar' does not exist on type/);
+        const foo = action("FOO", payload<number>());
+        const fooAction = foo(42);
+        const value = fooAction.bar;
+      `).toFail(/'bar' does not exist on type/);
     });
   });
 
@@ -322,25 +322,25 @@ describe("functions/action", function(): void {
 
     it("should enforce creator parameters", () => {
       expectSnippet(`
-                const foo = action("FOO", props<{ foo: number }>());
-                const fooAction = foo({ foo: "42" });
-            `).toFail(/'string' is not assignable to type 'number'/);
+        const foo = action("FOO", props<{ foo: number }>());
+        const fooAction = foo({ foo: "42" });
+      `).toFail(/'string' is not assignable to type 'number'/);
     });
 
     it("should enforce action property types", () => {
       expectSnippet(`
-                const foo = action("FOO", props<{ foo: number }>());
-                const fooAction = foo({ foo: 42 });
-                const value: string = fooAction.foo;
-            `).toFail(/'number' is not assignable to type 'string'/);
+        const foo = action("FOO", props<{ foo: number }>());
+        const fooAction = foo({ foo: 42 });
+        const value: string = fooAction.foo;
+      `).toFail(/'number' is not assignable to type 'string'/);
     });
 
     it("should enforce action property names", () => {
       expectSnippet(`
-                const foo = action("FOO", props<{ foo: number }>());
-                const fooAction = foo({ foo: 42 });
-                const value = fooAction.bar;
-            `).toFail(/'bar' does not exist on type/);
+        const foo = action("FOO", props<{ foo: number }>());
+        const fooAction = foo({ foo: 42 });
+        const value = fooAction.bar;
+      `).toFail(/'bar' does not exist on type/);
     });
   });
 });
