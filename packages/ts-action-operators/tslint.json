@@ -1,0 +1,17 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "@cartant/tslint-config",
+    "@cartant/tslint-config-etc",
+    "@cartant/tslint-config-rxjs"
+  ],
+  "rules": {
+    "typedef": {
+      "options": [
+        "parameter",
+        "property-declaration"
+      ],
+      "severity": "error"
+    }
+  }
+}

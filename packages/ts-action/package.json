@@ -1,0 +1,61 @@
+{
+  "author": "Nicholas Jamieson <nicholas@cartant.com>",
+  "bugs": {
+    "url": "https://github.com/cartant/ts-action/issues"
+  },
+  "dependencies": {},
+  "description": "TypeScript action creators for Redux",
+  "devDependencies": {
+    "@cartant/tslint-config": "^2.0.0",
+    "@cartant/tslint-config-etc": "^2.0.0",
+    "@types/chai": "^4.0.0",
+    "@types/lodash.isplainobject": "^4.0.0",
+    "@types/mocha": "^5.0.0",
+    "chai": "^4.1.2",
+    "cpy-cli": "^2.0.0",
+    "lodash.isplainobject": "^4.0.0",
+    "mocha": "^6.0.0",
+    "rimraf": "^2.6.2",
+    "ts-snippet": "^4.0.0",
+    "tslint": "^5.8.0",
+    "tslint-etc": "^1.5.1",
+    "typescript": "~3.4.1"
+  },
+  "es2015": "./dist/esm2015/index.js",
+  "homepage": "https://github.com/cartant/ts-action",
+  "keywords": [
+    "action",
+    "ngrx",
+    "redux",
+    "redux-observable",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/esm5/index.js",
+  "name": "ts-action",
+  "optionalDependencies": {},
+  "peerDependencies": {},
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cartant/ts-action.git"
+  },
+  "scripts": {
+    "dist": "yarn run dist:build && yarn run dist:copy",
+    "dist:build": "yarn run dist:clean && yarn run dist:build:cjs && yarn run dist:build:esm2015 && yarn run dist:build:esm5",
+    "dist:build:cjs": "tsc -p tsconfig-dist-cjs.json",
+    "dist:build:esm2015": "tsc -p tsconfig-dist-esm2015.json",
+    "dist:build:esm5": "tsc -p tsconfig-dist-esm5.json",
+    "dist:clean": "rimraf dist",
+    "dist:copy": "node scripts/pack.js && yarn run dist:copy:docs",
+    "dist:copy:docs": "cpy CHANGELOG.md CLASSES.md LICENSE README.md dist/",
+    "lint": "tslint --project tsconfig.json source/**/*.ts",
+    "test": "yarn run lint && yarn run test:build && mocha ./build/**/*-spec.js",
+    "test:build": "yarn run test:clean && tsc -p tsconfig-test.json",
+    "test:clean": "rimraf build"
+  },
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "version": "10.0.2"
+}

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "inlineSourceMap": false,
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "es5"
+  },
+  "exclude": [
+    "source/**/*-spec.ts"
+  ],
+  "extends": "./tsconfig.json"
+}
