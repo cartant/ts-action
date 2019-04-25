@@ -3,9 +3,6 @@
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cartant/ts-action/blob/master/LICENSE)
 [![NPM version](https://img.shields.io/npm/v/ts-action-operators.svg)](https://www.npmjs.com/package/ts-action-operators)
 [![Build status](https://img.shields.io/travis/cartant/ts-action.svg)](http://travis-ci.org/cartant/ts-action)
-[![dependency status](https://img.shields.io/david/cartant/ts-action-operators.svg)](https://david-dm.org/cartant/ts-action-operators)
-[![devDependency Status](https://img.shields.io/david/dev/cartant/ts-action-operators.svg)](https://david-dm.org/cartant/ts-action-operators#info=devDependencies)
-[![peerDependency Status](https://img.shields.io/david/peer/cartant/ts-action-operators.svg)](https://david-dm.org/cartant/ts-action-operators#info=peerDependencies)
 [![Greenkeeper badge](https://badges.greenkeeper.io/cartant/ts-action.svg)](https://greenkeeper.io/)
 
 ### What is it?
