@@ -12,8 +12,8 @@
   },
   "private": true,
   "scripts": {
-    "dist": "yarn --cwd ./packages/ts-action dist && yarn --cwd ./packages/ts-action-operators dist",
-    "test": "yarn --cwd ./packages/ts-action test && yarn --cwd ./packages/ts-action-operators test"
+    "dist": "yarn --cwd ./packages/ts-action dist && yarn --cwd ./packages/ts-action-immer dist &&yarn --cwd ./packages/ts-action-operators dist",
+    "test": "yarn --cwd ./packages/ts-action test && yarn --cwd ./packages/ts-action-immer test &&yarn --cwd ./packages/ts-action-operators test"
   },
   "workspaces": [
     "packages/*"
