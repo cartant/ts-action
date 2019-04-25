@@ -4,7 +4,7 @@
     "url": "https://github.com/cartant/ts-action/issues"
   },
   "dependencies": {},
-  "description": "TypeScript action operators for NgRx and redux-observable",
+  "description": "Immer-based reducer creators for Redux",
   "devDependencies": {
     "@cartant/tslint-config": "^2.0.0",
     "@cartant/tslint-config-etc": "^2.0.0",
