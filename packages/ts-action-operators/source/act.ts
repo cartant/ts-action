@@ -71,12 +71,8 @@ export function act<
                       },
                       error(e: any) {
                         errored = true;
-                        if (error) {
-                          subscriber.next(error(e));
-                          subscriber.complete();
-                        } else {
-                          subscriber.error(e);
-                        }
+                        subscriber.next(error(e));
+                        subscriber.complete();
                       },
                       next(value: Value) {
                         const index = nexts++;
