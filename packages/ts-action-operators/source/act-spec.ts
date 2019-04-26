@@ -28,9 +28,10 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => values.p,
-          next: (value, index) => {
+          next: (value, index, action) => {
             expect(value).to.equal("r");
             expect(index).to.equal(0);
+            expect(action).to.equal(values.f);
             return values.b;
           },
           project: action => response
@@ -49,8 +50,9 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
-          complete: nexts => {
+          complete: (nexts, action) => {
             expect(nexts).to.equal(1);
+            expect(action).to.equal(values.f);
             return values.c;
           },
           error: () => values.p,
@@ -71,7 +73,11 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
-          error: () => values.p,
+          error: (error, action) => {
+            expect(error).to.not.be.undefined;
+            expect(action).to.equal(values.f);
+            return values.p;
+          },
           next: () => values.b,
           project: action => response
         })
@@ -168,8 +174,9 @@ describe("act", () => {
           next: () => values.b,
           operator: switchMap,
           project: action => response,
-          unsubscribe: nexts => {
+          unsubscribe: (nexts, action) => {
             expect(nexts).to.equal(0);
+            expect(action).to.equal(values.f);
             return values.m;
           }
         })

@@ -29,14 +29,14 @@ export function act<
   project,
   unsubscribe
 }: {
-  complete?: (nexts: number) => CompleteAction;
-  error: (error: any) => ErrorAction;
-  next?: (value: Value, index: number) => NextAction;
+  complete?: (nexts: number, action: EffectAction) => CompleteAction;
+  error: (error: any, action: EffectAction) => ErrorAction;
+  next?: (value: Value, index: number, action: EffectAction) => NextAction;
   operator?: <A, R>(
     project: (action: A) => Observable<R>
   ) => OperatorFunction<A, R>;
   project: (action: EffectAction) => Observable<Value>;
-  unsubscribe?: (nexts: number) => UnsubscribeAction;
+  unsubscribe?: (nexts: number, action: EffectAction) => UnsubscribeAction;
 }): (
   source: Observable<EffectAction>
 ) => Observable<CompleteAction | ErrorAction | NextAction | UnsubscribeAction> {
@@ -57,7 +57,7 @@ export function act<
                   const subscription = new Subscription();
                   subscription.add(() => {
                     if (!completed && !errored && !nexts && unsubscribe) {
-                      subject.next(unsubscribe(nexts));
+                      subject.next(unsubscribe(nexts, action));
                     }
                   });
                   subscription.add(
@@ -65,19 +65,19 @@ export function act<
                       complete() {
                         completed = true;
                         if (complete) {
-                          subscriber.next(complete(nexts));
+                          subscriber.next(complete(nexts, action));
                         }
                         subscriber.complete();
                       },
                       error(e: any) {
                         errored = true;
-                        subscriber.next(error(e));
+                        subscriber.next(error(e, action));
                         subscriber.complete();
                       },
                       next(value: Value) {
                         const index = nexts++;
                         if (next) {
-                          subscriber.next(next(value, index));
+                          subscriber.next(next(value, index, action));
                         }
                       }
                     })
