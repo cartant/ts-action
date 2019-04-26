@@ -14,13 +14,20 @@ import {
 } from "rxjs";
 import { concatMap } from "rxjs/operators";
 
+enum UnspecifiedBrand {}
+type UnspecifiedAction = {
+  type: "";
+  unspecified: UnspecifiedBrand;
+};
+type SpecifiedAction<A extends Action> = Exclude<A, UnspecifiedAction>;
+
 export function act<
   Value,
   EffectAction extends Action,
-  CompleteAction extends Action,
-  ErrorAction extends Action,
-  NextAction extends Action,
-  UnsubscribeAction extends Action
+  CompleteAction extends Action = UnspecifiedAction,
+  ErrorAction extends Action = UnspecifiedAction,
+  NextAction extends Action = UnspecifiedAction,
+  UnsubscribeAction extends Action = UnspecifiedAction
 >({
   complete,
   error,
@@ -39,12 +46,12 @@ export function act<
   unsubscribe?: (nexts: number, action: EffectAction) => UnsubscribeAction;
 }): (
   source: Observable<EffectAction>
-) => Observable<CompleteAction | ErrorAction | NextAction | UnsubscribeAction> {
+) => Observable<
+  SpecifiedAction<CompleteAction | ErrorAction | NextAction | UnsubscribeAction>
+> {
   return source =>
     defer(
-      (): Observable<
-        CompleteAction | ErrorAction | NextAction | UnsubscribeAction
-      > => {
+      (): Observable<Action> => {
         const subject = new Subject<UnsubscribeAction>();
         return merge(
           source.pipe(
@@ -89,5 +96,9 @@ export function act<
           subject
         );
       }
-    );
+    ) as Observable<
+      SpecifiedAction<
+        CompleteAction | ErrorAction | NextAction | UnsubscribeAction
+      >
+    >;
 }
