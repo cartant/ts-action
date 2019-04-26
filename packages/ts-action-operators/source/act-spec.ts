@@ -52,8 +52,8 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
-          complete: (nexts, action) => {
-            expect(nexts).to.equal(1);
+          complete: (count, action) => {
+            expect(count).to.equal(1);
             expect(action).to.equal(f);
             return c;
           },
@@ -169,8 +169,8 @@ describe("act", () => {
           error: () => p,
           operator: switchMap,
           project: () => response.pipe(mapTo(b)),
-          unsubscribe: (nexts, action) => {
-            expect(nexts).to.equal(0);
+          unsubscribe: (count, action) => {
+            expect(count).to.equal(0);
             expect(action).to.equal(f);
             return d;
           }

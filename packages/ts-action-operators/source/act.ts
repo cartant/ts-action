@@ -23,7 +23,7 @@ type SpecifiedAction<A extends Action> = Exclude<A, UnspecifiedAction>;
 
 export function act<
   EffectAction extends Action,
-  NextAction extends Action = UnspecifiedAction,
+  ProjectAction extends Action = UnspecifiedAction,
   ErrorAction extends Action = UnspecifiedAction,
   CompleteAction extends Action = UnspecifiedAction,
   UnsubscribeAction extends Action = UnspecifiedAction
@@ -34,17 +34,17 @@ export function act<
   project,
   unsubscribe
 }: {
-  complete?: (nexts: number, action: EffectAction) => CompleteAction;
+  complete?: (count: number, action: EffectAction) => CompleteAction;
   error: (error: any, action: EffectAction) => ErrorAction;
   operator?: <A, R>(
     project: (action: A, index: number) => Observable<R>
   ) => OperatorFunction<A, R>;
-  project: (action: EffectAction, index: number) => Observable<NextAction>;
-  unsubscribe?: (nexts: number, action: EffectAction) => UnsubscribeAction;
+  project: (action: EffectAction, index: number) => Observable<ProjectAction>;
+  unsubscribe?: (count: number, action: EffectAction) => UnsubscribeAction;
 }): (
   source: Observable<EffectAction>
 ) => Observable<
-  SpecifiedAction<NextAction | ErrorAction | CompleteAction | UnsubscribeAction>
+  SpecifiedAction<ProjectAction | ErrorAction | CompleteAction | UnsubscribeAction>
 > {
   return source =>
     defer(
@@ -57,11 +57,11 @@ export function act<
                 new Observable(subscriber => {
                   let completed = false;
                   let errored = false;
-                  let nexts = 0;
+                  let projected = 0;
                   const subscription = new Subscription();
                   subscription.add(() => {
-                    if (!completed && !errored && !nexts && unsubscribe) {
-                      subject.next(unsubscribe(nexts, action));
+                    if (!completed && !errored && !projected && unsubscribe) {
+                      subject.next(unsubscribe(projected, action));
                     }
                   });
                   subscription.add(
@@ -69,7 +69,7 @@ export function act<
                       complete() {
                         completed = true;
                         if (complete) {
-                          subscriber.next(complete(nexts, action));
+                          subscriber.next(complete(projected, action));
                         }
                         subscriber.complete();
                       },
@@ -78,9 +78,9 @@ export function act<
                         subscriber.next(error(e, action));
                         subscriber.complete();
                       },
-                      next(nextAction: NextAction) {
-                        ++nexts;
-                        subscriber.next(nextAction);
+                      next(projectAction: ProjectAction) {
+                        ++projected;
+                        subscriber.next(projectAction);
                       }
                     })
                   );
@@ -93,7 +93,7 @@ export function act<
       }
     ) as Observable<
       SpecifiedAction<
-        NextAction | ErrorAction | CompleteAction | UnsubscribeAction
+        ProjectAction | ErrorAction | CompleteAction | UnsubscribeAction
       >
     >;
 }
