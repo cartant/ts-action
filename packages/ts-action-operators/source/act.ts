@@ -44,7 +44,9 @@ export function act<
 }): (
   source: Observable<EffectAction>
 ) => Observable<
-  SpecifiedAction<ProjectAction | ErrorAction | CompleteAction | UnsubscribeAction>
+  SpecifiedAction<
+    ProjectAction | ErrorAction | CompleteAction | UnsubscribeAction
+  >
 > {
   return source =>
     defer(
@@ -69,13 +71,22 @@ export function act<
                       complete() {
                         completed = true;
                         if (complete) {
-                          subscriber.next(complete(projected, action));
+                          try {
+                            subscriber.next(complete(projected, action));
+                          } catch (callbackError) {
+                            subscriber.error(callbackError);
+                            return;
+                          }
                         }
                         subscriber.complete();
                       },
-                      error(e: any) {
+                      error(projectError: any) {
                         errored = true;
-                        subscriber.next(error(e, action));
+                        try {
+                          subscriber.next(error(projectError, action));
+                        } catch (callbackError) {
+                          subscriber.error(callbackError);
+                        }
                         subscriber.complete();
                       },
                       next(projectAction: ProjectAction) {
