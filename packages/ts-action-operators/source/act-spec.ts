@@ -5,7 +5,7 @@
 /*tslint:disable:no-unused-expression rxjs-no-explicit-generics*/
 
 import { expect } from "chai";
-import { exhaustMap, mergeMap, switchMap } from "rxjs/operators";
+import { exhaustMap, mapTo, mergeMap, switchMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
 import { action } from "ts-action";
 import { act } from "./act";
@@ -23,7 +23,7 @@ describe("act", () => {
   const p = poo();
 
   it(
-    "should support next",
+    "should support project",
     marbles(m => {
       const source = m.cold("   f", { f });
       const response = m.cold(" r");
@@ -32,13 +32,11 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => p,
-          next: (value, index, action) => {
-            expect(value).to.equal("r");
-            expect(index).to.equal(0);
+          project: (action, index) => {
             expect(action).to.equal(f);
-            return b;
-          },
-          project: action => response
+            expect(index).to.equal(0);
+            return response.pipe(mapTo(b));
+          }
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -60,8 +58,7 @@ describe("act", () => {
             return c;
           },
           error: () => p,
-          next: () => b,
-          project: action => response
+          project: () => response.pipe(mapTo(b))
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -82,8 +79,7 @@ describe("act", () => {
             expect(action).to.equal(f);
             return p;
           },
-          next: () => b,
-          project: action => response
+          project: () => response.pipe(mapTo(b))
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -100,8 +96,7 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => p,
-          next: () => b,
-          project: action => response
+          project: () => response.pipe(mapTo(b))
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -118,9 +113,8 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => p,
-          next: () => b,
           operator: mergeMap,
-          project: action => response
+          project: () => response.pipe(mapTo(b))
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -137,9 +131,8 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => p,
-          next: () => b,
           operator: switchMap,
-          project: action => response
+          project: () => response.pipe(mapTo(b))
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -156,9 +149,8 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => p,
-          next: () => b,
           operator: exhaustMap,
-          project: action => response
+          project: () => response.pipe(mapTo(b))
         })
       );
       m.expect(effect).toBeObservable(expected);
@@ -175,9 +167,8 @@ describe("act", () => {
       const effect = source.pipe(
         act({
           error: () => p,
-          next: () => b,
           operator: switchMap,
-          project: action => response,
+          project: () => response.pipe(mapTo(b)),
           unsubscribe: (nexts, action) => {
             expect(nexts).to.equal(0);
             expect(action).to.equal(f);
