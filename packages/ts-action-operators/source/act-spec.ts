@@ -27,6 +27,7 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
+          error: () => values.p,
           next: (value, index) => {
             expect(value).to.equal("r");
             expect(index).to.equal(0);
@@ -52,6 +53,7 @@ describe("act", () => {
             expect(nexts).to.equal(1);
             return values.c;
           },
+          error: () => values.p,
           next: () => values.b,
           project: action => response
         })
@@ -87,6 +89,7 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
+          error: () => values.p,
           next: value => values.b,
           project: action => response
         })
@@ -104,6 +107,7 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
+          error: () => values.p,
           next: value => values.b,
           operator: mergeMap,
           project: action => response
@@ -122,6 +126,7 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
+          error: () => values.p,
           next: value => values.b,
           operator: switchMap,
           project: action => response
@@ -140,6 +145,7 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
+          error: () => values.p,
           next: value => values.b,
           operator: exhaustMap,
           project: action => response
@@ -158,6 +164,7 @@ describe("act", () => {
 
       const effect = source.pipe(
         act({
+          error: () => values.p,
           next: () => values.b,
           operator: switchMap,
           project: action => response,

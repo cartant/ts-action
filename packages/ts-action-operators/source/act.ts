@@ -30,7 +30,7 @@ export function act<
   unsubscribe
 }: {
   complete?: (nexts: number) => CompleteAction;
-  error?: (error: any) => ErrorAction;
+  error: (error: any) => ErrorAction;
   next?: (value: Value, index: number) => NextAction;
   operator?: <A, R>(
     project: (action: A) => Observable<R>
