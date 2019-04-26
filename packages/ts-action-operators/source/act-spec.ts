@@ -10,7 +10,7 @@ import { marbles } from "rxjs-marbles";
 import { action } from "ts-action";
 import { act } from "./act";
 
-describe.only("act", () => {
+describe("act", () => {
   const foo = action("FOO");
   const boo = action("BOO");
   const coo = action("COO");
