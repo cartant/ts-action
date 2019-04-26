@@ -162,7 +162,7 @@ describe("act", () => {
   );
 
   it(
-    "should support empty for unsubscriptions",
+    "should support unsubscribe",
     marbles(m => {
       const source = m.cold("   ff", values);
       const response = m.cold(" --");
