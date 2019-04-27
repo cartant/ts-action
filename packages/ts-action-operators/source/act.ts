@@ -30,8 +30,8 @@ type UnspecifiedAction = {
 type SpecifiedAction<A extends Action> = Exclude<A, UnspecifiedAction>;
 
 export function act<
-  EffectAction extends Action,
-  ProjectedAction extends Action = UnspecifiedAction,
+  InputAction extends Action,
+  OutputAction extends Action = UnspecifiedAction,
   ErrorAction extends Action = UnspecifiedAction,
   CompleteAction extends Action = UnspecifiedAction,
   UnsubscribeAction extends Action = UnspecifiedAction
@@ -42,22 +42,22 @@ export function act<
   project,
   unsubscribe
 }: {
-  complete?: (count: number, action: EffectAction) => CompleteAction;
-  error: (error: any, action: EffectAction) => ErrorAction;
-  operator?: <A, R>(
-    project: (action: A, index: number) => Observable<R>
-  ) => OperatorFunction<A, R>;
-  project: (action: EffectAction, index: number) => Observable<ProjectedAction>;
-  unsubscribe?: (count: number, action: EffectAction) => UnsubscribeAction;
+  complete?: (count: number, action: InputAction) => CompleteAction;
+  error: (error: any, action: InputAction) => ErrorAction;
+  operator?: <I, O>(
+    project: (input: I, index: number) => Observable<O>
+  ) => OperatorFunction<I, O>;
+  project: (action: InputAction, index: number) => Observable<OutputAction>;
+  unsubscribe?: (count: number, action: InputAction) => UnsubscribeAction;
 }): (
-  source: Observable<EffectAction>
+  source: Observable<InputAction>
 ) => Observable<
   SpecifiedAction<
-    ProjectedAction | ErrorAction | CompleteAction | UnsubscribeAction
+    OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
   >
 > {
   type CombinedAction =
-    | ProjectedAction
+    | OutputAction
     | ErrorAction
     | CompleteAction
     | UnsubscribeAction;

@@ -1,5 +1,5 @@
 /**
- * @license Use of this source code is governed by an MIT-style license that
+ * @license Use of this input code is governed by an MIT-style license that
  * can be found in the LICENSE file at https://github.com/cartant/ts-action
  */
 /*tslint:disable:no-unused-expression rxjs-no-explicit-generics*/
@@ -25,11 +25,11 @@ describe("act", () => {
   it(
     "should support project",
     marbles(m => {
-      const source = m.cold("   f", { f });
+      const input = m.cold("    f", { f });
       const response = m.cold(" r");
       const expected = m.cold(" b", { b });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           project: (action, index) => {
@@ -39,18 +39,18 @@ describe("act", () => {
           }
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should support complete",
     marbles(m => {
-      const source = m.cold("   f-", { f });
+      const input = m.cold("    f-", { f });
       const response = m.cold(" r|");
       const expected = m.cold(" bc", { b, c });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           complete: (count, action) => {
             expect(count).to.equal(1);
@@ -61,18 +61,18 @@ describe("act", () => {
           project: () => response.pipe(mapTo(b))
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should support error",
     marbles(m => {
-      const source = m.cold("   f-", { f });
+      const input = m.cold("    f-", { f });
       const response = m.cold(" r#");
       const expected = m.cold(" bp", { b, p });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: (error, action) => {
             expect(error).to.not.be.undefined;
@@ -82,89 +82,89 @@ describe("act", () => {
           project: () => response.pipe(mapTo(b))
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should default to concatMap",
     marbles(m => {
-      const source = m.cold("   ff-----", { f });
+      const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ---b--b", { b });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           project: () => response.pipe(mapTo(b))
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should support mergeMap",
     marbles(m => {
-      const source = m.cold("   ff-----", { f });
+      const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ---bb--", { b });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           operator: mergeMap,
           project: () => response.pipe(mapTo(b))
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should support switchMap",
     marbles(m => {
-      const source = m.cold("   ff-----", { f });
+      const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ----b--", { b });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           operator: switchMap,
           project: () => response.pipe(mapTo(b))
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should support exhaustMap",
     marbles(m => {
-      const source = m.cold("   ff-----", { f });
+      const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ---b---", { b });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           operator: exhaustMap,
           project: () => response.pipe(mapTo(b))
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
     "should support unsubscribe",
     marbles(m => {
-      const source = m.cold("   ff", { f });
+      const input = m.cold("    ff", { f });
       const response = m.cold(" --");
       const expected = m.cold(" -d", { d });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           operator: switchMap,
@@ -176,18 +176,18 @@ describe("act", () => {
           }
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 
   it(
-    "should call unsubscribe after a projected notification",
+    "should call unsubscribe after a output notification",
     marbles(m => {
-      const source = m.cold("   ff---", { f });
+      const input = m.cold("    ff---", { f });
       const response = m.cold(" b----");
       const expected = m.cold(" b(db)", { b, d });
 
-      const effect = source.pipe(
+      const output = input.pipe(
         act({
           error: () => p,
           operator: switchMap,
@@ -199,7 +199,7 @@ describe("act", () => {
           }
         })
       );
-      m.expect(effect).toBeObservable(expected);
+      m.expect(output).toBeObservable(expected);
     })
   );
 });
