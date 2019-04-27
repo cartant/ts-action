@@ -61,7 +61,6 @@ export function act<
     | ErrorAction
     | CompleteAction
     | UnsubscribeAction;
-  type ReturnedAction = SpecifiedAction<CombinedAction>;
   return source =>
     defer(
       (): Observable<CombinedAction> => {
@@ -114,7 +113,7 @@ export function act<
           subject
         );
       }
-    ) as Observable<ReturnedAction>;
+    ) as Observable<SpecifiedAction<CombinedAction>>;
 }
 
 function isDefined<T>(value: T | undefined): value is T {
