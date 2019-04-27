@@ -179,4 +179,27 @@ describe("act", () => {
       m.expect(effect).toBeObservable(expected);
     })
   );
+
+  it(
+    "should call unsubscribe after a projected notification",
+    marbles(m => {
+      const source = m.cold("   ff---", { f });
+      const response = m.cold(" b----");
+      const expected = m.cold(" b(db)", { b, d });
+
+      const effect = source.pipe(
+        act({
+          error: () => p,
+          operator: switchMap,
+          project: () => response.pipe(mapTo(b)),
+          unsubscribe: (count, action) => {
+            expect(count).to.equal(1);
+            expect(action).to.equal(f);
+            return d;
+          }
+        })
+      );
+      m.expect(effect).toBeObservable(expected);
+    })
+  );
 });
