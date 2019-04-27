@@ -61,9 +61,7 @@ export function act<
     | ErrorAction
     | CompleteAction
     | UnsubscribeAction;
-  type ReturnedAction = SpecifiedAction<
-    ProjectedAction | ErrorAction | CompleteAction | UnsubscribeAction
-  >;
+  type ReturnedAction = SpecifiedAction<CombinedAction>;
   return source =>
     defer(
       (): Observable<CombinedAction> => {
@@ -74,34 +72,39 @@ export function act<
               defer(() => {
                 let completed = false;
                 let errored = false;
-                let projected = 0;
+                let projectedCount = 0;
                 return project(action, index).pipe(
                   materialize(),
                   map(
-                    (note): Notification<CombinedAction> | undefined => {
-                      switch (note.kind) {
+                    (
+                      notification
+                    ): Notification<CombinedAction> | undefined => {
+                      switch (notification.kind) {
                         case "E":
                           errored = true;
                           return new Notification(
                             "N",
-                            error(note.error, action)
+                            error(notification.error, action)
                           );
                         case "C":
                           completed = true;
                           return complete
-                            ? new Notification("N", complete(projected, action))
+                            ? new Notification(
+                                "N",
+                                complete(projectedCount, action)
+                              )
                             : undefined;
                         default:
-                          ++projected;
-                          return note;
+                          ++projectedCount;
+                          return notification;
                       }
                     }
                   ),
                   filter(isDefined),
                   dematerialize(),
                   finalize(() => {
-                    if (!completed && !errored && !projected && unsubscribe) {
-                      subject.next(unsubscribe(projected, action));
+                    if (!completed && !errored && unsubscribe) {
+                      subject.next(unsubscribe(projectedCount, action));
                     }
                   })
                 );
