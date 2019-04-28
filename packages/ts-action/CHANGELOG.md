@@ -1,3 +1,10 @@
+<a name="10.0.3"></a>
+## [10.0.3](https://github.com/cartant/ts-action/compare/v10.0.2...v10.0.3) (2019-04-28)
+
+### Fixes
+
+* Fix the rest-parameter signature for `on`. ([32f90d1](https://github.com/cartant/ts-action/commit/32f90d1))
+
 <a name="10.0.2"></a>
 ## [10.0.2](https://github.com/cartant/ts-action/compare/v10.0.1...v10.0.2) (2019-04-24)
 
