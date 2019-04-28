@@ -10,7 +10,7 @@ import { action, props, union } from "ts-action";
 import { on, reducer } from "./reducer";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("reducer", function () {
+describe("reducer", function() {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
@@ -53,8 +53,12 @@ describe("reducer", function () {
       const initialState: State = {};
       const fooBarReducer = reducer(
         initialState,
-        on(foo, (state, { foo }) => { state.foo = foo; }),
-        on(bar, (state, { bar }) => { state.bar = bar; })
+        on(foo, (state, { foo }) => {
+          state.foo = foo;
+        }),
+        on(bar, (state, { bar }) => {
+          state.bar = bar;
+        })
       );
 
       expect(fooBarReducer).to.be.a("function");
@@ -75,7 +79,9 @@ describe("reducer", function () {
       const initialState: State = [];
       const fooBarReducer = reducer(
         initialState,
-        on(foo, bar, (state, { type }) => { state.push(type); })
+        on(foo, bar, (state, { type }) => {
+          state.push(type);
+        })
       );
 
       expect(fooBarReducer).to.be.a("function");
