@@ -4,17 +4,12 @@
  */
 
 import { Draft, produce } from "immer";
-import { Action, ActionCreator, ActionType } from "ts-action";
+import { Action, ActionCreator, ActionType, On } from "ts-action";
 
-export type On<S> = {
-  reducer: (state: Draft<S>, action: Action) => S | void;
-  types: string[];
-};
 export type OnReducer<S, C extends ActionCreator[]> = (
   state: Draft<S>,
   action: ActionType<C[number]>
 ) => S | void;
-export type Reducer<S> = (state: S | undefined, action: Action) => S;
 
 export function on<C1 extends ActionCreator, S>(
   creator1: C1,
@@ -43,25 +38,12 @@ export function on<S>(
 export function on(
   ...args: (ActionCreator | Function)[]
 ): { reducer: Function; types: string[] } {
-  const reducer = args.pop() as Function;
+  const draftReducer = args.pop() as Function;
+  const reducer = (state: {}, action: Action) =>
+    produce(state, (draft: Draft<{}>) => draftReducer(draft, action));
   const types = args.reduce(
     (result, creator) => [...result, (creator as ActionCreator).type],
     [] as string[]
   );
   return { reducer, types };
-}
-
-export function reducer<S>(initialState: S, ...ons: On<S>[]): Reducer<S> {
-  const map = new Map<string, (state: Draft<S>, action: Action) => S | void>();
-  for (let on of ons) {
-    for (let type of on.types) {
-      map.set(type, on.reducer);
-    }
-  }
-  return function(state: S = initialState, action: Action): S {
-    const reducer = map.get(action.type);
-    return reducer
-      ? (produce(state, draft => reducer(draft, action)) as S)
-      : state;
-  };
 }

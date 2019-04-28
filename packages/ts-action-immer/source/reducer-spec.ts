@@ -6,8 +6,8 @@
 
 import { expect } from "chai";
 import { Draft } from "immer";
-import { action, props, union } from "ts-action";
-import { on, reducer } from "./reducer";
+import { action, props, reducer, union } from "ts-action";
+import { on } from "./reducer";
 import { expectSnippet, timeout } from "./snippet-spec";
 
 describe("reducer", function() {
@@ -36,7 +36,7 @@ describe("reducer", function() {
       const both = union(bar, foo);
       const func = (state: Draft<{}>, action: typeof both) => ({});
       const result = on(foo, bar, func);
-      expect(result).to.have.property("reducer", func);
+      expect(result).to.have.property("reducer");
       expect(result).to.have.property("types");
       expect(result.types).to.contain(bar.type);
       expect(result.types).to.contain(foo.type);
