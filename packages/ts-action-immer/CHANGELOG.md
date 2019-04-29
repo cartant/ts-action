@@ -3,7 +3,7 @@
 
 ### Breaking changes
 
-* Move the `produce` call into `on` so that the `reducer` from `ts-action` can be reused. Thanks to Tim for the suggestion. ([73b3b59](https://github.com/cartant/ts-action/commit/73b3b59))
+* Move the `produce` call into `on` so that the `reducer` from `ts-action` can be reused. Thanks to [Tim Deschryver](https://github.com/timdeschryver) for the suggestion. ([73b3b59](https://github.com/cartant/ts-action/commit/73b3b59))
 
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/cartant/ts-action/compare/v1.0.0-ts-action-immer...v1.0.1-ts-action-immer) (2019-04-25)
