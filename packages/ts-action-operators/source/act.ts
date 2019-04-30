@@ -25,7 +25,7 @@ import {
 export function act<
   InputAction extends Action,
   OutputAction extends Action,
-  ErrorAction extends Action = never,
+  ErrorAction extends Action,
   CompleteAction extends Action = never,
   UnsubscribeAction extends Action = never
 >({
