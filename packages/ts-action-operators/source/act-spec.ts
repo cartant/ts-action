@@ -23,6 +23,27 @@ describe("act", () => {
   const p = poo();
 
   it(
+    "should support function arguments",
+    marbles(m => {
+      const input = m.cold("    f", { f });
+      const response = m.cold(" r");
+      const expected = m.cold(" b", { b });
+
+      const output = input.pipe(
+        act(
+          (action, index) => {
+            expect(action).to.equal(f);
+            expect(index).to.equal(0);
+            return response.pipe(mapTo(b));
+          },
+          () => p
+        )
+      );
+      m.expect(output).toBeObservable(expected);
+    })
+  );
+
+  it(
     "should support project",
     marbles(m => {
       const input = m.cold("    f", { f });

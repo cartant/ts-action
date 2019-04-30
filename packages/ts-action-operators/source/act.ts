@@ -22,19 +22,13 @@ import {
   materialize
 } from "rxjs/operators";
 
-export function act<
+export type ActConfig<
   InputAction extends Action,
   OutputAction extends Action,
   ErrorAction extends Action,
-  CompleteAction extends Action = never,
-  UnsubscribeAction extends Action = never
->({
-  complete,
-  error,
-  operator = concatMap,
-  project,
-  unsubscribe
-}: {
+  CompleteAction extends Action,
+  UnsubscribeAction extends Action
+> = {
   complete?: (count: number, action: InputAction) => CompleteAction;
   error: (error: any, action: InputAction) => ErrorAction;
   operator?: <I, O>(
@@ -42,11 +36,74 @@ export function act<
   ) => OperatorFunction<I, O>;
   project: (action: InputAction, index: number) => Observable<OutputAction>;
   unsubscribe?: (count: number, action: InputAction) => UnsubscribeAction;
-}): (
+};
+
+export function act<
+  InputAction extends Action,
+  OutputAction extends Action,
+  ErrorAction extends Action
+>(
+  project: (action: InputAction, index: number) => Observable<OutputAction>,
+  error: (error: any, action: InputAction) => ErrorAction
+): (source: Observable<InputAction>) => Observable<OutputAction | ErrorAction>;
+
+export function act<
+  InputAction extends Action,
+  OutputAction extends Action,
+  ErrorAction extends Action,
+  CompleteAction extends Action = never,
+  UnsubscribeAction extends Action = never
+>(
+  config: ActConfig<
+    InputAction,
+    OutputAction,
+    ErrorAction,
+    CompleteAction,
+    UnsubscribeAction
+  >
+): (
+  source: Observable<InputAction>
+) => Observable<
+  OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
+>;
+
+export function act<
+  InputAction extends Action,
+  OutputAction extends Action,
+  ErrorAction extends Action,
+  CompleteAction extends Action,
+  UnsubscribeAction extends Action
+>(
+  projectOrConfig:
+    | ((action: InputAction, index: number) => Observable<OutputAction>)
+    | ActConfig<
+        InputAction,
+        OutputAction,
+        ErrorAction,
+        CompleteAction,
+        UnsubscribeAction
+      >,
+  optionalError?: (error: any, action: InputAction) => ErrorAction
+): (
   source: Observable<InputAction>
 ) => Observable<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 > {
+  const config =
+    typeof projectOrConfig === "function"
+      ? {
+          error: optionalError!,
+          project: projectOrConfig
+        }
+      : projectOrConfig;
+  const {
+    complete,
+    error,
+    operator = concatMap,
+    project,
+    unsubscribe
+  } = config;
+
   return source =>
     defer(() => {
       const subject = new Subject<UnsubscribeAction>();
