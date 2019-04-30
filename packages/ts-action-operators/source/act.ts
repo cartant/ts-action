@@ -22,19 +22,12 @@ import {
   materialize
 } from "rxjs/operators";
 
-enum UnspecifiedBrand {}
-type UnspecifiedAction = {
-  type: "";
-  unspecified: UnspecifiedBrand;
-};
-type SpecifiedAction<A extends Action> = Exclude<A, UnspecifiedAction>;
-
 export function act<
   InputAction extends Action,
-  OutputAction extends Action = UnspecifiedAction,
-  ErrorAction extends Action = UnspecifiedAction,
-  CompleteAction extends Action = UnspecifiedAction,
-  UnsubscribeAction extends Action = UnspecifiedAction
+  OutputAction extends Action,
+  ErrorAction extends Action = never,
+  CompleteAction extends Action = never,
+  UnsubscribeAction extends Action = never
 >({
   complete,
   error,
@@ -52,18 +45,16 @@ export function act<
 }): (
   source: Observable<InputAction>
 ) => Observable<
-  SpecifiedAction<
-    OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
-  >
+  OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 > {
-  type CombinedAction =
+  type ResultAction =
     | OutputAction
     | ErrorAction
     | CompleteAction
     | UnsubscribeAction;
   return source =>
     defer(
-      (): Observable<CombinedAction> => {
+      (): Observable<ResultAction> => {
         const subject = new Subject<UnsubscribeAction>();
         return merge(
           source.pipe(
@@ -75,9 +66,7 @@ export function act<
                 return project(action, index).pipe(
                   materialize(),
                   map(
-                    (
-                      notification
-                    ): Notification<CombinedAction> | undefined => {
+                    (notification): Notification<ResultAction> | undefined => {
                       switch (notification.kind) {
                         case "E":
                           errored = true;
@@ -113,7 +102,7 @@ export function act<
           subject
         );
       }
-    ) as Observable<SpecifiedAction<CombinedAction>>;
+    );
 }
 
 function isDefined<T>(value: T | undefined): value is T {
