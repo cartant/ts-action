@@ -47,62 +47,64 @@ export function act<
 ) => Observable<
   OutputAction | ErrorAction | CompleteAction | UnsubscribeAction
 > {
-  type ResultAction =
-    | OutputAction
-    | ErrorAction
-    | CompleteAction
-    | UnsubscribeAction;
   return source =>
-    defer(
-      (): Observable<ResultAction> => {
-        const subject = new Subject<UnsubscribeAction>();
-        return merge(
-          source.pipe(
-            operator((action, index) =>
-              defer(() => {
-                let completed = false;
-                let errored = false;
-                let projectedCount = 0;
-                return project(action, index).pipe(
-                  materialize(),
-                  map(
-                    (notification): Notification<ResultAction> | undefined => {
-                      switch (notification.kind) {
-                        case "E":
-                          errored = true;
-                          return new Notification(
-                            "N",
-                            error(notification.error, action)
-                          );
-                        case "C":
-                          completed = true;
-                          return complete
-                            ? new Notification(
-                                "N",
-                                complete(projectedCount, action)
-                              )
-                            : undefined;
-                        default:
-                          ++projectedCount;
-                          return notification;
-                      }
+    defer(() => {
+      const subject = new Subject<UnsubscribeAction>();
+      return merge(
+        source.pipe(
+          operator((action, index) =>
+            defer(() => {
+              let completed = false;
+              let errored = false;
+              let projectedCount = 0;
+              return project(action, index).pipe(
+                materialize(),
+                map(
+                  (
+                    notification
+                  ):
+                    | Notification<
+                        | OutputAction
+                        | ErrorAction
+                        | CompleteAction
+                        | UnsubscribeAction
+                      >
+                    | undefined => {
+                    switch (notification.kind) {
+                      case "E":
+                        errored = true;
+                        return new Notification(
+                          "N",
+                          error(notification.error, action)
+                        );
+                      case "C":
+                        completed = true;
+                        return complete
+                          ? new Notification(
+                              "N",
+                              complete(projectedCount, action)
+                            )
+                          : undefined;
+                      default:
+                        ++projectedCount;
+                        return notification;
                     }
-                  ),
-                  filter(isDefined),
-                  dematerialize(),
-                  finalize(() => {
-                    if (!completed && !errored && unsubscribe) {
-                      subject.next(unsubscribe(projectedCount, action));
-                    }
-                  })
-                );
-              })
-            )
-          ),
-          subject
-        );
-      }
-    );
+                  }
+                ),
+                filter(isDefined),
+                dematerialize(),
+                finalize(() => {
+                  if (!completed && !errored && unsubscribe) {
+                    subject.next(unsubscribe(projectedCount, action));
+                  }
+                })
+              );
+            })
+          )
+        ),
+        subject
+      );
+    });
 }
 
 function isDefined<T>(value: T | undefined): value is T {
