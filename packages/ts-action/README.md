@@ -15,6 +15,8 @@ I wanted a mechanism for declaring and consuming actions that involved writing a
 
 Also, if you are using NgRx or redux-observable, you might find the [`ts-action-operators`](https://github.com/cartant/ts-action/blob/master/packages/ts-action-operators/README.md) package useful, too - it includes an RxJS pipeable `ofType` operator that can be passed a `ts-action` action creator.
 
+And there is an alternative implementation for the `on` function in [`ts-action-immer`](https://github.com/cartant/ts-action/blob/master/packages/ts-action-immer/README.md) - which passed an Immer `Draft` as the reducer's `state` argument.
+
 For an in-depth look at TypeScript, Redux and `ts-action`, have a look at: [How to Reduce Action Boilerplate](https://blog.angularindepth.com/how-to-reduce-action-boilerplate-90dc3d389e2b).
 
 ## Install
