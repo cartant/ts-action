@@ -66,5 +66,5 @@
   },
   "sideEffects": false,
   "types": "./dist/index.d.ts",
-  "version": "9.0.1"
+  "version": "9.1.0"
 }
