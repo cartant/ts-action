@@ -39,7 +39,7 @@ const epic = actions => actions.pipe(
 );
 ```
 
-Using `pipe` is recommended; however, you if use a version of RxJS that does not include `pipe`, you can use `let` instead:
+Using `pipe` is recommended; however, if you use a version of RxJS that does not include `pipe`, you can use `let` instead:
 
 ```ts
 import { ofType, toPayload } from "ts-action-operators";
@@ -53,8 +53,61 @@ const epic = actions => actions
 
 ## API
 
+* [act](#act)
 * [ofType](#ofType)
 * [toPayload](#toPayload)
+
+<a name="act"></a>
+
+### act
+
+The `act` operator is a convenience operator that facilitates the mapping of an input action to an output action with as little boilerplate as possible and with some sensible defaults. It also ensures that errors are handled and that `catchError` is called in the correct location.
+
+`act` can be passed a `project` function and `error` selector, like this:
+
+```ts
+.pipe(
+  ofType(thingRequested),
+  act(
+    ({ id }) => things.get(id).pipe(
+      map(thing => thingFulfilled(thing))
+    ),
+    error => thingRejected(error)
+  )
+)
+```
+
+Which is equivalent to:
+
+```ts
+.pipe(
+  ofType(thingRequested),
+  concatMap(
+    ({ id }) => things.get(id).pipe(
+      map(thing => thingFulfilled(thing)),
+      catchError(error => thingRejected(error))
+    )
+  )
+)
+```
+
+`act` can also be passed a config object that includes optional `complete`, `operator` and `unsubscribe` properties:
+
+```ts
+.pipe(
+  ofType(thingRequested),
+  act({
+    ({ id }) => things.get(id).pipe(
+      map(thing => thingFulfilled(thing))
+    ),
+    error: error => thingRejected(error),
+    unsubscribe: (_ , { id }) => thingCancelled(id),
+    operator: switchMap
+  })
+)
+```
+
+The `unsubscribe` callback is called if the observable returned from `project` is unsubscribed *before* a `complete` or `error` notification is emitted. The `complete` and `unsubscribe` callbacks are passed the number of actions emitted by the observable returned from `project` and the input action.
 
 <a name="ofType"></a>
 
