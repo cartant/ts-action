@@ -1,3 +1,10 @@
+<a name="9.1.0"></a>
+## [9.1.0](https://github.com/cartant/ts-action/compare/v9.0.1...v9.1.0) (2019-05-06)
+
+### Features
+
+* Add `act` convenience operator. ([b33eb9b](https://github.com/cartant/ts-action/commit/b33eb9b))
+
 <a name="9.0.1"></a>
 ## [9.0.1](https://github.com/cartant/ts-action-operators/compare/v9.0.0...v9.0.1) (2019-04-19)
 
