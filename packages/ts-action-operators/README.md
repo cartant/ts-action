@@ -72,7 +72,7 @@ The `act` operator is a convenience operator that facilitates the mapping of an 
     ({ id }) => things.get(id).pipe(
       map(thing => thingFulfilled(thing))
     ),
-    error => thingRejected(error)
+    (error, { id }) => thingRejected(id, error)
   )
 )
 ```
@@ -85,7 +85,7 @@ Which is equivalent to:
   concatMap(
     ({ id }) => things.get(id).pipe(
       map(thing => thingFulfilled(thing)),
-      catchError(error => thingRejected(error))
+      catchError(error => thingRejected(id, error))
     )
   )
 )
@@ -100,7 +100,7 @@ Which is equivalent to:
     ({ id }) => things.get(id).pipe(
       map(thing => thingFulfilled(thing))
     ),
-    error: error => thingRejected(error),
+    error: (error, { id }) => thingRejected(id, error),
     unsubscribe: (_ , { id }) => thingCancelled(id),
     operator: switchMap
   })
