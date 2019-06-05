@@ -6,8 +6,8 @@
 
 import { expect } from "chai";
 import { of } from "rxjs";
-import { tap, toArray } from "rxjs/operators";
 import { observe } from "rxjs-marbles/mocha";
+import { tap, toArray } from "rxjs/operators";
 import { Action } from "ts-action";
 import { usingPayload } from "./foobar-spec";
 import { ofType } from "./ofType";

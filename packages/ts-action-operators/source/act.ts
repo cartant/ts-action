@@ -4,7 +4,6 @@
  */
 /*tslint:disable:rxjs-no-unsafe-scope*/
 
-import { Action } from "ts-action";
 import {
   defer,
   merge,
@@ -21,6 +20,7 @@ import {
   map,
   materialize
 } from "rxjs/operators";
+import { Action } from "ts-action";
 
 export type ActConfig<
   InputAction extends Action,

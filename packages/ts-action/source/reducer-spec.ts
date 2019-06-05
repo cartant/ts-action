@@ -5,10 +5,10 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
-import { on, reducer } from "./reducer";
-import { usingProps } from "./foobar-spec";
-import { expectSnippet, timeout } from "./snippet-spec";
 import { union } from "./action";
+import { usingProps } from "./foobar-spec";
+import { on, reducer } from "./reducer";
+import { expectSnippet, timeout } from "./snippet-spec";
 
 describe("reducer", function(): void {
   /*tslint:disable-next-line:no-invalid-this*/

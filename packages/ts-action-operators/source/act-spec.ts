@@ -5,8 +5,8 @@
 /*tslint:disable:no-unused-expression rxjs-no-explicit-generics*/
 
 import { expect } from "chai";
-import { exhaustMap, mapTo, mergeMap, switchMap } from "rxjs/operators";
 import { marbles } from "rxjs-marbles";
+import { exhaustMap, mapTo, mergeMap, switchMap } from "rxjs/operators";
 import { action } from "ts-action";
 import { act } from "./act";
 
