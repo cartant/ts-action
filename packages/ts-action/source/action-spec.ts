@@ -69,6 +69,12 @@ describe("functions/action", function(): void {
         const value = fooAction.bar;
       `).toFail(/'bar' does not exist on type/);
     });
+
+    it("should prevent type properties", () => {
+      expectSnippet(`
+        action("FOO", (type: string) => ({ type }));
+      `).toFail(/should not include a type/);
+    });
   });
 
   describe("empty", () => {
@@ -341,6 +347,13 @@ describe("functions/action", function(): void {
         const fooAction = foo({ foo: 42 });
         const value = fooAction.bar;
       `).toFail(/'bar' does not exist on type/);
+    });
+
+    it("should prevent type properties", () => {
+      expectSnippet(`
+        const foo = action("FOO", props<{ type: string }>());
+        foo({ type: "FOO" });
+      `).toFail(/should not include a type/);
     });
   });
 });

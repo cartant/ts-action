@@ -10,6 +10,9 @@ export type Creator = (...args: any[]) => object;
 export type Typed<A, T extends string> = A extends { type: T }
   ? A
   : A & { type: T };
+export type NotTyped<T> = T extends { type: any }
+  ? "Props and creator return values should not include a type."
+  : {};
 export type ActionCreator<
   T extends string = string,
   C extends Creator = Creator
@@ -44,10 +47,10 @@ export function action<T extends string, P>(
 export function action<T extends string, P extends object>(
   type: T,
   config: { _as: "props"; _p: P }
-): ActionCreator<T, (props: P) => Typed<P, T>>;
+): ActionCreator<T, (props: P & NotTyped<P>) => Typed<P, T>>;
 export function action<T extends string, C extends Creator>(
   type: T,
-  creator: C
+  creator: C & NotTyped<ReturnType<C>>
 ): Typed<
   FunctionWithParametersType<ParametersType<C>, Typed<ReturnType<C>, T>>,
   T
