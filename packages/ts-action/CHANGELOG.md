@@ -1,3 +1,10 @@
+<a name="10.1.0"></a>
+## [10.1.0](https://github.com/cartant/ts-action/compare/v10.0.3...v10.1.0) (2019-06-08)
+
+### Changes
+
+* Prevent `type` in props and creator return values. ([845d444](https://github.com/cartant/ts-action/commit/845d444))
+
 <a name="10.0.3"></a>
 ## [10.0.3](https://github.com/cartant/ts-action/compare/v10.0.2...v10.0.3) (2019-04-28)
 
