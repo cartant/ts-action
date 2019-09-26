@@ -1,3 +1,10 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/cartant/ts-action/compare/v2.0.0-ts-action-immer...v2.0.1-ts-action-immer) (2019-09-26)
+
+### Changes
+
+* Widen the peer dependency range. ([a52c0c1](https://github.com/cartant/ts-action/commit/a52c0c1))
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/cartant/ts-action/compare/v1.0.1-ts-action-immer...v2.0.0-ts-action-immer) (2019-04-29)
 
