@@ -3,15 +3,19 @@
   "bugs": {
     "url": "https://github.com/cartant/ts-action/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "common-tags": "^1.8.0"
+  },
   "description": "TypeScript action creators for Redux",
   "devDependencies": {
     "@cartant/tslint-config": "^2.0.0",
     "@cartant/tslint-config-etc": "^2.0.0",
     "@types/chai": "^4.0.0",
+    "@types/common-tags": "^1.8.0",
     "@types/lodash.isplainobject": "^4.0.0",
     "@types/mocha": "^5.0.0",
     "chai": "^4.1.2",
+    "common-tags": "^1.8.0",
     "cpy-cli": "^2.0.0",
     "lodash.isplainobject": "^4.0.0",
     "mocha": "^6.0.0",

@@ -5,6 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
+import { stripIndent } from "common-tags";
 import { union } from "./action";
 import { usingProps } from "./foobar-spec";
 import { on, reducer } from "./reducer";
@@ -19,14 +20,14 @@ describe("reducer", function(): void {
 
     describe("on", () => {
       it("should enforce action property types", () => {
-        expectSnippet(`
+        expectSnippet(stripIndent`
           const foo = action("FOO", props<{ foo: number }>());
           on(foo, (state, action) => { const foo: string = action.foo; return state; });
         `).toFail(/'number' is not assignable to type 'string'/);
       });
 
       it("should enforce action property names", () => {
-        expectSnippet(`
+        expectSnippet(stripIndent`
           const foo = action("FOO", props<{ foo: number }>());
           on(foo, (state, action) => { const bar: string = action.bar; return state; });
         `).toFail(/'bar' does not exist on type/);

@@ -5,6 +5,7 @@
 /*tslint:disable:no-unused-expression*/
 
 import { expect } from "chai";
+import { stripIndent } from "common-tags";
 import { action, empty, fsa, payload, props, union } from "./action";
 import { expectSnippet, timeout } from "./snippet-spec";
 
@@ -48,14 +49,14 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce creator parameters", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", (foo: number) => ({ foo }));
         const fooAction = foo("42");
       `).toFail(/not assignable to parameter of type 'number'/);
     });
 
     it("should enforce action property types", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", (foo: number) => ({ foo }));
         const fooAction = foo(42);
         const value: string = fooAction.foo;
@@ -63,7 +64,7 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce action property names", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", (foo: number) => ({ foo }));
         const fooAction = foo(42);
         const value = fooAction.bar;
@@ -71,7 +72,7 @@ describe("functions/action", function(): void {
     });
 
     it("should prevent type properties", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         action("FOO", (type: string) => ({ type }));
       `).toFail(/should not include a type/);
     });
@@ -120,14 +121,14 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce creator parameters", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", empty());
         const fooAction = foo("42");
       `).toFail(/Expected 0 arguments/);
     });
 
     it("should enforce action property types", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", empty());
         const fooAction = foo();
         const value: string = fooAction.foo;
@@ -135,7 +136,7 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce action property names", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", empty());
         const fooAction = foo();
         const value = fooAction.bar;
@@ -206,14 +207,14 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce creator parameters", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", fsa<number>());
         const fooAction = foo("42");
       `).toFail(/not assignable to parameter of type 'number | Error'/);
     });
 
     it("should enforce action property types", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", fsa<number>());
         const fooAction = foo(42);
         const value: string = fooAction.payload;
@@ -221,7 +222,7 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce action property names", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", fsa<number>());
         const fooAction = foo(42);
         const value = fooAction.bar;
@@ -268,14 +269,14 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce creator parameters", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", payload<number>());
         const fooAction = foo("42");
       `).toFail(/not assignable to parameter of type 'number'/);
     });
 
     it("should enforce action property types", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", payload<number>());
         const fooAction = foo(42);
         const value: string = fooAction.payload;
@@ -283,7 +284,7 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce action property names", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", payload<number>());
         const fooAction = foo(42);
         const value = fooAction.bar;
@@ -327,14 +328,14 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce creator parameters", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", props<{ foo: number }>());
         const fooAction = foo({ foo: "42" });
       `).toFail(/'string' is not assignable to type 'number'/);
     });
 
     it("should enforce action property types", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", props<{ foo: number }>());
         const fooAction = foo({ foo: 42 });
         const value: string = fooAction.foo;
@@ -342,7 +343,7 @@ describe("functions/action", function(): void {
     });
 
     it("should enforce action property names", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", props<{ foo: number }>());
         const fooAction = foo({ foo: 42 });
         const value = fooAction.bar;
@@ -350,7 +351,7 @@ describe("functions/action", function(): void {
     });
 
     it("should prevent type properties", () => {
-      expectSnippet(`
+      expectSnippet(stripIndent`
         const foo = action("FOO", props<{ type: string }>());
         foo({ type: "FOO" });
       `).toFail(/should not include a type/);
