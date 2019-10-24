@@ -52,4 +52,50 @@ describe("reducer-experiment", function(): void {
       `(action: { type: "a"; } & { __brand: "a"; }) => void`
     );
   });
+
+  it("should infer using a spread tuple", () => {
+    expectSnippet(stripIndent`
+      type Action = { type: string };
+      type Brand = { __brand: string };
+      type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
+
+      declare function on<B extends Brand>(
+        ...args: (B | ((action: ActionFromBrand<B>) => void))[]
+      ): (action: ActionFromBrand<B>) => void;
+
+      const args = [
+        { __brand: "a" as const, type: "a" as const },
+        { __brand: "b" as const, type: "b" as const }
+      ];
+      const listener = on(
+        ...args,
+        action => {}
+      );
+    `).toInfer(
+      "listener",
+      `(action: { __brand: "a"; type: "a"; } | { __brand: "b"; type: "b"; }) => void`
+    );
+  });
+
+  it("should infer using a spread tuple of functions", () => {
+    expectSnippet(stripIndent`
+      type Action = { type: string };
+      type Creator = () => { type: string };
+      type Brand = { __brand: string };
+      type ActionFromBrand<B extends Brand> = B extends () => infer U ? U : never;
+
+      declare function on<B extends Brand>(
+        ...args: (B | ((action: ActionFromBrand<B>) => void))[]
+      ): (action: ActionFromBrand<B>) => void;
+
+      const args = [
+        (() => ({ type: "a" })) as (() => { type: "a" }) & { __brand: "a" },
+        (() => ({ type: "b" })) as (() => { type: "b" }) & { __brand: "b" }
+      ];
+      const listener = on(
+        ...args,
+        action => {}
+      );
+    `).toInfer("listener", `(action: { type: "a"; } | { type: "b"; }) => void`);
+  });
 });
