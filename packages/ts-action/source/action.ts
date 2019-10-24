@@ -119,8 +119,24 @@ export function type<T extends string, R extends object>(
 
 export function union<C extends ActionCreator[]>(
   ...creators: C
-): ActionType<C[number]> {
-  return undefined!;
+): C & {
+  actions: ActionType<C[number]>;
+  types: ActionType<C[number]>["type"];
+} {
+  const result = [creators];
+  const descriptor = {
+    get: () => {
+      throw new Error("Pseudo property not readable.");
+    },
+    set: () => {
+      throw new Error("Pseudo property not writable.");
+    }
+  };
+  Object.defineProperties(result, {
+    actions: descriptor,
+    types: descriptor
+  });
+  return result as any;
 }
 
 function defineType(type: string, creator: Creator): Creator {
