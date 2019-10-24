@@ -98,4 +98,47 @@ describe("reducer-experiment", function(): void {
       );
     `).toInfer("listener", `(action: { type: "a"; } | { type: "b"; }) => void`);
   });
+
+  it("should infer the reducer's state if the reducer is the only function argument", () => {
+    expectSnippet(stripIndent`
+      type Action = { type: string };
+      type Brand = { __brand: string };
+      type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
+
+      declare function on<S, B extends Brand>(
+        ...args: (B | ((state:S, action: ActionFromBrand<B>) => S))[]
+      ): S;
+
+      const args = [
+        { __brand: "a" as const, type: "a" as const },
+        { __brand: "b" as const, type: "b" as const }
+      ];
+      const state: { name: string } = on(
+        ...args,
+        (state, action) => ({ role: "programmer" })
+      );
+    `).toFail(/'name' is missing in type/);
+  });
+
+  it("should fail to infer the reducer's state if all arguments are functions", () => {
+    expectSnippet(stripIndent`
+      type Action = { type: string };
+      type Creator = () => { type: string };
+      type Brand = { __brand: string };
+      type ActionFromBrand<B extends Brand> = B extends () => infer U ? U : never;
+
+      declare function on<S, B extends Brand>(
+        ...args: (B | ((state: S, action: ActionFromBrand<B>) => S))[]
+      ): S;
+
+      const args = [
+        (() => ({ type: "a" })) as (() => { type: "a" }) & { __brand: "a" },
+        (() => ({ type: "b" })) as (() => { type: "b" }) & { __brand: "b" }
+      ];
+      const listener: { name: string } = on(
+        ...args,
+        (state, action) => state
+      );
+    `).toFail(/'name' is missing in type/);
+  });
 });
