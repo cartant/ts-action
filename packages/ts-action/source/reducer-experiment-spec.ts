@@ -4,11 +4,52 @@
  */
 /*tslint:disable:no-unused-expression*/
 
-import { timeout } from "./snippet-spec";
+import { stripIndent } from "common-tags";
+import { expectSnippet, timeout } from "./snippet-spec";
 
 describe("reducer-experiment", function(): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
-  it.skip("should experiment", () => {});
+  // https://github.com/microsoft/TypeScript/issues/30824
+
+  it("should infer a union from literals", () => {
+    expectSnippet(stripIndent`
+      type Action = { type: string };
+      type Brand = { __brand: string };
+      type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
+
+      declare function on<B extends Brand>(
+        ...args: (B | ((action: ActionFromBrand<B>) => void))[]
+      ): (action: ActionFromBrand<B>) => void;
+
+      const listener = on(
+        { __brand: "a" as const, type: "a" as const },
+        { __brand: "b" as const, type: "b" as const },
+        action => {}
+      );
+    `).toInfer(
+      "listener",
+      `(action: { __brand: "a"; type: "a"; } | { __brand: "b"; type: "b"; }) => void`
+    );
+  });
+
+  it("should fail to infer a union from variables", () => {
+    expectSnippet(stripIndent`
+      type Action = { type: string };
+      type Brand = { __brand: string };
+      type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
+
+      declare function on<B extends Brand>(
+        ...args: (B | ((action: ActionFromBrand<B>) => void))[]
+      ): (action: ActionFromBrand<B>) => void;
+
+      const a = { type: "a" } as ({ type: "a" } & { __brand: "a" });
+      const b = { type: "b" } as ({ type: "b" } & { __brand: "b" });
+      const listener = on(a, b, action => {});
+    `).toInfer(
+      "listener",
+      `(action: { type: "a"; } & { __brand: "a"; }) => void`
+    );
+  });
 });
