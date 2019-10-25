@@ -115,7 +115,7 @@ describe("reducer", function(): void {
         expect(state).to.deep.equal(["[foobar] FOO", "[foobar] BAR"]);
       });
 
-      it.only("should call reducers exclusively", () => {
+      it("should call reducers exclusively", () => {
         type State = number;
 
         const called: number[] = [];

@@ -54,7 +54,12 @@ export function reducer<S>(initialState: S, ...ons: On<S>[]): Reducer<S> {
   const map = new Map<string, (state: S, action: Action) => S>();
   for (let on of ons) {
     for (let type of on.types) {
-      map.set(type, on.reducer);
+      if (!map.has(type)) {
+        map.set(type, on.reducer);
+      } else {
+        /*tslint:disable:no-console*/
+        console.warn(`${type} already specified in an 'on' call.`);
+      }
     }
   }
   return function(state: S = initialState, action: Action): S {
