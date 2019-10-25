@@ -36,8 +36,8 @@ export function on<
   creator3: C3,
   reducer: OnReducer<S, [C1, C2, C3]>
 ): On<S>;
-export function on<S, C extends ActionCreator>(
-  ...args: (C | ((state: S, action: ActionType<C>) => S))[]
+export function on<S, C extends { type: string; action: Action }>(
+  ...args: (C | ((state: S, action: C["action"]) => S))[]
 ): On<S>;
 export function on(
   ...args: (ActionCreator | Function)[]

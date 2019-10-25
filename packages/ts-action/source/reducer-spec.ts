@@ -16,7 +16,7 @@ describe("reducer", function(): void {
   this.timeout(timeout);
 
   describe("props", () => {
-    const { bar, foo } = usingProps;
+    const { bar, baz, boo, foo } = usingProps;
 
     describe("on", () => {
       it("should enforce action property types", () => {
@@ -77,6 +77,30 @@ describe("reducer", function(): void {
         const fooBarReducer = reducer(
           initialState,
           on(foo, bar, (state, { type }) => [...state, type])
+        );
+
+        expect(fooBarReducer).to.be.a("function");
+
+        let state = fooBarReducer(undefined, { type: "UNKNOWN" });
+        expect(state).to.deep.equal([]);
+
+        state = fooBarReducer(state, foo({ foo: 42 }));
+        expect(state).to.deep.equal(["[foobar] FOO"]);
+
+        state = fooBarReducer(state, bar({ bar: 54 }));
+        expect(state).to.deep.equal(["[foobar] FOO", "[foobar] BAR"]);
+      });
+
+      it("should support reducers with multiple actions spread from union", () => {
+        type State = string[];
+
+        const initialState: State = [];
+        const fooBarReducer = reducer(
+          initialState,
+          on(...union(foo, bar, baz, boo), (state, { type }) => [
+            ...state,
+            type
+          ])
         );
 
         expect(fooBarReducer).to.be.a("function");

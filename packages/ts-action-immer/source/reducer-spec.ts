@@ -16,6 +16,8 @@ describe("reducer", function() {
   this.timeout(timeout);
 
   const bar = action("[foobar] BAR", props<{ bar: number }>());
+  const baz = action("[foobar] BAZ", props<{ baz: number }>());
+  const boo = action("[foobar] BOO", props<{ boo: number }>());
   const foo = action("[foobar] FOO", props<{ foo: number }>());
 
   describe("on", () => {
@@ -35,7 +37,7 @@ describe("reducer", function() {
 
     it("should support reducers with multiple actions", () => {
       const both = union(bar, foo);
-      const func = (state: Draft<{}>, action: typeof both) => ({});
+      const func = (state: Draft<{}>, action: typeof both.actions) => ({});
       const result = on(foo, bar, func);
       expect(result).to.have.property("reducer");
       expect(result).to.have.property("types");
@@ -81,6 +83,29 @@ describe("reducer", function() {
       const fooBarReducer = reducer(
         initialState,
         on(foo, bar, (state, { type }) => {
+          state.push(type);
+        })
+      );
+
+      expect(fooBarReducer).to.be.a("function");
+
+      let state = fooBarReducer(undefined, { type: "UNKNOWN" });
+      expect(state).to.deep.equal([]);
+
+      state = fooBarReducer(state, foo({ foo: 42 }));
+      expect(state).to.deep.equal(["[foobar] FOO"]);
+
+      state = fooBarReducer(state, bar({ bar: 54 }));
+      expect(state).to.deep.equal(["[foobar] FOO", "[foobar] BAR"]);
+    });
+
+    it("should support reducers with multiple actions spread from union", () => {
+      type State = string[];
+
+      const initialState: State = [];
+      const fooBarReducer = reducer(
+        initialState,
+        on(...union(foo, bar, baz, boo), (state, { type }) => {
           state.push(type);
         })
       );

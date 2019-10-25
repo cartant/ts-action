@@ -117,13 +117,23 @@ export function type<T extends string, R extends object>(
   return { ...(rest as object), type } as any;
 }
 
+type ActionCreatorMeta<C> = C extends ActionCreator
+  ? {
+      action: ReturnType<C>;
+      type: ActionType<C>["type"];
+    }
+  : never;
+
+type ActionCreatorUnionMeta<C> = C extends ActionCreator[]
+  ? { [K in keyof C]: ActionCreatorMeta<C[K]> } & {
+      actions: ActionType<C[number]>;
+      types: ActionType<C[number]>["type"];
+    }
+  : never;
+
 export function union<C extends ActionCreator[]>(
   ...creators: C
-): C & {
-  actions: ActionType<C[number]>;
-  types: ActionType<C[number]>["type"];
-} {
-  const result = [creators];
+): ActionCreatorUnionMeta<C> {
   const descriptor = {
     get: () => {
       throw new Error("Pseudo property not readable.");
@@ -132,6 +142,9 @@ export function union<C extends ActionCreator[]>(
       throw new Error("Pseudo property not writable.");
     }
   };
+  const result = creators.map(({ type }) =>
+    Object.defineProperty({ type }, "action", descriptor)
+  );
   Object.defineProperties(result, {
     actions: descriptor,
     types: descriptor
