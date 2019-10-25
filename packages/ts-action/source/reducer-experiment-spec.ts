@@ -141,4 +141,12 @@ describe("reducer-experiment", function(): void {
       );
     `).toFail(/'name' is missing in type/);
   });
+
+  it("should ignore non-functions when matching functions", () => {
+    expectSnippet(stripIndent`
+      const a = (() => {}) as (() => void) & { type: string };
+      declare function f<S>(arg: ({ type: string } | ((value: S) => S))): S;
+      const r: string = f(a);
+    `).toFail(/'void' is not assignable to type 'string'/);
+  });
 });
