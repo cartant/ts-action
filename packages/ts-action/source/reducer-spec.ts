@@ -114,6 +114,36 @@ describe("reducer", function(): void {
         state = fooBarReducer(state, bar({ bar: 54 }));
         expect(state).to.deep.equal(["[foobar] FOO", "[foobar] BAR"]);
       });
+
+      it.only("should call reducers exclusively", () => {
+        type State = number;
+
+        const called: number[] = [];
+        const initialState: State = 0;
+        const fooBarReducer = reducer(
+          initialState,
+          on(foo, () => {
+            called.push(1);
+            return 1;
+          }),
+          on(foo, () => {
+            called.push(2);
+            return 2;
+          }),
+          on(foo, () => {
+            called.push(3);
+            return 3;
+          })
+        );
+
+        let state = fooBarReducer(undefined, { type: "UNKNOWN" });
+        expect(state).to.equal(0);
+        expect(called).to.deep.equal([]);
+
+        state = fooBarReducer(undefined, { type: "[foobar] FOO" });
+        expect(state).to.equal(1);
+        expect(called).to.deep.equal([1]);
+      });
     });
   });
 });
