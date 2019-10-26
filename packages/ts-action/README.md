@@ -73,7 +73,7 @@ const both = union(foo, bar);
 interface State { foo?: number; bar?: number; }
 const initialState: State = {};
 
-function fooBarReducer(state: State = initialState, action: typeof both): State {
+function fooBarReducer(state: State = initialState, action: typeof both.actions): State {
   switch (action.type) {
   case foo.type:
     return { ...state, foo: action.payload.foo };
@@ -274,7 +274,7 @@ The `union` function can be used to infer a union of actions - for type narrowin
 
 ```ts
 const both = union(foo, bar);
-function reducer(state: any = [], action: typeof both): any {
+function reducer(state: any = [], action: typeof both.actions): any {
   switch (action.type) {
   case fFoo.type:
     return ... // Here the action will be narrowed to Foo.
@@ -285,6 +285,8 @@ function reducer(state: any = [], action: typeof both): any {
   }
 }
 ```
+
+`union` can be used if more than three action creators need to be passed to `on`.
 
 <a name="isType"></a>
 
@@ -305,7 +307,8 @@ if (isType(action, foo)) {
 
 ```ts
 if (isType(action, foo, bar)) {
-  // Here, TypeScript has narrowed the type to `typeof union(foo, bar)`.
+  // Here, TypeScript has narrowed the action type to an action created
+  // by foo or bar.
 }
 ```
 
@@ -355,4 +358,13 @@ const fooBarReducer = reducer(
   on(bar, (state, { payload }) => ({ ...state, bar: payload.bar })),
   on(fooError, barError, (state, { payload }) => ({ ...state, error: payload.error }))
 );
+```
+
+If more that three action creators need to be passed to `on`, you can use `union`, like this:
+
+```ts
+on(
+  ...union(foo, bar, baz, boo),
+  (state, { payload }) => /* whatever */
+)
 ```

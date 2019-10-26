@@ -133,7 +133,7 @@ If multiple action creators are specified - in an array literal - the action's t
 .pipe(
   ofType([foo, bar]),
   tap(action => {
-    // Here, the action has been narrowed to `typeof union([foo, bar])`.
+    // Here, the action has been narrowed to either a FOO or a BAR action.
     // Common properties will be accessible, other will require further narrowing.
     if (isType(action, foo)) {
       // Here, the action has been narrowed to a FOO action.
