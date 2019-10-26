@@ -3,9 +3,7 @@
   "bugs": {
     "url": "https://github.com/cartant/ts-action/issues"
   },
-  "dependencies": {
-    "common-tags": "^1.8.0"
-  },
+  "dependencies": {},
   "description": "TypeScript action creators for Redux",
   "devDependencies": {
     "@cartant/tslint-config": "^2.0.0",
