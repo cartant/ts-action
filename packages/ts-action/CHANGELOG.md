@@ -1,5 +1,31 @@
+<a name="11.0.0"></a>
+## [11.0.0](https://github.com/cartant/ts-action/compare/v10.1.0-ts-action...v11.0.0-ts-action) (2019-10-26)
+
+### Breaking changes
+
+* `union` now returns an array of metadata describing the passed action creators. Previously, it returned a psuedo value that could be used to obtain the union type. That psuedo value is now a property on the array. So instead of this:
+
+        const both = union(foo, bar);
+        type Both = typeof both;
+
+    You will need to do this:
+
+        const both = union(foo, bar);
+        type Both = typeof both.actions;
+
+* Previously, if an action creator was passed to multiple `on` calls, the reducer associated with the last call was the one that would have been invoked. Now, the reducer associated with the first call will be invoked and a warning will be logged to the console if a creator is passed to more than one `on` call.
+
+### Features
+
+* `union` can be used if more than three action creators need to be passed to `on`, like this:
+
+        on(
+          ...union(foo, bar, baz, boo),
+          (state, { payload }) => /* whatever */
+        )
+
 <a name="10.1.0"></a>
-## [10.1.0](https://github.com/cartant/ts-action/compare/v10.0.3...v10.1.0) (2019-06-08)
+## [10.1.0](https://github.com/cartant/ts-action/compare/v10.0.3-ts-action...v10.1.0-ts-action) (2019-06-08)
 
 ### Changes
 
