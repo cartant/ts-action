@@ -38,7 +38,7 @@
   "optionalDependencies": {},
   "peerDependencies": {
     "immer": "^3.0.0 || ^4.0.0",
-    "ts-action": "^10.0.0 || ^9.0.0"
+    "ts-action": "^11.0.0"
   },
   "private": true,
   "publishConfig": {
