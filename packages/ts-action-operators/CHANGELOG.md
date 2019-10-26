@@ -1,5 +1,12 @@
+<a name="9.1.1"></a>
+## [9.1.1](https://github.com/cartant/ts-action/compare/v9.1.0-ts-action-operators...v9.1.1-ts-action-operators) (2019-10-26)
+
+### Changes
+
+* Widen peer dependency range for `ts-action`.
+
 <a name="9.1.0"></a>
-## [9.1.0](https://github.com/cartant/ts-action/compare/v9.0.1...v9.1.0) (2019-05-06)
+## [9.1.0](https://github.com/cartant/ts-action/compare/v9.0.1...v9.1.0-ts-action-operators) (2019-05-06)
 
 ### Features
 
