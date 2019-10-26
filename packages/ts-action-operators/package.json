@@ -40,7 +40,7 @@
   "optionalDependencies": {},
   "peerDependencies": {
     "rxjs": "^6.0.0",
-    "ts-action": "^10.0.0 || ^9.0.0"
+    "ts-action": "^11.0.0 || ^10.0.0 || ^9.0.0"
   },
   "private": true,
   "publishConfig": {
@@ -66,5 +66,5 @@
   },
   "sideEffects": false,
   "types": "./dist/index.d.ts",
-  "version": "9.1.0"
+  "version": "9.1.1"
 }
