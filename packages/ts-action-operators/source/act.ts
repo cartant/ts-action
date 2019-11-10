@@ -116,38 +116,34 @@ export function act<
               let projectedCount = 0;
               return project(action, index).pipe(
                 materialize(),
-                map(
-                  (
-                    notification
-                  ):
-                    | Notification<
-                        | OutputAction
-                        | ErrorAction
-                        | CompleteAction
-                        | UnsubscribeAction
-                      >
-                    | undefined => {
-                    switch (notification.kind) {
-                      case "E":
-                        errored = true;
-                        return new Notification(
-                          "N",
-                          error(notification.error, action)
-                        );
-                      case "C":
-                        completed = true;
-                        return complete
-                          ? new Notification(
-                              "N",
-                              complete(projectedCount, action)
-                            )
-                          : undefined;
-                      default:
-                        ++projectedCount;
-                        return notification;
-                    }
+                map((notification):
+                  | Notification<
+                      | OutputAction
+                      | ErrorAction
+                      | CompleteAction
+                      | UnsubscribeAction
+                    >
+                  | undefined => {
+                  switch (notification.kind) {
+                    case "E":
+                      errored = true;
+                      return new Notification(
+                        "N",
+                        error(notification.error, action)
+                      );
+                    case "C":
+                      completed = true;
+                      return complete
+                        ? new Notification(
+                            "N",
+                            complete(projectedCount, action)
+                          )
+                        : undefined;
+                    default:
+                      ++projectedCount;
+                      return notification;
                   }
-                ),
+                }),
                 filter(isDefined),
                 dematerialize(),
                 finalize(() => {
