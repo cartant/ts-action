@@ -15,7 +15,7 @@ I created the [`ts-action`](https://github.com/cartant/ts-action) package becaus
 
 If you, too, want less cruft in your effects or epics, you might find this package useful.
 
-For an in-depth look at TypeScript, Redux and `ts-action`, have a look at: [How to Reduce Action Boilerplate](https://blog.angularindepth.com/how-to-reduce-action-boilerplate-90dc3d389e2b).
+For an in-depth look at TypeScript, Redux and `ts-action`, have a look at: [How to Reduce Action Boilerplate](https://ncjamieson.com/how-to-reduce-action-boilerplate/).
 
 ## Install
 
