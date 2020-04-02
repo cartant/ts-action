@@ -276,7 +276,7 @@ The `union` function can be used to infer a union of actions - for type narrowin
 const both = union(foo, bar);
 function reducer(state: any = [], action: typeof both.actions): any {
   switch (action.type) {
-  case fFoo.type:
+  case foo.type:
     return ... // Here the action will be narrowed to Foo.
   case bar.type:
     return ... // Here the action will be narrowed to Bar.
