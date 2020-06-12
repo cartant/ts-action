@@ -21,7 +21,7 @@
     "ts-action": "^11.0.0",
     "tslint": "^6.0.0",
     "tslint-etc": "^1.5.1",
-    "typescript": "~3.8.3"
+    "typescript": "~3.9.3"
   },
   "es2015": "./dist/esm2015/index.js",
   "homepage": "https://github.com/cartant/ts-action",
