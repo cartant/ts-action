@@ -7,7 +7,7 @@
 import { stripIndent } from "common-tags";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("reducer-experiment", function(): void {
+describe("reducer-experiment", function (): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 

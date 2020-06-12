@@ -11,7 +11,7 @@ import { action, props, reducer, union } from "ts-action";
 import { on } from "./reducer";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("reducer", function() {
+describe("reducer", function () {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 

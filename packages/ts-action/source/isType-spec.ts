@@ -10,7 +10,7 @@ import {
   usingEmpty,
   usingFsa,
   usingPayload,
-  usingProps
+  usingProps,
 } from "./foobar-spec";
 import { isType } from "./isType";
 

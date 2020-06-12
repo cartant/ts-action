@@ -24,7 +24,7 @@ describe("act", () => {
 
   it(
     "should support function arguments",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    f", { f });
       const response = m.cold(" r");
       const expected = m.cold(" b", { b });
@@ -45,7 +45,7 @@ describe("act", () => {
 
   it(
     "should support project",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    f", { f });
       const response = m.cold(" r");
       const expected = m.cold(" b", { b });
@@ -57,7 +57,7 @@ describe("act", () => {
             expect(action).to.equal(f);
             expect(index).to.equal(0);
             return response.pipe(mapTo(b));
-          }
+          },
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -66,7 +66,7 @@ describe("act", () => {
 
   it(
     "should support complete",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    f-", { f });
       const response = m.cold(" r|");
       const expected = m.cold(" bc", { b, c });
@@ -79,7 +79,7 @@ describe("act", () => {
             return c;
           },
           error: () => p,
-          project: () => response.pipe(mapTo(b))
+          project: () => response.pipe(mapTo(b)),
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -88,7 +88,7 @@ describe("act", () => {
 
   it(
     "should support error",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    f-", { f });
       const response = m.cold(" r#");
       const expected = m.cold(" bp", { b, p });
@@ -100,7 +100,7 @@ describe("act", () => {
             expect(action).to.equal(f);
             return p;
           },
-          project: () => response.pipe(mapTo(b))
+          project: () => response.pipe(mapTo(b)),
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -109,7 +109,7 @@ describe("act", () => {
 
   it(
     "should default to concatMap",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ---b--b", { b });
@@ -117,7 +117,7 @@ describe("act", () => {
       const output = input.pipe(
         act({
           error: () => p,
-          project: () => response.pipe(mapTo(b))
+          project: () => response.pipe(mapTo(b)),
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -126,7 +126,7 @@ describe("act", () => {
 
   it(
     "should support mergeMap",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ---bb--", { b });
@@ -135,7 +135,7 @@ describe("act", () => {
         act({
           error: () => p,
           operator: mergeMap,
-          project: () => response.pipe(mapTo(b))
+          project: () => response.pipe(mapTo(b)),
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -144,7 +144,7 @@ describe("act", () => {
 
   it(
     "should support switchMap",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ----b--", { b });
@@ -153,7 +153,7 @@ describe("act", () => {
         act({
           error: () => p,
           operator: switchMap,
-          project: () => response.pipe(mapTo(b))
+          project: () => response.pipe(mapTo(b)),
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -162,7 +162,7 @@ describe("act", () => {
 
   it(
     "should support exhaustMap",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    ff-----", { f });
       const response = m.cold(" ---(r|)");
       const expected = m.cold(" ---b---", { b });
@@ -171,7 +171,7 @@ describe("act", () => {
         act({
           error: () => p,
           operator: exhaustMap,
-          project: () => response.pipe(mapTo(b))
+          project: () => response.pipe(mapTo(b)),
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -180,7 +180,7 @@ describe("act", () => {
 
   it(
     "should support unsubscribe",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    ff", { f });
       const response = m.cold(" --");
       const expected = m.cold(" -d", { d });
@@ -194,7 +194,7 @@ describe("act", () => {
             expect(count).to.equal(0);
             expect(action).to.equal(f);
             return d;
-          }
+          },
         })
       );
       m.expect(output).toBeObservable(expected);
@@ -203,7 +203,7 @@ describe("act", () => {
 
   it(
     "should call unsubscribe after a output notification",
-    marbles(m => {
+    marbles((m) => {
       const input = m.cold("    ff---", { f });
       const response = m.cold(" b----");
       const expected = m.cold(" b(db)", { b, d });
@@ -217,7 +217,7 @@ describe("act", () => {
             expect(count).to.equal(1);
             expect(action).to.equal(f);
             return d;
-          }
+          },
         })
       );
       m.expect(output).toBeObservable(expected);

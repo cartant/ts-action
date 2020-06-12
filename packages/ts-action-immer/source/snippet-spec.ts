@@ -7,14 +7,14 @@ import { stripIndent } from "common-tags";
 import { expecter } from "ts-snippet";
 
 export const expectSnippet = expecter(
-  code => stripIndent`
+  (code) => stripIndent`
     import { action, empty, fsa, payload, props, union } from "ts-action";
     import { on, reducer } from "./source";
     ${code}
   `,
   {
     moduleResolution: "node",
-    target: "es2015"
+    target: "es2015",
   }
 );
 

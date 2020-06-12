@@ -62,7 +62,7 @@ export function reducer<S>(initialState: S, ...ons: On<S>[]): Reducer<S> {
       }
     }
   }
-  return function(state: S = initialState, action: Action): S {
+  return function (state: S = initialState, action: Action): S {
     const reducer = map.get(action.type);
     return reducer ? reducer(state, action) : state;
   };

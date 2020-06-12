@@ -9,5 +9,5 @@ import { map } from "rxjs/operators";
 export function toPayload<A extends { payload: {} }>(): (
   source: Observable<A>
 ) => Observable<A["payload"]> {
-  return map(action => action.payload);
+  return map((action) => action.payload);
 }

@@ -9,7 +9,7 @@ import { stripIndent } from "common-tags";
 import { action, empty, fsa, payload, props, union } from "./action";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("functions/action", function(): void {
+describe("functions/action", function (): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
@@ -196,7 +196,7 @@ describe("functions/action", function(): void {
       expect(JSON.parse(text)).to.deep.equal({
         error: false,
         payload: { foo: 42 },
-        type: "FOO"
+        type: "FOO",
       });
     });
 
@@ -258,7 +258,7 @@ describe("functions/action", function(): void {
       const text = JSON.stringify(fooAction);
       expect(JSON.parse(text)).to.deep.equal({
         payload: { foo: 42 },
-        type: "FOO"
+        type: "FOO",
       });
     });
 

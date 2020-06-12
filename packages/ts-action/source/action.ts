@@ -67,7 +67,7 @@ export function action<T extends string>(
   if (typeof config === "function") {
     return defineType(type, (...args: unknown[]) => ({
       ...config(...args),
-      type
+      type,
     }));
   }
   const as = config ? config._as : "empty";
@@ -85,7 +85,7 @@ export function action<T extends string>(
     case "props":
       return defineType(type, (props: unknown) => ({
         ...(props as object),
-        type
+        type,
       }));
     default:
       throw new Error("Unexpected config.");
@@ -140,14 +140,14 @@ export function union<C extends ActionCreator[]>(
     },
     set: () => {
       throw new Error("Pseudo property not writable.");
-    }
+    },
   };
   const result = creators.map(({ type }) =>
     Object.defineProperty({ type }, "action", descriptor)
   );
   Object.defineProperties(result, {
     actions: descriptor,
-    types: descriptor
+    types: descriptor,
   });
   return result as any;
 }
@@ -155,6 +155,6 @@ export function union<C extends ActionCreator[]>(
 function defineType(type: string, creator: Creator): Creator {
   return Object.defineProperty(creator, "type", {
     value: type,
-    writable: false
+    writable: false,
   });
 }

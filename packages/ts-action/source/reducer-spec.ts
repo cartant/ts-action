@@ -11,7 +11,7 @@ import { usingProps } from "./foobar-spec";
 import { on, reducer } from "./reducer";
 import { expectSnippet, timeout } from "./snippet-spec";
 
-describe("reducer", function(): void {
+describe("reducer", function (): void {
   /*tslint:disable-next-line:no-invalid-this*/
   this.timeout(timeout);
 
@@ -99,7 +99,7 @@ describe("reducer", function(): void {
           initialState,
           on(...union(foo, bar, baz, boo), (state, { type }) => [
             ...state,
-            type
+            type,
           ])
         );
 

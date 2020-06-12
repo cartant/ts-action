@@ -21,10 +21,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo(), bar()).pipe(
           ofType(foo),
-          tap(action => expect(isType(action, foo)).to.be.true),
-          map(action => action.type),
+          tap((action) => expect(isType(action, foo)).to.be.true),
+          map((action) => action.type),
           toArray(),
-          tap(array => expect(array).to.deep.equal(["[foobar] FOO"]))
+          tap((array) => expect(array).to.deep.equal(["[foobar] FOO"]))
         );
       })
     );
@@ -34,10 +34,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo(), bar()).pipe(
           ofType(foo, bar),
-          tap(action => expect(isType(action, foo, bar)).to.be.true),
-          map(action => action.type),
+          tap((action) => expect(isType(action, foo, bar)).to.be.true),
+          map((action) => action.type),
           toArray(),
-          tap(array =>
+          tap((array) =>
             expect(array).to.deep.equal(["[foobar] FOO", "[foobar] BAR"])
           )
         );
@@ -49,10 +49,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo()).pipe(
           ofType(bar),
-          tap(action => expect(isType(action, bar)).to.be.true),
-          map(action => action.type),
+          tap((action) => expect(isType(action, bar)).to.be.true),
+          map((action) => action.type),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -62,9 +62,9 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo()).pipe(
           ofType(bar, baz),
-          tap(action => expect(isType(action, bar, baz)).to.be.true),
+          tap((action) => expect(isType(action, bar, baz)).to.be.true),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -78,10 +78,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 }), bar({ bar: 54 })).pipe(
           ofType(foo),
-          tap(action => expect(isType(action, foo)).to.be.true),
-          map(action => (action.error ? undefined : action.payload.foo)),
+          tap((action) => expect(isType(action, foo)).to.be.true),
+          map((action) => (action.error ? undefined : action.payload.foo)),
           toArray(),
-          tap(array => expect(array).to.deep.equal([42]))
+          tap((array) => expect(array).to.deep.equal([42]))
         );
       })
     );
@@ -91,8 +91,8 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 }), bar({ bar: 54 })).pipe(
           ofType(foo, bar),
-          tap(action => expect(isType(action, foo, bar)).to.be.true),
-          map(action =>
+          tap((action) => expect(isType(action, foo, bar)).to.be.true),
+          map((action) =>
             action.error
               ? undefined
               : action.type === foo.type
@@ -100,7 +100,7 @@ describe("ofType", () => {
               : action.payload.bar
           ),
           toArray(),
-          tap(array => expect(array).to.deep.equal([42, 54]))
+          tap((array) => expect(array).to.deep.equal([42, 54]))
         );
       })
     );
@@ -110,10 +110,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 })).pipe(
           ofType(bar),
-          tap(action => expect(isType(action, bar)).to.be.true),
-          map(action => (action.error ? undefined : action.payload.bar)),
+          tap((action) => expect(isType(action, bar)).to.be.true),
+          map((action) => (action.error ? undefined : action.payload.bar)),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -123,9 +123,9 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 })).pipe(
           ofType(bar, baz),
-          tap(action => expect(isType(action, bar, baz)).to.be.true),
+          tap((action) => expect(isType(action, bar, baz)).to.be.true),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -139,10 +139,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 }), bar({ bar: 54 })).pipe(
           ofType(foo),
-          tap(action => expect(isType(action, foo)).to.be.true),
-          map(action => action.payload.foo),
+          tap((action) => expect(isType(action, foo)).to.be.true),
+          map((action) => action.payload.foo),
           toArray(),
-          tap(array => expect(array).to.deep.equal([42]))
+          tap((array) => expect(array).to.deep.equal([42]))
         );
       })
     );
@@ -152,12 +152,12 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 }), bar({ bar: 54 })).pipe(
           ofType(foo, bar),
-          tap(action => expect(isType(action, foo, bar)).to.be.true),
-          map(action =>
+          tap((action) => expect(isType(action, foo, bar)).to.be.true),
+          map((action) =>
             action.type === foo.type ? action.payload.foo : action.payload.bar
           ),
           toArray(),
-          tap(array => expect(array).to.deep.equal([42, 54]))
+          tap((array) => expect(array).to.deep.equal([42, 54]))
         );
       })
     );
@@ -167,10 +167,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 })).pipe(
           ofType(bar),
-          tap(action => expect(isType(action, bar)).to.be.true),
-          map(action => action.payload.bar),
+          tap((action) => expect(isType(action, bar)).to.be.true),
+          map((action) => action.payload.bar),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -180,9 +180,9 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 })).pipe(
           ofType(bar, baz),
-          tap(action => expect(isType(action, bar, baz)).to.be.true),
+          tap((action) => expect(isType(action, bar, baz)).to.be.true),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -196,10 +196,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 }), bar({ bar: 54 })).pipe(
           ofType(foo),
-          tap(action => expect(isType(action, foo)).to.be.true),
-          map(action => action.foo),
+          tap((action) => expect(isType(action, foo)).to.be.true),
+          map((action) => action.foo),
           toArray(),
-          tap(array => expect(array).to.deep.equal([42]))
+          tap((array) => expect(array).to.deep.equal([42]))
         );
       })
     );
@@ -209,10 +209,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 }), bar({ bar: 54 })).pipe(
           ofType(foo, bar),
-          tap(action => expect(isType(action, foo, bar)).to.be.true),
-          map(action => (action.type === foo.type ? action.foo : action.bar)),
+          tap((action) => expect(isType(action, foo, bar)).to.be.true),
+          map((action) => (action.type === foo.type ? action.foo : action.bar)),
           toArray(),
-          tap(array => expect(array).to.deep.equal([42, 54]))
+          tap((array) => expect(array).to.deep.equal([42, 54]))
         );
       })
     );
@@ -222,10 +222,10 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 })).pipe(
           ofType(bar),
-          tap(action => expect(isType(action, bar)).to.be.true),
-          map(action => action.bar),
+          tap((action) => expect(isType(action, bar)).to.be.true),
+          map((action) => action.bar),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );
@@ -235,9 +235,9 @@ describe("ofType", () => {
       observe(() => {
         return of<Action>(foo({ foo: 42 })).pipe(
           ofType(bar, baz),
-          tap(action => expect(isType(action, bar, baz)).to.be.true),
+          tap((action) => expect(isType(action, bar, baz)).to.be.true),
           toArray(),
-          tap(array => expect(array).to.deep.equal([]))
+          tap((array) => expect(array).to.deep.equal([]))
         );
       })
     );

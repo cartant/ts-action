@@ -10,7 +10,7 @@ import {
   Notification,
   Observable,
   OperatorFunction,
-  Subject
+  Subject,
 } from "rxjs";
 import {
   concatMap,
@@ -18,7 +18,7 @@ import {
   filter,
   finalize,
   map,
-  materialize
+  materialize,
 } from "rxjs/operators";
 import { Action } from "ts-action";
 
@@ -93,7 +93,7 @@ export function act<
     typeof projectOrConfig === "function"
       ? {
           error: optionalError!,
-          project: projectOrConfig
+          project: projectOrConfig,
         }
       : projectOrConfig;
   const {
@@ -101,10 +101,10 @@ export function act<
     error,
     operator = concatMap,
     project,
-    unsubscribe
+    unsubscribe,
   } = config;
 
-  return source =>
+  return (source) =>
     defer(() => {
       const subject = new Subject<UnsubscribeAction>();
       return merge(

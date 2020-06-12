@@ -14,6 +14,6 @@ export function ofType(
   ...creators: ActionCreator[]
 ): (source: Observable<Action>) => Observable<Action> {
   return filter<Action>(({ type }) =>
-    creators.some(creator => creator.type === type)
+    creators.some((creator) => creator.type === type)
   );
 }

@@ -23,7 +23,7 @@ describe("toPayload", () => {
         ofType(foo),
         toPayload(),
         toArray(),
-        tap(array => expect(array).to.deep.equal([{ foo: 42 }]))
+        tap((array) => expect(array).to.deep.equal([{ foo: 42 }]))
       );
     })
   );
