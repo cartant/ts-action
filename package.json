@@ -1,8 +1,13 @@
 {
   "devDependencies": {
+    "chalk": "^4.1.0",
+    "glob": "^7.1.6",
     "husky": "^4.0.0",
     "lint-staged": "^10.0.8",
-    "prettier": "~2.0.0"
+    "prettier": "~2.0.0",
+    "prompts": "^2.3.2",
+    "semver": "^7.3.2",
+    "yargs": "^15.4.0"
   },
   "husky": {
     "hooks": {
@@ -14,6 +19,7 @@
   },
   "private": true,
   "scripts": {
+    "bump": "node scripts/bump.js",
     "dist": "yarn --cwd ./packages/ts-action dist && yarn --cwd ./packages/ts-action-immer dist &&yarn --cwd ./packages/ts-action-operators dist",
     "prettier": "prettier --write \"./packages/**/{scripts,source}/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./packages/**/{scripts,source}/**/*.{js,json,ts}\"",
