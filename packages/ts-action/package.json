@@ -11,7 +11,7 @@
     "@types/chai": "^4.0.0",
     "@types/common-tags": "^1.8.0",
     "@types/lodash.isplainobject": "^4.0.0",
-    "@types/mocha": "^7.0.0",
+    "@types/mocha": "^8.0.0",
     "chai": "^4.1.2",
     "common-tags": "^1.8.0",
     "cpy-cli": "^3.0.0",
