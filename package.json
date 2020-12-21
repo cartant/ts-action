@@ -20,10 +20,10 @@
   "private": true,
   "scripts": {
     "bump": "node scripts/bump.js",
-    "dist": "yarn --cwd ./packages/ts-action dist && yarn --cwd ./packages/ts-action-immer dist &&yarn --cwd ./packages/ts-action-operators dist",
+    "dist": "yarn workspace ts-action dist && yarn workspace ts-action-immer dist && yarn workspace ts-action-operators dist",
     "prettier": "prettier --write \"./packages/**/{scripts,source}/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./packages/**/{scripts,source}/**/*.{js,json,ts}\"",
-    "test": "yarn --cwd ./packages/ts-action test && yarn --cwd ./packages/ts-action-immer test &&yarn --cwd ./packages/ts-action-operators test"
+    "test": "yarn workspace ts-action test && yarn workspace ts-action-immer test && yarn workspace ts-action-operators test"
   },
   "workspaces": [
     "packages/*"
