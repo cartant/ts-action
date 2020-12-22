@@ -14,13 +14,13 @@
     "chai": "^4.1.2",
     "common-tags": "^1.8.0",
     "cpy-cli": "^3.0.0",
-    "immer": "^7.0.0",
+    "immer": "^8.0.0",
     "mocha": "^8.0.0",
     "rimraf": "^3.0.0",
     "ts-action": "^11.0.0",
     "tslint": "^6.0.0",
     "tslint-etc": "^1.5.1",
-    "typescript": "~4.0.2"
+    "typescript": "~4.1.2"
   },
   "es2015": "./dist/esm2015/index.js",
   "homepage": "https://github.com/cartant/ts-action",

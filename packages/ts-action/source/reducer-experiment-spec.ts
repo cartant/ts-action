@@ -19,11 +19,11 @@ describe("reducer-experiment", function (): void {
       type Brand = { __brand: string };
       type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
 
-      declare function on<B extends Brand>(
+      declare function _on<B extends Brand>(
         ...args: (B | ((action: ActionFromBrand<B>) => void))[]
       ): (action: ActionFromBrand<B>) => void;
 
-      const listener = on(
+      const listener = _on(
         { __brand: "a" as const, type: "a" as const },
         { __brand: "b" as const, type: "b" as const },
         action => {}
@@ -40,17 +40,14 @@ describe("reducer-experiment", function (): void {
       type Brand = { __brand: string };
       type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
 
-      declare function on<B extends Brand>(
+      declare function _on<B extends Brand>(
         ...args: (B | ((action: ActionFromBrand<B>) => void))[]
       ): (action: ActionFromBrand<B>) => void;
 
       const a = { type: "a" } as ({ type: "a" } & { __brand: "a" });
       const b = { type: "b" } as ({ type: "b" } & { __brand: "b" });
-      const listener = on(a, b, action => {});
-    `).toInfer(
-      "listener",
-      `(action: { type: "a"; } & { __brand: "a"; }) => void`
-    );
+      const listener = _on(a, b, action => {});
+    `).toFail(/Type '"b"' is not assignable to type '"a"'/);
   });
 
   it("should infer using a spread tuple", () => {
@@ -59,7 +56,7 @@ describe("reducer-experiment", function (): void {
       type Brand = { __brand: string };
       type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
 
-      declare function on<B extends Brand>(
+      declare function _on<B extends Brand>(
         ...args: (B | ((action: ActionFromBrand<B>) => void))[]
       ): (action: ActionFromBrand<B>) => void;
 
@@ -67,7 +64,7 @@ describe("reducer-experiment", function (): void {
         { __brand: "a" as const, type: "a" as const },
         { __brand: "b" as const, type: "b" as const }
       ];
-      const listener = on(
+      const listener = _on(
         ...args,
         action => {}
       );
@@ -84,7 +81,7 @@ describe("reducer-experiment", function (): void {
       type Brand = { __brand: string };
       type ActionFromBrand<B extends Brand> = B extends () => infer U ? U : never;
 
-      declare function on<B extends Brand>(
+      declare function _on<B extends Brand>(
         ...args: (B | ((action: ActionFromBrand<B>) => void))[]
       ): (action: ActionFromBrand<B>) => void;
 
@@ -92,7 +89,7 @@ describe("reducer-experiment", function (): void {
         (() => ({ type: "a" })) as (() => { type: "a" }) & { __brand: "a" },
         (() => ({ type: "b" })) as (() => { type: "b" }) & { __brand: "b" }
       ];
-      const listener = on(
+      const listener = _on(
         ...args,
         action => {}
       );
@@ -105,7 +102,7 @@ describe("reducer-experiment", function (): void {
       type Brand = { __brand: string };
       type ActionFromBrand<B extends Brand> = B extends Action ? B : never;
 
-      declare function on<S, B extends Brand>(
+      declare function _on<S, B extends Brand>(
         ...args: (B | ((state:S, action: ActionFromBrand<B>) => S))[]
       ): S;
 
@@ -113,7 +110,7 @@ describe("reducer-experiment", function (): void {
         { __brand: "a" as const, type: "a" as const },
         { __brand: "b" as const, type: "b" as const }
       ];
-      const state: { name: string } = on(
+      const state: { name: string } = _on(
         ...args,
         (state, action) => ({ role: "programmer" })
       );
@@ -127,7 +124,7 @@ describe("reducer-experiment", function (): void {
       type Brand = { __brand: string };
       type ActionFromBrand<B extends Brand> = B extends () => infer U ? U : never;
 
-      declare function on<S, B extends Brand>(
+      declare function _on<S, B extends Brand>(
         ...args: (B | ((state: S, action: ActionFromBrand<B>) => S))[]
       ): S;
 
@@ -135,7 +132,7 @@ describe("reducer-experiment", function (): void {
         (() => ({ type: "a" })) as (() => { type: "a" }) & { __brand: "a" },
         (() => ({ type: "b" })) as (() => { type: "b" }) & { __brand: "b" }
       ];
-      const listener: { name: string } = on(
+      const listener: { name: string } = _on(
         ...args,
         (state, action) => state
       );
