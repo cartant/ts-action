@@ -2,17 +2,12 @@
   "devDependencies": {
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
-    "husky": "^4.0.0",
+    "husky": "^6.0.0",
     "lint-staged": "^10.0.8",
     "prettier": "~2.2.0",
     "prompts": "^2.3.2",
     "semver": "^7.3.2",
     "yargs": "^16.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "prettier --write"
@@ -21,6 +16,7 @@
   "scripts": {
     "bump": "node scripts/bump.js",
     "dist": "yarn workspace ts-action dist && yarn workspace ts-action-immer dist && yarn workspace ts-action-operators dist",
+    "prepare": "husky install",
     "prettier": "prettier --write \"./packages/**/{scripts,source}/**/*.{js,json,ts}\"",
     "prettier:ci": "prettier --check \"./packages/**/{scripts,source}/**/*.{js,json,ts}\"",
     "test": "yarn workspace ts-action test && yarn workspace ts-action-immer test && yarn workspace ts-action-operators test"
