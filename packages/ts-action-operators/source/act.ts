@@ -4,14 +4,7 @@
  */
 /*tslint:disable:rxjs-no-unsafe-scope*/
 
-import {
-  defer,
-  merge,
-  Notification,
-  Observable,
-  OperatorFunction,
-  Subject,
-} from "rxjs";
+import { defer, merge, Observable, OperatorFunction, Subject } from "rxjs";
 import {
   concatMap,
   dematerialize,
@@ -117,27 +110,29 @@ export function act<
               return project(action, index).pipe(
                 materialize(),
                 map((notification):
-                  | Notification<
-                      | OutputAction
-                      | ErrorAction
-                      | CompleteAction
-                      | UnsubscribeAction
-                    >
+                  | {
+                      kind: "N";
+                      value:
+                        | OutputAction
+                        | ErrorAction
+                        | CompleteAction
+                        | UnsubscribeAction;
+                    }
                   | undefined => {
                   switch (notification.kind) {
                     case "E":
                       errored = true;
-                      return new Notification(
-                        "N",
-                        error(notification.error, action)
-                      );
+                      return {
+                        kind: "N",
+                        value: error(notification.error, action),
+                      };
                     case "C":
                       completed = true;
                       return complete
-                        ? new Notification(
-                            "N",
-                            complete(projectedCount, action)
-                          )
+                        ? {
+                            kind: "N",
+                            value: complete(projectedCount, action),
+                          }
                         : undefined;
                     default:
                       ++projectedCount;

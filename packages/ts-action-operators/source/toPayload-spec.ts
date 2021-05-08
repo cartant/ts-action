@@ -8,7 +8,6 @@ import { expect } from "chai";
 import { of } from "rxjs";
 import { observe } from "rxjs-marbles/mocha";
 import { tap, toArray } from "rxjs/operators";
-import { Action } from "ts-action";
 import { usingPayload } from "./foobar-spec";
 import { ofType } from "./ofType";
 import { toPayload } from "./toPayload";
@@ -19,7 +18,7 @@ describe("toPayload", () => {
   it(
     "should obtain the payload",
     observe(() => {
-      return of<Action>(foo({ foo: 42 })).pipe(
+      return of(foo({ foo: 42 })).pipe(
         ofType(foo),
         toPayload(),
         toArray(),

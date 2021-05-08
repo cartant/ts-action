@@ -6,6 +6,7 @@
     "@cartant/tslint-config-rxjs"
   ],
   "rules": {
+    "rxjs-no-create": { "severity": "off" },
     "typedef": {
       "options": [
         "parameter",
