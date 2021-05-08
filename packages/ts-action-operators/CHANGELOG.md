@@ -1,3 +1,10 @@
+<a name="9.1.2"></a>
+## [9.1.2](https://github.com/cartant/ts-action/compare/v9.1.1-ts-action-operators...v9.1.2-ts-action-operators) (2021-05-08)
+
+### Changes
+
+* Upgrade to RxJS version 7 and widen peer dependency range for `rxjs`. ([2aba46a](https://github.com/cartant/ts-action/commit/2aba46a))
+
 <a name="9.1.1"></a>
 ## [9.1.1](https://github.com/cartant/ts-action/compare/v9.1.0-ts-action-operators...v9.1.1-ts-action-operators) (2019-10-26)
 
