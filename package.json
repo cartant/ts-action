@@ -3,11 +3,11 @@
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "husky": "^6.0.0",
-    "lint-staged": "^10.0.8",
+    "lint-staged": "^11.0.0",
     "prettier": "~2.2.0",
     "prompts": "^2.3.2",
     "semver": "^7.3.2",
-    "yargs": "^16.0.0"
+    "yargs": "^17.0.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "prettier --write"
