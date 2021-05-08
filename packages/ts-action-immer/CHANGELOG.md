@@ -1,3 +1,10 @@
+<a name="3.0.4"></a>
+## [3.0.4](https://github.com/cartant/ts-action/compare/v3.0.3-ts-action-immer...v3.0.4-ts-action-immer) (2021-05-08)
+
+### Changes
+
+* Widen the peer dependency range. ([84a9d52](https://github.com/cartant/ts-action/commit/84a9d52))
+
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/cartant/ts-action/compare/v3.0.2-ts-action-immer...v3.0.3-ts-action-immer) (2020-06-12)
 
